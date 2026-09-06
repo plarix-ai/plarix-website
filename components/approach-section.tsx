@@ -3,44 +3,77 @@
 import React from "react"
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, ShieldCheck, FileText, ChevronRight } from "lucide-react";
+import { Search, Zap, DollarSign, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { DiscoverVisual } from "@/components/visuals/discover-visual";
-import { RedteamVisual } from "@/components/visuals/redteam-visual";
-import { ReportVisual } from "@/components/visuals/report-visual";
 
-interface Feature {
-  id: number;
-  title: string;
-  description: string;
-  icon: React.ReactNode;
-  visual: React.ReactNode;
-}
-
-const features: Feature[] = [
+const workflowSteps = [
   {
     id: 1,
-    title: "1. Process runs",
+    title: "1. Diagnose",
     description:
-      "Your team runs the process the way it runs today. We watch it, time it, and price it exactly as it is. No changes yet.",
+      "We pull your job data, identify every part and labor line that qualifies for a warranty claim, and give you a dollar figure: here is what you are owed, here is what has not been filed. No guesswork.",
     icon: <Search className="w-5 h-5" />,
-    visual: <DiscoverVisual />,
+    visual: (
+      <div className="flex h-full w-full items-center justify-center bg-slate-900/60 p-8">
+        <div className="flex flex-col items-center gap-4">
+          <div className="flex items-center gap-3">
+            <div className="px-3 py-2 bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-mono">Your Job Data</div>
+            <span className="text-slate-600">&rarr;</span>
+            <div className="px-3 py-2 bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-mono">Eligibility Check</div>
+          </div>
+          <div className="mt-4 flex flex-col items-center gap-2">
+            <span className="text-3xl font-normal text-amber-500">$12,470</span>
+            <span className="text-xs text-slate-500">unfiled warranty value found</span>
+          </div>
+        </div>
+      </div>
+    ),
   },
   {
     id: 2,
-    title: "2. Plarix builds the EEAS",
+    title: "2. Automate",
     description:
-      "We design and build an Economically-Engineered Agentic System scoped to that one process. Built for the cost structure we just measured, not a generic bot.",
-    icon: <ShieldCheck className="w-5 h-5" />,
-    visual: <RedteamVisual />,
+      "We prepare and submit claims to each manufacturer's portal — Carrier, Trane, Lennox, whichever — using their exact format and rules. Your team does nothing. The claim goes in correctly the first time.",
+    icon: <Zap className="w-5 h-5" />,
+    visual: (
+      <div className="flex h-full w-full items-center justify-center bg-slate-900/60 p-8">
+        <div className="flex flex-col items-center gap-4">
+          <div className="flex items-center gap-3">
+            <div className="px-3 py-2 bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-mono">Claim Prepared</div>
+            <span className="text-slate-600">&rarr;</span>
+            <div className="px-3 py-2 bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-mono">Filed With Manufacturer&rarr;</div>
+          </div>
+          <div className="mt-4 grid grid-cols-3 gap-2">
+            {["Carrier", "Trane", "Lennox", "Rheem", "Goodman", "Daikin"].map((mfr) => (
+              <div key={mfr} className="px-2 py-1 text-[10px] text-slate-400 border border-slate-800/30 text-center">{mfr}</div>
+            ))}
+          </div>
+        </div>
+      </div>
+    ),
   },
   {
     id: 3,
-    title: "3. Money and time, logged",
+    title: "3. Recover",
     description:
-      "Every result gets compared against the baseline: euros saved and hours returned. If the number doesn't hold up, we say so.",
-    icon: <FileText className="w-5 h-5" />,
-    visual: <ReportVisual />,
+      "We track every claim through to payment, chase denials, and report what came back: claims filed, dollars recovered, month over month. You get a number you can take to a budget review.",
+    icon: <DollarSign className="w-5 h-5" />,
+    visual: (
+      <div className="flex h-full w-full items-center justify-center bg-slate-900/60 p-8">
+        <div className="flex flex-col items-center gap-4">
+          <div className="flex items-center gap-3">
+            <div className="px-3 py-2 bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-mono">Tracked</div>
+            <span className="text-slate-600">&rarr;</span>
+            <div className="px-3 py-2 bg-green-500/10 border border-green-500/20 text-green-400 text-xs font-mono">Money Back</div>
+          </div>
+          <div className="mt-4 flex flex-col items-center gap-1">
+            <span className="text-2xl font-normal text-white">$9,840</span>
+            <span className="text-xs text-slate-500">recovered this month</span>
+            <span className="text-xs text-slate-600">34 claims, 3 manufacturers</span>
+          </div>
+        </div>
+      </div>
+    ),
   },
 ];
 
@@ -52,7 +85,7 @@ export function ApproachSection() {
   const startTimer = useCallback(() => {
     if (timerRef.current) clearInterval(timerRef.current);
     timerRef.current = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % features.length);
+      setActiveIndex((prev) => (prev + 1) % workflowSteps.length);
     }, 8000);
   }, []);
 
@@ -84,16 +117,15 @@ export function ApproachSection() {
   return (
     <section ref={sectionRef} id="approach" className="w-full bg-slate-950 text-white py-24 flex flex-col items-center overflow-hidden border-b border-slate-800/30">
       <div className="max-w-7xl w-full px-6 md:px-12 lg:px-16 gap-12 flex flex-col">
-        {/* Header Section */}
         <div className="flex flex-col gap-4 max-w-[600px]">
           <div className="flex items-center gap-3 px-4 py-2 border border-slate-800/50 w-fit">
             <div className="w-2.5 h-2.5 bg-amber-500" />
             <span className="text-sm font-medium text-slate-500 tracking-wide">
-              Our approach
+              How we do it
             </span>
           </div>
           <h2 className="text-balance text-4xl md:text-5xl font-normal leading-[1.1] tracking-tight text-white">
-            {"AI, engineered for the economics of your business".split(" ").map((word, i) => (
+            {"Diagnose, automate, recover".split(" ").map((word, i) => (
               <motion.span
                 key={i}
                 initial={{ filter: "blur(10px)", opacity: 0 }}
@@ -107,13 +139,11 @@ export function ApproachSection() {
             ))}
           </h2>
           <p className="text-balance text-slate-400 text-base leading-relaxed">
-            Plarix is a process-first AI build. We measure how a task runs today, in money and hours, before writing a line of the system. Then we build, deploy, and report the delta.
+            We pull your existing job data, identify every unfiled warranty claim, submit it to the manufacturer, and track it through to payment. Your team does nothing except see the money come back.
           </p>
         </div>
 
-        {/* Interactive Content Container */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[400px]">
-          {/* Left: Visual Display */}
           <div className="relative aspect-[4/3] w-full overflow-hidden border border-slate-800/30">
             <AnimatePresence mode="wait">
               <motion.div
@@ -124,13 +154,12 @@ export function ApproachSection() {
                 transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
                 className="absolute inset-0"
               >
-                {features[activeIndex].visual}
+                {workflowSteps[activeIndex].visual}
               </motion.div>
             </AnimatePresence>
 
-            {/* Progress indicator */}
             <div className="absolute bottom-3 left-3 right-3 h-0.5 flex gap-2 z-10">
-              {features.map((_, idx) => (
+              {workflowSteps.map((_, idx) => (
                 <div key={idx} className="h-full flex-1 bg-white/10 overflow-hidden">
                   {activeIndex === idx && (
                     <motion.div
@@ -148,11 +177,10 @@ export function ApproachSection() {
             </div>
           </div>
 
-          {/* Right: Step List */}
           <div className="flex flex-col gap-4">
-            {features.map((feature, index) => (
+            {workflowSteps.map((step, index) => (
               <motion.button
-                key={feature.id}
+                key={step.id}
                 onClick={() => { setActiveIndex(index); startTimer(); }}
                 className={cn(
                   "group relative w-full text-left p-6 transition-all duration-300 outline-none",
@@ -168,7 +196,7 @@ export function ApproachSection() {
                     "mt-1 p-2 transition-colors duration-300",
                     activeIndex === index ? "bg-amber-500 text-slate-950" : "bg-white/5 text-slate-600"
                   )}>
-                    {feature.icon}
+                    {step.icon}
                   </div>
 
                   <div className="flex-1 gap-1 flex flex-col">
@@ -176,14 +204,14 @@ export function ApproachSection() {
                       "text-xl font-medium transition-colors duration-300",
                       activeIndex === index ? "text-white" : "text-slate-600"
                     )}>
-                      {feature.title}
+                      {step.title}
                     </h3>
 
                     <p className={cn(
                       "text-slate-400 text-base leading-relaxed mt-1 transition-opacity duration-300",
                       activeIndex === index ? "opacity-100" : "opacity-0 select-none"
                     )}>
-                      {feature.description}
+                      {step.description}
                     </p>
                   </div>
 
@@ -199,7 +227,6 @@ export function ApproachSection() {
           </div>
         </div>
 
-        {/* Footer/CTA Area */}
         <div className="pt-12 flex justify-center border-t border-slate-800/20">
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -207,7 +234,7 @@ export function ApproachSection() {
             onClick={() => window.dispatchEvent(new CustomEvent("open-consultation"))}
             className="px-8 py-4 bg-amber-500 text-slate-950 font-medium flex items-center gap-2 hover:bg-amber-400 transition-colors"
           >
-            Get a Free Process Audit
+            Get a Free Warranty Audit
             <ChevronRight className="w-4 h-4" />
           </motion.button>
         </div>

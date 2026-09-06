@@ -4,24 +4,24 @@ import { motion } from "framer-motion";
 
 const stats = [
   {
-    value: "95%",
-    label: "No measurable return",
-    context: "Of enterprise generative AI pilots show no measurable financial return. MIT, State of AI in Business, 2025."
+    value: "$45K–$110K",
+    label: "Cost of a warranty coordinator",
+    context: "Annual salary for a full-time warranty administrator in HVAC/plumbing, sourced from active job postings on Indeed and ZipRecruiter."
   },
   {
-    value: "88%",
-    label: "Never reach production",
-    context: "Of AI proofs of concept never reach production. IDC, 2025."
+    value: "0",
+    label: "Platforms that file claims",
+    context: "Of the six major FSM platforms (ServiceTitan, Jobber, Housecall Pro, FieldEdge, Workiz, Service Fusion), none handle manufacturer warranty claim submission or tracking."
   },
   {
-    value: "40%+",
-    label: "Predicted to be cancelled",
-    context: "Of agentic AI projects predicted to be cancelled by 2027 over unclear value. Gartner."
+    value: "$14.7B",
+    label: "HVAC market, fragmented",
+    context: "U.S. HVAC services market size (Grand View Research, 2024), served by 130,000+ independent contractors. No single player owns the warranty recovery layer."
   },
   {
     value: "2",
-    label: "Numbers that matter",
-    context: "The only numbers every Plarix build is measured against: money and hours."
+    label: "Numbers we report",
+    context: "Every Plarix engagement ends with two numbers: dollars recovered and claims filed. No dashboards that nobody reads."
   },
 ];
 
@@ -54,7 +54,7 @@ export function StatsSection() {
             </span>
           </div>
           <h2 className="text-balance text-4xl md:text-5xl font-normal tracking-tight text-white">
-            {"The ROI gap is real".split(" ").map((word, i) => (
+            {"The gap is real, and it is expensive".split(" ").map((word, i) => (
               <motion.span
                 key={i}
                 initial={{ filter: "blur(10px)", opacity: 0 }}
@@ -88,16 +88,12 @@ export function StatsSection() {
               <span className="text-sm font-medium text-white uppercase tracking-wider">
                 {stat.label}
               </span>
-              <p className="text-sm text-slate-500 leading-relaxed">
+              <p className="text-xs text-slate-500 leading-relaxed italic">
                 {stat.context}
               </p>
             </motion.div>
           ))}
         </motion.div>
-
-        <p className="mt-12 text-center text-slate-400 text-base max-w-2xl mx-auto">
-          A chatbot cannot tell you what it saved. A pilot cannot tell you if it's worth keeping. You need a baseline, a build, and a number.
-        </p>
       </div>
     </section>
   );

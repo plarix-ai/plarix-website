@@ -1,28 +1,28 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Calculator, Crosshair, LineChart, Plug } from "lucide-react";
+import { XCircle, Users, Eye, MessageCircle } from "lucide-react";
 
 const blocks = [
   {
-    icon: <Calculator className="w-5 h-5 text-amber-500" />,
-    title: "Economics first",
-    description: "We measure the baseline and model the cost before deciding whether to build anything. If a process doesn't clear the number, we say so instead of building it anyway.",
+    icon: <XCircle className="w-5 h-5 text-amber-500" />,
+    title: "No long contract, cancel anytime",
+    description: "You are not locked into a 12-month agreement. If Plarix stops recovering money for you, you walk. No termination fee, no notice period games. We earn your business every month.",
   },
   {
-    icon: <Crosshair className="w-5 h-5 text-amber-500" />,
-    title: "Built around your process, not a generic bot",
-    description: "Every EEAS is scoped to one process we've measured directly, not a general assistant dropped into your company.",
+    icon: <Users className="w-5 h-5 text-amber-500" />,
+    title: "Nobody on your team loses their job",
+    description: "Plarix automates the portal-login-and-upload part of warranty claims — not the people part. Your office staff stops doing data entry and starts doing things that actually need a human. We do not replace anyone.",
   },
   {
-    icon: <LineChart className="w-5 h-5 text-amber-500" />,
-    title: "Measured, not promised",
-    description: "Every engagement ends with a savings record: money and hours, compared against a real baseline, on a schedule. Not an estimate made once and never checked.",
+    icon: <Eye className="w-5 h-5 text-amber-500" />,
+    title: "You see the number before you commit to anything",
+    description: "The free warranty audit gives you a dollar figure: here is what you are owed and not filing. You decide whether it is worth pursuing. No upfront payment, no credit card required to see the number.",
   },
   {
-    icon: <Plug className="w-5 h-5 text-amber-500" />,
-    title: "No rebuild required",
-    description: "Plarix builds around the systems you already run. No new platform for your team to adopt, no migration project before the first result shows up.",
+    icon: <MessageCircle className="w-5 h-5 text-amber-500" />,
+    title: "Built from conversations with shop owners, not a lab",
+    description: "Every feature in Plarix came from sitting down with HVAC and plumbing contractors and asking: what part of this process actually hurts? The answer is never 'we need more dashboards.' It is usually 'I do not know what we are not filing.'",
   },
 ];
 
@@ -47,7 +47,6 @@ export function TrustSection() {
   return (
     <section className="w-full bg-slate-950 py-24 md:py-32 border-b border-slate-800/30">
       <div className="mx-auto max-w-7xl px-6 md:px-12 lg:px-16">
-        {/* Header */}
         <div className="flex flex-col gap-6 mb-16 items-center text-center">
           <div className="flex items-center gap-3 px-4 py-2 border border-slate-800/50 w-fit">
             <div className="w-2.5 h-2.5 bg-amber-500" />
@@ -56,7 +55,7 @@ export function TrustSection() {
             </span>
           </div>
           <h2 className="text-balance text-4xl md:text-5xl font-normal tracking-tight text-white">
-            {"What makes this different".split(" ").map((word, i) => (
+            {"Four things we will never do to a contractor".split(" ").map((word, i) => (
               <motion.span
                 key={i}
                 initial={{ filter: "blur(10px)", opacity: 0 }}
@@ -71,7 +70,6 @@ export function TrustSection() {
           </h2>
         </div>
 
-        {/* Grid */}
         <motion.div
           variants={containerVariants}
           initial="hidden"

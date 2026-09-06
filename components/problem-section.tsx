@@ -1,26 +1,26 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { AlertTriangle, Calculator, TrendingDown } from "lucide-react";
+import { ClipboardList, Globe, DollarSign } from "lucide-react";
 
 const problems = [
   {
-    icon: <Calculator className="w-5 h-5 text-amber-500" />,
-    title: "Nobody scoped the process",
+    icon: <ClipboardList className="w-5 h-5 text-amber-500" />,
+    title: "The manual process",
     description:
-      "Teams pick a process because it's visible, not because it's expensive. The processes actually draining budget and headcount are rarely the ones that get automated first.",
+      "A warranty claim today touches your FSM, the manufacturer's portal, a parts invoice, and someone's memory. One technician fills out a form, an office person looks up the serial number, logs into Carrier or Trane or Lennox with a different password, uploads the paperwork, and hits submit. Then they wait. If the claim comes back denied, they start over. Most shops have nobody dedicated to this — it lives on whoever has time.",
   },
   {
-    icon: <AlertTriangle className="w-5 h-5 text-amber-500" />,
-    title: "Nobody priced it before building",
+    icon: <Globe className="w-5 h-5 text-amber-500" />,
+    title: "The manufacturer portals",
     description:
-      "A pilot ships, then someone asks what it cost to build and run. By then the number is fixed, and there's no baseline to compare it against.",
+      "Carrier, Trane, Lennox, Rheem — each has its own portal, its own login, its own rules for what counts as a valid claim. Deadlines vary. Required documents vary. A claim filed correctly to Carrier would get rejected by Lennox for a missing field. Contractors call it 'submit and pray' because there is no way to know if a claim will stick until the check shows up or doesn't.",
   },
   {
-    icon: <TrendingDown className="w-5 h-5 text-amber-500" />,
-    title: "Nobody can prove the return",
+    icon: <DollarSign className="w-5 h-5 text-amber-500" />,
+    title: "The money you're not filing",
     description:
-      "Leadership asks what the AI initiative saved. There's an answer for adoption and usage. There's rarely an answer in euros or hours.",
+      "Parts covered under warranty that were billed to the customer. Labor hours that the manufacturer would have paid, written off because nobody had time to chase them. Every shop owner we've talked to has a version of 'we eat the cost' — not because the claim is invalid, but because filing it costs more in staff time than anyone wants to spend. The money is owed. It just isn't getting claimed.",
   },
 ];
 
@@ -57,7 +57,7 @@ export function ProblemSection() {
             </span>
           </div>
           <h2 className="text-balance text-4xl font-normal tracking-tight text-white md:text-5xl lg:text-5xl">
-            {"Most AI initiatives don't fail because the model is bad. They fail because nobody did the math first.".split(" ").map((word, i) => (
+            {"Zero field service platforms track warranty claims. Your shop is eating costs the manufacturer owes you.".split(" ").map((word, i) => (
               <motion.span
                 key={i}
                 initial={{ filter: "blur(10px)", opacity: 0 }}
@@ -72,11 +72,10 @@ export function ProblemSection() {
           </h2>
 
           <p className="text-balance text-lg leading-relaxed text-slate-400 md:text-xl max-w-3xl">
-            A team sees what AI can do and starts building. Nobody has asked what it costs to run, what it replaces, or whether the savings are real. Three questions arrive later that should have come first.
+            Six major FSM platforms, 1,400+ reviews analyzed. Not one handles manufacturer warranty claim tracking — not ServiceTitan, not Jobber, not Housecall Pro. The process is entirely manual, entirely off-platform, and costing shops real money every month.
           </p>
         </div>
 
-        {/* Problem Cards */}
         <motion.div
           variants={containerVariants}
           initial="hidden"

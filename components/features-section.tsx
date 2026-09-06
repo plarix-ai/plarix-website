@@ -2,7 +2,7 @@
 
 import React from "react"
 import { motion } from "framer-motion";
-import { ClipboardList, TrendingUp, Wrench, Search } from "lucide-react";
+import { FileCheck, Send, RefreshCw, Receipt, Percent, BadgeDollarSign } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface FeatureItem {
@@ -11,36 +11,38 @@ interface FeatureItem {
   title: string;
   description: string;
   items: string[];
+  comingSoon?: boolean;
 }
 
 const DEFAULT_FEATURES: FeatureItem[] = [
   {
     id: "1",
-    icon: <ClipboardList className="w-5 h-5 text-white" />,
-    title: "Process diagnostic",
-    description: "We sit with the team doing the work and measure it: steps, time per step, cost per step, error rate, volume. This becomes the baseline every result gets measured against.",
-    items: ["Time and cost per task, measured directly", "Volume and frequency mapped", "Error and rework rate captured", "A written baseline before any build starts"],
+    icon: <FileCheck className="w-5 h-5 text-white" />,
+    title: "Warranty claim identification",
+    description: "We scan your job history and flag every part and labor line that qualifies for a manufacturer warranty claim — including claims your team missed because the serial number was on a different screen.",
+    items: ["Parts and labor both checked", "Works across Carrier, Trane, Lennox, Rheem, and more", "No manual lookup by your team", "Dollar value estimated before filing"],
   },
   {
     id: "2",
-    icon: <TrendingUp className="w-5 h-5 text-white" />,
-    title: "Economic modeling",
-    description: "Before we write any code, we model what automating the process would cost to build and run, and compare it to the baseline. If the number doesn't work, we say so and stop.",
-    items: ["Build and run cost estimated up front", "Compared against the measured baseline", "Break-even point calculated before build", "No build recommended when the math doesn't hold"],
+    icon: <Send className="w-5 h-5 text-white" />,
+    title: "Manufacturer portal submission",
+    description: "We submit claims directly to each manufacturer's portal in their exact format — correct fields, correct attachments, correct deadlines. No more 'submit and pray.'",
+    items: ["Filed to the correct portal, every time", "All required docs attached automatically", "Deadline tracking per manufacturer", "Denial reasons surfaced and corrected"],
   },
   {
     id: "3",
-    icon: <Wrench className="w-5 h-5 text-white" />,
-    title: "EEAS build",
-    description: "We build the agentic system around the specific process we measured, using the tools and data your company already has. No rebuild of your stack, no new platform to adopt.",
-    items: ["Built around your existing systems", "Scoped to one process, not a general assistant", "Deployed alongside your team, not instead of oversight", "Handles the volume and edge cases we measured"],
+    icon: <RefreshCw className="w-5 h-5 text-white" />,
+    title: "Claim status tracking",
+    description: "We track every submitted claim from filed to paid. You see what is pending, what was denied and why, and what landed back in your account — all in one place.",
+    items: ["Status of every claim, updated automatically", "Denied claims flagged with reason", "Payments matched to claims", "Monthly recovery report"],
   },
   {
     id: "4",
-    icon: <Search className="w-5 h-5 text-white" />,
-    title: "Free process scan",
-    description: "A short, no-cost session where we estimate the savings on one process before you commit to anything. You get a number. You decide if it's worth building.",
-    items: ["One process, reviewed in under a week", "Estimated savings in euros and hours", "No obligation to continue", "Always free"],
+    icon: <Receipt className="w-5 h-5 text-white" />,
+    title: "Manufacturer rebate tracking",
+    description: "We track manufacturer rebate programs against your purchases and flag what you qualify for but haven't claimed. Coming in a future release.",
+    items: ["Rebate eligibility flagged from purchase data", "Form prep and submission handled", "Seasonal program deadlines tracked", "Matches rebates to qualifying installs"],
+    comingSoon: true,
   },
 ];
 
@@ -75,7 +77,6 @@ export function FeaturesSection({ className }: FeaturesSectionProps) {
       )}
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -86,11 +87,11 @@ export function FeaturesSection({ className }: FeaturesSectionProps) {
           <div className="flex items-center gap-3 px-4 py-2 border border-slate-800/50 w-fit">
             <div className="w-2.5 h-2.5 bg-amber-500" />
             <span className="text-sm font-medium text-slate-500 tracking-wide">
-              Capabilities
+              What we automate
             </span>
           </div>
           <h2 className="text-balance text-white text-4xl md:text-5xl lg:text-5xl font-normal leading-[1.1] max-w-[700px] tracking-tight">
-            {"How Plarix builds an EEAS".split(" ").map((word, i) => (
+            {"Every step from job data to money back".split(" ").map((word, i) => (
               <motion.span
                 key={i}
                 initial={{ filter: "blur(10px)", opacity: 0 }}
@@ -104,11 +105,10 @@ export function FeaturesSection({ className }: FeaturesSectionProps) {
             ))}
           </h2>
           <p className="text-slate-400 text-base leading-relaxed max-w-xl">
-            Turning a process into a measurable AI system takes more than a model. It takes a baseline, an economic model, a build, and a report.
+            Plarix automates the parts of warranty recovery that currently live in spreadsheets, sticky notes, and someone's memory.
           </p>
         </motion.div>
 
-        {/* Features Grid */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -120,16 +120,19 @@ export function FeaturesSection({ className }: FeaturesSectionProps) {
             <motion.div
               key={feature.id}
               variants={itemVariants}
-              className="flex flex-col group p-8 border border-slate-800/30 bg-slate-900/20 hover:bg-slate-900/40 transition-colors"
+              className="flex flex-col group p-8 border border-slate-800/30 bg-slate-900/20 hover:bg-slate-900/40 transition-colors relative"
             >
-              {/* Icon */}
+              {feature.comingSoon && (
+                <span className="absolute top-3 right-4 px-2 py-0.5 text-[10px] text-amber-500/70 border border-amber-500/20 bg-amber-500/5 uppercase tracking-wider">
+                  Coming next
+                </span>
+              )}
               <div className="mb-6">
                 <div className="w-10 h-10 flex items-center justify-center bg-amber-500/10 border border-amber-500/20 transform transition-transform group-hover:scale-110 duration-300">
                   {feature.icon}
                 </div>
               </div>
 
-              {/* Content */}
               <div className="flex flex-col gap-3">
                 <h4 className="text-white text-lg font-medium tracking-tight">
                   {feature.title}

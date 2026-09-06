@@ -28,7 +28,7 @@ export function CtaSection() {
       lastName: formData.get("lastName") as string,
       company: formData.get("company") as string,
       email: formData.get("email") as string,
-      process: formData.get("process") as string,
+      fsm: formData.get("fsm") as string,
     };
 
     try {
@@ -45,16 +45,16 @@ export function CtaSection() {
           setSubmitted(false);
         }, 3000);
       } else {
-        const subject = encodeURIComponent("Plarix Free Process Audit Request");
+        const subject = encodeURIComponent("Plarix Free Warranty Audit Request");
         const body = encodeURIComponent(
-          `First Name: ${data.firstName}\nLast Name: ${data.lastName}\nCompany: ${data.company}\nEmail: ${data.email}\nProcess: ${data.process || "N/A"}`
+          `First Name: ${data.firstName}\nLast Name: ${data.lastName}\nCompany: ${data.company}\nEmail: ${data.email}\nFSM Platform: ${data.fsm || "N/A"}`
         );
         window.location.href = `mailto:hello@plarix.dev?subject=${subject}&body=${body}`;
       }
     } catch {
-      const subject = encodeURIComponent("Plarix Free Process Audit Request");
+      const subject = encodeURIComponent("Plarix Free Warranty Audit Request");
       const body = encodeURIComponent(
-        `First Name: ${data.firstName}\nLast Name: ${data.lastName}\nCompany: ${data.company}\nEmail: ${data.email}\nProcess: ${data.process || "N/A"}`
+        `First Name: ${data.firstName}\nLast Name: ${data.lastName}\nCompany: ${data.company}\nEmail: ${data.email}\nFSM Platform: ${data.fsm || "N/A"}`
       );
       window.location.href = `mailto:hello@plarix.dev?subject=${subject}&body=${body}`;
     } finally {
@@ -71,7 +71,7 @@ export function CtaSection() {
           </div>
 
           <h2 className="text-balance text-4xl font-normal tracking-tight text-slate-950 md:text-5xl lg:text-6xl">
-            {"Your most expensive process is running right now".split(" ").map((word, i) => (
+            {"There is money sitting in your job history that the manufacturer owes you".split(" ").map((word, i) => (
               <motion.span
                 key={`cta-${i}`}
                 initial={{ filter: "blur(10px)", opacity: 0 }}
@@ -86,7 +86,7 @@ export function CtaSection() {
           </h2>
 
           <p className="text-balance max-w-xl text-base leading-relaxed text-slate-500 md:text-lg">
-            Nobody is measuring what it costs or what fixing it would be worth. Plarix is taking on a small number of design partner companies for process audits. Apply below and we'll get back to you.
+            Let us find it. The audit is free, the number is real, and there is no obligation to continue. No sales pressure. Just an honest look at what you are not filing.
           </p>
 
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center w-full">
@@ -95,17 +95,8 @@ export function CtaSection() {
               className="bg-slate-950 px-8 text-white hover:bg-slate-800 font-medium"
               onClick={() => setFormOpen(true)}
             >
-              Get a Free Process Audit
+              Get a Free Warranty Audit
             </Button>
-            <span className="text-sm text-slate-400">
-              Or read how an EEAS build works{" "}
-              <a
-                href="/blog/what-is-an-economically-engineered-agentic-system"
-                className="underline underline-offset-2 hover:text-slate-600 transition-colors"
-              >
-                →
-              </a>
-            </span>
           </div>
         </div>
       </div>
@@ -147,7 +138,7 @@ export function CtaSection() {
                       Request received.
                     </p>
                     <p className="text-slate-400 text-sm text-center">
-                      We will reach out to schedule your free process audit.
+                      We will reach out to schedule your free warranty audit.
                     </p>
                   </div>
                 ) : (
@@ -158,10 +149,10 @@ export function CtaSection() {
                       </div>
                       <div>
                         <h3 className="text-white text-lg font-medium">
-                          Get a Free Process Audit
+                          Get a Free Warranty Audit
                         </h3>
                         <p className="text-slate-500 text-sm mt-1">
-                          Tell us about one process that costs too much. We'll estimate what it could save.
+                          Tell us what FSM you use and we will show you what is sitting unfiled.
                         </p>
                       </div>
                     </div>
@@ -205,7 +196,7 @@ export function CtaSection() {
                           type="text"
                           name="company"
                           required
-                          placeholder="Acme GmbH"
+                          placeholder="ABC Heating & Cooling"
                           className="bg-slate-900 border border-slate-800 text-white text-sm px-3 py-2.5 placeholder:text-slate-600 focus:outline-none focus:border-slate-600 transition-colors"
                         />
                       </div>
@@ -218,19 +209,19 @@ export function CtaSection() {
                           type="email"
                           name="email"
                           required
-                          placeholder="john@acme.com"
+                          placeholder="john@abcheating.com"
                           className="bg-slate-900 border border-slate-800 text-white text-sm px-3 py-2.5 placeholder:text-slate-600 focus:outline-none focus:border-slate-600 transition-colors"
                         />
                       </div>
 
                       <div className="flex flex-col gap-1.5">
                         <label className="text-xs text-slate-400">
-                          Which process would you like audited?
+                          Which FSM platform do you use?
                         </label>
                         <input
                           type="text"
-                          name="process"
-                          placeholder="e.g. invoice processing, claims handling"
+                          name="fsm"
+                          placeholder="e.g. ServiceTitan, Jobber, FieldEdge"
                           className="bg-slate-900 border border-slate-800 text-white text-sm px-3 py-2.5 placeholder:text-slate-600 focus:outline-none focus:border-slate-600 transition-colors"
                         />
                       </div>

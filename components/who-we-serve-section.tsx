@@ -1,29 +1,29 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Workflow, PieChart, Lightbulb } from "lucide-react";
+import { Wrench, Droplets, Zap } from "lucide-react";
 
 const audiences = [
   {
-    icon: <Workflow className="w-6 h-6 text-amber-500" />,
-    title: "Operations and shared-services leaders",
+    icon: <Wrench className="w-6 h-6 text-amber-500" />,
+    title: "HVAC contractors",
     description:
-      "You run a process that hasn't changed in years: invoice processing, claims handling, order management, back-office reconciliation. It's expensive, everyone knows it, and nobody has put a number on fixing it.",
-    concerns: ["Process cost baseline", "Built around existing systems", "No new platform to learn", "Money and time reporting"],
+      "You are running 20–100 trucks, using ServiceTitan, Jobber, or FieldEdge, and someone on your team is already doing warranty claims by hand — or you are hiring for it. You know parts are being replaced under warranty every week, and you are not sure how many are actually getting filed.",
+    concerns: ["$3M–$25M revenue", "20–100 employees", "Uses ServiceTitan, Jobber, or FieldEdge", "Someone already filing claims manually"],
   },
   {
-    icon: <PieChart className="w-6 h-6 text-amber-500" />,
-    title: "Finance and operations teams evaluating AI spend",
+    icon: <Droplets className="w-6 h-6 text-amber-500" />,
+    title: "Plumbing contractors",
     description:
-      "You've approved a few AI pilots already. Some are running, most aren't clearly worth what they cost. You need a way to compare an idea against a real number before the next budget cycle.",
-    concerns: ["Break-even calculated up front", "Independent of vendor hype", "Clear go/no-go before build", "Budget-review-ready reporting"],
+      "Same profile as HVAC: mid-sized shop, running an FSM platform, dealing with manufacturer warranties on fixtures, water heaters, and pumps — and nobody has time to chase the portals.",
+    concerns: ["$3M–$25M revenue", "20–100 employees", "Uses ServiceTitan, Jobber, or FieldEdge", "Warranty parts billed to customer instead of filed"],
   },
   {
-    icon: <Lightbulb className="w-6 h-6 text-amber-500" />,
-    title: "Founders and operators who tried AI and got a demo, not a result",
+    icon: <Zap className="w-6 h-6 text-amber-500" />,
+    title: "Also a fit: electrical & roofing",
     description:
-      "Your team built a chatbot or an internal tool. It's clever. Nobody can say what it saved. You want the next one to actually move a number.",
-    concerns: ["Scoped to one measurable process", "Real baseline, not a guess", "Delivered as a working system", "Result reported in euros and hours"],
+      "Electrical and roofing contractors that carry manufacturer warranties on equipment and materials — panels, inverters, shingles, underlayment. If you have a parts warranty and a portal to file through, Plarix works the same way.",
+    concerns: ["Manufacturer warranty on materials", "Multiple portals to manage", "Same manual filing bottleneck", "Also a fit if you meet the revenue range"],
   },
 ];
 
@@ -48,7 +48,6 @@ export function WhoWeServeSection() {
   return (
     <section className="w-full bg-slate-950 py-24 md:py-32 border-b border-slate-800/30">
       <div className="mx-auto max-w-7xl px-6 md:px-12 lg:px-16">
-        {/* Header */}
         <div className="flex flex-col gap-6 mb-16">
           <div className="flex items-center gap-3 px-4 py-2 border border-slate-800/50 w-fit">
             <div className="w-2.5 h-2.5 bg-amber-500" />
@@ -57,7 +56,7 @@ export function WhoWeServeSection() {
             </span>
           </div>
           <h2 className="text-balance text-4xl md:text-5xl font-normal tracking-tight text-white max-w-2xl">
-            {"Built for teams carrying an expensive process".split(" ").map((word, i) => (
+            {"Built for independent home services contractors".split(" ").map((word, i) => (
               <motion.span
                 key={i}
                 initial={{ filter: "blur(10px)", opacity: 0 }}
@@ -71,11 +70,10 @@ export function WhoWeServeSection() {
             ))}
           </h2>
           <p className="text-slate-400 text-base leading-relaxed max-w-xl">
-            If a process is costing real money in hours or headcount, and nobody can say what automating it would be worth, Plarix is built for that conversation.
+            If you run an FSM platform and have manufacturer warranties you are not filing, Plarix is built for you.
           </p>
         </div>
 
-        {/* Cards */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -106,6 +104,10 @@ export function WhoWeServeSection() {
             </motion.div>
           ))}
         </motion.div>
+
+        <p className="mt-10 text-center text-sm text-slate-500 max-w-lg mx-auto">
+          Hiring for a warranty coordinator right now? Talk to us before you fill that role.
+        </p>
       </div>
     </section>
   );

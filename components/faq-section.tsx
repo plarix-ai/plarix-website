@@ -14,45 +14,45 @@ interface FAQItem {
 const faqs: FAQItem[] = [
   {
     id: "1",
-    question: "Is this a consulting engagement or a piece of software?",
+    question: "Does this replace ServiceTitan?",
     answer:
-      "Today, it's a build: our team maps your process, builds the EEAS around it, and hands over a working system plus a savings record. The long-term plan is a platform that does this for many processes without a project team behind every one. Early customers get the build now.",
+      "No. Plarix works alongside your FSM — ServiceTitan, Jobber, FieldEdge, whatever you run. We pull job data from it, identify claims, and file them. Your team keeps using the same platform they already know.",
   },
   {
     id: "2",
-    question: "Do we need to already be using AI somewhere?",
+    question: "What if we do not know how much we are losing?",
     answer:
-      "No. Most of the processes worth automating haven't been touched yet. We start from how the process runs today, not from whatever AI tooling you already have in place.",
+      "That is exactly what the free audit is for. We pull your job history and tell you: this many claims qualify, this is the estimated dollar value. You find out the number before you spend a dollar with us.",
   },
   {
     id: "3",
-    question: "How do you calculate the savings number?",
+    question: "Will this replace my office manager?",
     answer:
-      "We measure the process directly before we build anything: hours per task, cost per task, volume, error rate. That becomes the baseline. After the EEAS is live, we compare actual results against that same baseline, on a set schedule.",
+      "No. Your office manager currently spends hours logging into manufacturer portals, filling out forms, and chasing denials. Plarix handles that part. They get those hours back — to dispatch, handle customer calls, or do anything that actually needs a person.",
   },
   {
     id: "4",
-    question: "What if the process isn't actually worth automating?",
+    question: "What data do you need access to?",
     answer:
-      "Then we tell you before you pay for a build. The economic model runs before the build does. If the number doesn't clear, the honest answer is not to build it.",
+      "Your job data from your FSM: job records, parts used, labor logged, serial numbers when available. We do not need access to your financials, your bank accounts, or your customer data beyond what is on the work order itself.",
   },
   {
     id: "5",
-    question: "Will this replace our existing systems?",
+    question: "What happens if you do not find anything?",
     answer:
-      "No. The EEAS runs alongside what you already use: your CRM, your ERP, your ticketing system, your spreadsheets. There's no migration project before you see a result.",
+      "Then we tell you, and you pay nothing. The audit is free either way. If there are no unfiled claims in your job history, we will tell you that directly and you move on. We would rather tell you the truth than sell you something you do not need.",
   },
   {
     id: "6",
-    question: "How long does one engagement take?",
+    question: "How do you get paid?",
     answer:
-      "The process audit typically takes about a week. The build depends on the process, but most engagements are scoped to a single, well-defined workflow rather than a company-wide transformation, which keeps the timeline short.",
+      "We take a percentage of the dollars we recover for you. If we do not recover anything, you do not pay anything. This means our incentives are aligned: we only succeed when money actually lands back in your account.",
   },
   {
     id: "7",
-    question: "How is this different from a general AI consultancy?",
+    question: "How long until we see money coming back?",
     answer:
-      "Most AI consultancies start with the technology and ask where to apply it. We start with the process, measure what it costs, and only build when the economics work. The deliverable isn't a strategy deck. It's a working system and a number.",
+      "It depends on the manufacturer. Some pay within 30 days of a clean claim submission. Others take 60–90 days. We start filing as soon as the audit is complete, and we track every claim through to payment so you know exactly where each one stands.",
   },
 ];
 
@@ -70,7 +70,6 @@ export function FaqSection() {
     >
       <div className="mx-auto max-w-7xl px-6 md:px-12 lg:px-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-          {/* Left Column - Header */}
           <div className="flex flex-col gap-6">
             <div className="flex items-center gap-3 px-4 py-2 border border-slate-800/50 w-fit">
               <div className="w-2.5 h-2.5 bg-amber-500" />
@@ -80,7 +79,7 @@ export function FaqSection() {
             </div>
 
             <h2 className="text-balance text-4xl md:text-5xl lg:text-6xl font-normal text-white tracking-tight leading-[1.1]">
-              {"Common questions".split(" ").map((word, i) => (
+              {"Questions we hear from shop owners".split(" ").map((word, i) => (
                 <motion.span
                   key={i}
                   initial={{ filter: "blur(10px)", opacity: 0 }}
@@ -95,18 +94,17 @@ export function FaqSection() {
             </h2>
 
             <p className="text-balance text-base md:text-lg text-slate-400 leading-relaxed max-w-md">
-              Get quick answers about how Plarix scopes, builds, and measures an AI system against a real business process.
+              Straight answers about how Plarix finds, files, and tracks warranty claims — and what it costs.
             </p>
 
             <p className="text-sm text-slate-500">
-              Cannot find what you are looking for?{" "}
+              Do not see your question?{" "}
               <a href="mailto:hello@plarix.dev" className="text-amber-500 hover:text-amber-400 transition-colors">
-                Reach out directly.
+                Ask us directly.
               </a>
             </p>
           </div>
 
-          {/* Right Column - FAQ Items */}
           <div className="flex flex-col">
             {faqs.map((faq, index) => (
               <div
