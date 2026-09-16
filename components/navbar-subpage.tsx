@@ -2,9 +2,9 @@
 
 import React, { useState } from "react"
 import Link from "next/link"
-import Image from "next/image"
 import { Menu, X } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
+import { PlarixLogo } from "@/components/plarix-logo"
 
 const NAV_LINKS = [
   { href: "/#problem", label: "Problem" },
@@ -21,15 +21,7 @@ export function NavbarSubpage() {
       <div className="relative mx-auto flex h-14 max-w-7xl items-center px-6">
         {/* Logo */}
         <Link href="/" className="absolute left-6 top-1/2 -translate-y-1/2 z-10">
-          <Image
-            src="/images/plarix-logo-dark.png"
-            alt="Plarix"
-            width={400}
-            height={100}
-            className="invert brightness-200"
-            style={{ height: "76px", width: "auto" }}
-            priority
-          />
+          <PlarixLogo markSize={28} textClassName="text-base" />
         </Link>
 
         {/* Desktop nav */}
