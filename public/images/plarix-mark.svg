@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="front" x1="10%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FAFBFC"/>
+      <stop offset="50%" stop-color="#C6CCD4"/>
+      <stop offset="100%" stop-color="#7C8595"/>
+    </linearGradient>
+    <linearGradient id="back" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4B525C"/>
+      <stop offset="100%" stop-color="#191C21"/>
+    </linearGradient>
+    <linearGradient id="fold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#AEB6C0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- back flap -->
+  <rect x="32" y="92" width="44" height="66" rx="14" fill="url(#back)"/>
+
+  <!-- fold light wedge, bridges the notch to the back flap -->
+  <path d="M 66 96 L 100 96 L 100 128 L 66 150 Z" fill="url(#fold)"/>
+
+  <!-- main body with notch -->
+  <path
+    d="
+      M 88 16
+      L 140 16
+      A 26 26 0 0 1 166 42
+      L 166 126
+      A 26 26 0 0 1 140 152
+      L 88 152
+      A 26 26 0 0 1 62 126
+      L 62 96
+      L 100 96
+      L 100 64
+      L 62 64
+      L 62 42
+      A 26 26 0 0 1 88 16
+      Z
+    "
+    fill="url(#front)"
+  />
+</svg>

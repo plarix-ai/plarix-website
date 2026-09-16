@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+import { PlarixLogo } from "@/components/plarix-logo";
 
 export function Footer() {
   return (
@@ -8,14 +8,7 @@ export function Footer() {
         <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
           <div className="flex flex-col gap-2">
             <Link href="/">
-              <Image
-                src="/images/plarix-logo-dark.png"
-                alt="Plarix"
-                width={400}
-                height={100}
-                className="invert brightness-200"
-                style={{ height: "76px", width: "auto" }}
-              />
+              <PlarixLogo markSize={28} textClassName="text-base" />
             </Link>
           </div>
 

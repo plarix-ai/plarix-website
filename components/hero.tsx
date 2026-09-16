@@ -5,8 +5,8 @@ import { Button } from "@/components/ui/button"
 import { useState, useCallback } from "react"
 import { Menu, X } from "lucide-react"
 import Link from "next/link"
-import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
+import { PlarixLogo } from "@/components/plarix-logo"
 
 const NAV_LINKS = [
   { href: "#problem", label: "Problem" },
@@ -39,15 +39,7 @@ export function Navbar() {
     <nav className="fixed top-0 left-0 z-[100] w-full bg-slate-950/25 backdrop-blur-md">
       <div className="relative mx-auto flex h-14 max-w-7xl items-center px-6">
         <Link href="/" className="absolute left-6 top-1/2 -translate-y-1/2 z-10">
-          <Image
-            src="/images/plarix-logo-dark.png"
-            alt="Plarix"
-            width={400}
-            height={100}
-            className=""
-            style={{ height: "76px", width: "auto", filter: "invert(1) brightness(2.5)" }}
-            priority
-          />
+          <PlarixLogo markSize={28} textClassName="text-base" />
         </Link>
 
         <div className="hidden lg:flex items-center gap-8 text-sm text-white/60 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
