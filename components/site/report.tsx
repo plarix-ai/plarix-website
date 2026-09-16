@@ -1,3 +1,4 @@
+import { Counted } from "./counted";
 import { Reveal } from "./reveal";
 import { report } from "@/content/site";
 
@@ -38,7 +39,7 @@ export function Report() {
 
               <div className="border-b border-hairline py-8">
                 <p className="t-caption text-text-secondary">{report.headline.label}</p>
-                <p className="t-h1 mt-2 text-gold">{report.headline.value}</p>
+                <Counted value={report.headline.value} className="t-h1 mt-2 block tabular-nums text-gold" />
               </div>
 
               <Reveal as="dl" delay={200} className="reveal-stagger">

@@ -125,10 +125,12 @@ void main() {
   /*
    * Grade the surface instead of laying a scrim over it. Brightness rises toward
    * the upper right; the lower left, where the headline sits, falls to near black.
+   * A phone gives the copy far more of the frame, so the band clears out harder
+   * there and the facts row keeps its contrast.
    */
   float axis = frag.x * 0.44 + frag.y * 0.80;
   float bed = smoothstep(0.06, 1.02, axis);
-  bed = pow(bed, mix(2.10, 2.90, uNarrow));
+  bed = pow(bed, mix(2.10, 3.70, uNarrow));
 
   /*
    * The navigation sits in the top strip and has to stay legible, so the surface

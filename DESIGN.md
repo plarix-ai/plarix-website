@@ -134,3 +134,51 @@ video to compress.
 
 Verified at 1920x1080, 1440x900 and 390x844 at 3x: no horizontal overflow, no console errors, small
 labels above 4.5:1, the mechanical detector clean.
+
+
+## Multi-page architecture
+
+The site is nineteen real pages, not one page with anchor links. The navigation goes to
+pages that exist and have their own reason to: `/processes` and one page per process,
+`/how-it-works`, `/pricing`, `/company`, `/journal` and its posts, `/faq`, `/count`,
+`/privacy`. That is a genuine surface for search and for an assistant, and it is how a
+buyer actually reads: he wants the one thing he came for, not a scroll past five things
+he did not.
+
+**The nav.** Sticky on every page. At the top it is transparent and carries the full
+lockup. Past 40px it collapses: the bar shortens from 4.75rem to 3.75rem, a blurred
+surface and a hairline fade in, and the wordmark closes into the mark. The lockup is
+composed from two exact crops of the source art rather than one flat image, with widths
+derived from the art's own proportions, so the name slides away and nothing shifts a
+pixel. The collapse uses hysteresis, 40px down and 8px back, so a logo sitting on the
+threshold cannot flicker.
+
+**Type.** One scale. Six display steps and five text steps, each with its own tracking
+and leading; display tightens as it grows, body loosens as it shrinks. Nothing on the
+site sets a size outside it. The scale sits at 80% of its first draft, which is the
+difference between a billboard and a piece of software. The two smallest steps do not
+take that reduction: label holds at 12px and caption at 13px, because below that they
+stop being readable, and a scale that wins an argument with legibility has lost.
+
+**Motion, and what earns it.** The hero entrance plays once. Section reveals are one
+calm arrival each. Repeating elements get the 260ms `swapIn`, which never reaches zero
+opacity, because a panel that blanks for a quarter second reads as broken rather than as
+changing. Exactly one number on the site counts up. Links wipe their underline in with
+`clip-path` rather than switching it on. Articles carry a reading-progress hairline and a
+table of contents that tracks the section in view. Everything stays under 300ms except
+the nav and logo transitions, which are movement rather than feedback.
+
+**Inner pages** carry a static whisper of the hero's material behind their header, so
+they are not plain documents, while the live shader stays a signature the home page alone
+spends. Its dither is a real 96px tile, not `feTurbulence`.
+
+**GEO and SEO.** Every page has a canonical, a written description, one h1, and stacked
+JSON-LD: Organization, WebSite and Service site-wide, plus BreadcrumbList everywhere and
+ItemList, FAQPage, HowTo, Service or Article as the page warrants. `llms.txt` states the
+positioning, the six processes, the method, the pricing shape and the citable figures,
+and explicitly tells an assistant which number not to cite. `robots.txt` names the
+assistant crawlers and allows them.
+
+Verified at 320, 390, 768, 1024, 1440 and 1920 across all eleven route shapes: no
+horizontal overflow anywhere, no console errors, nothing below the legible type floor,
+and the mechanical detector clean.

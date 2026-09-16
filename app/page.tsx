@@ -12,6 +12,10 @@ import { ColumnRules } from "@/components/site/column-rules";
 import { JsonLd, faqLd, itemListLd } from "@/lib/seo";
 import { faqs, processes } from "@/content/site";
 
+export const metadata = {
+  alternates: { canonical: "/" },
+};
+
 export default function Home() {
   return (
     <>

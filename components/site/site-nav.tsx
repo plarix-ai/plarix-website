@@ -53,7 +53,7 @@ export function SiteNav() {
         className="absolute inset-0 border-b transition-[opacity,background-color] duration-500"
         style={{
           opacity: compact ? 1 : 0,
-          background: "rgba(4, 5, 7, 0.72)",
+          background: "rgba(4, 5, 7, 0.88)",
           backdropFilter: "blur(20px) saturate(140%)",
           WebkitBackdropFilter: "blur(20px) saturate(140%)",
           borderColor: "var(--hairline)",

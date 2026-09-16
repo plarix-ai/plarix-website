@@ -6,6 +6,9 @@ import { PageFrame } from "@/components/site/page-frame";
 import { PageHeader } from "@/components/site/page-header";
 import { Reveal } from "@/components/site/reveal";
 import { Closing } from "@/components/site/closing";
+import { ReadingProgress } from "@/components/site/reading-progress";
+import { Toc } from "@/components/site/toc";
+import { tocId } from "@/lib/slug";
 import { JsonLd, breadcrumbLd, pageMeta } from "@/lib/seo";
 import { SITE_URL, journal } from "@/content/site";
 
@@ -42,6 +45,8 @@ export default async function JournalPost({ params }: { params: Promise<{ slug: 
   const index = journal.findIndex((p) => p.slug === slug);
   const next = journal[(index + 1) % journal.length];
 
+  const headings: string[] = post.body.flatMap((b) => (b.h ? [b.h as string] : []));
+
   const crumbs = [
     { label: "Plarix", href: "/" },
     { label: "Journal", href: "/journal" },
@@ -70,6 +75,8 @@ export default async function JournalPost({ params }: { params: Promise<{ slug: 
         ]}
       />
 
+      <ReadingProgress />
+
       <div id="main">
         <PageHeader eyebrowCrumbs={crumbs} title={post.title} lede={post.dek}>
           <p className="flex flex-wrap items-center gap-x-3 gap-y-1 t-caption text-text-tertiary">
@@ -79,33 +86,33 @@ export default async function JournalPost({ params }: { params: Promise<{ slug: 
           </p>
         </PageHeader>
 
-        <article className="shell pb-20 md:pb-28">
-          <div className="max-w-[68ch]">
+        <div className="shell grid gap-14 pb-16 lg:grid-cols-[minmax(0,1fr)_15rem] lg:gap-20">
+          <article className="measure">
             {post.body.map((block, i) => (
-              <Reveal key={i} delay={i * 50} className="mt-12 first:mt-0">
+              <Reveal key={i} delay={i * 50} className="mt-14 first:mt-0">
                 {block.h ? (
-                  <h2
-                    className="mb-5 text-2xl text-white md:text-[30px]"
-                   
-                  >
+                  <h2 id={tocId(block.h)} className="mb-5 t-h3 scroll-mt-32 text-white">
                     {block.h}
                   </h2>
                 ) : null}
                 <div className="space-y-5">
                   {block.p.map((p, j) => (
-                    <p
-                      key={j}
-                      className="t-prose text-text-secondary"
-                    >
+                    <p key={j} className="t-prose text-text-prose">
                       {p}
                     </p>
                   ))}
                 </div>
               </Reveal>
             ))}
-          </div>
+          </article>
 
-          <Reveal delay={200} className="mt-16 border-t border-hairline pt-10">
+          <aside className="hidden lg:block">
+            <Toc headings={headings} />
+          </aside>
+        </div>
+
+        <div className="shell pb-20 md:pb-28">
+          <Reveal delay={200} className="border-t border-hairline pt-10">
             <Link
               href={`/journal/${next.slug}`}
               className="group inline-flex items-center gap-3 text-base text-text-secondary transition-colors duration-200 hover:text-white md:text-lg"
@@ -120,7 +127,7 @@ export default async function JournalPost({ params }: { params: Promise<{ slug: 
               />
             </Link>
           </Reveal>
-        </article>
+        </div>
 
         <Closing />
       </div>
