@@ -108,7 +108,7 @@ export function SiteNav({ overlay = false }: { overlay?: boolean }) {
         }`}
         style={{ transitionTimingFunction: "var(--ease-out)" }}
       >
-        <div className="mx-4 overflow-hidden rounded-2xl bg-ink-800/95 shadow-[0_24px_60px_-12px_rgba(0,0,0,0.9)] backdrop-blur-xl md:mx-12">
+        <div className="mx-4 overflow-hidden rounded-2xl bg-ink-700 shadow-[0_24px_60px_-12px_rgba(0,0,0,0.95)] md:mx-12">
           <nav className="flex flex-col p-2" aria-label="Mobile">
             {nav.map((item, i) => (
               <Link

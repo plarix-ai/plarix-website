@@ -59,3 +59,25 @@ calm in-view reveal, not a second entrance competing with the first.
 
 Hero entrance 1000ms, stagger 50ms. Section reveals 700ms. Controls 160–220ms. Nothing in the UI
 layer runs past 300ms.
+
+## Built result
+
+The hero backdrop is a canvas scene, not a placeholder. A perspective field of windows
+recedes to a horizon at 30% viewport height; a bloom travels across the grid on a 21s
+cycle so the neighbourhood is always lit and the motion reads as light moving through
+it. The field fades out by 78% height on desktop and 50% on narrow screens, which is
+what keeps the headline on clean black at every size. Lights are stamped from one
+pre-rendered glow sprite rather than a per-light gradient, so the scene holds frame
+rate with a few thousand points. It pauses on tab hide and renders a single composed
+still under `prefers-reduced-motion`.
+
+`public/video/hero.mp4` overrides it when present, checked on the server at build time
+so no client code pays for the absence. See `public/video/README.md`.
+
+Four sections share a two-column head (heading left, qualifying line right). Their
+bodies deliberately do not share a shape: a directory with a live detail pane, a rail
+running through three moments, a full-width list of refusals, three pricing surfaces, a
+two-column accordion, a paper-trail timeline. Variety lives in the bodies.
+
+Verified at 1440x900 and 390x844: no horizontal overflow, no console errors, small
+labels above 4.5:1, the mechanical detector clean.

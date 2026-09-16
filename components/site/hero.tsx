@@ -124,10 +124,10 @@ export function Hero({ videoSrc, posterSrc }: { videoSrc?: string; posterSrc?: s
             onBlurCapture={() => setPaused(false)}
           >
             <div className="mb-3 flex items-center justify-between">
-              <span className="text-[11px] uppercase tracking-[0.18em] text-white/45">
+              <span className="text-[11px] uppercase tracking-[0.18em] text-white/60">
                 {hero.rotatorLabel}
               </span>
-              <span className="text-[11px] tabular-nums text-white/45">
+              <span className="text-[11px] tabular-nums text-white/60">
                 {String(index + 1).padStart(2, "0")} / {String(processes.length).padStart(2, "0")}
               </span>
             </div>
@@ -142,7 +142,7 @@ export function Hero({ videoSrc, posterSrc }: { videoSrc?: string; posterSrc?: s
                 <p className="mb-2 text-[15px] font-medium leading-snug text-white">
                   {current.name}
                 </p>
-                <p className="text-[13.5px] leading-relaxed text-white/60">{current.short}</p>
+                <p className="text-[13.5px] leading-relaxed text-white/70">{current.short}</p>
               </div>
             </div>
 
