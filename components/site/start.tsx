@@ -20,7 +20,7 @@ export function Start() {
           </div>
 
           <Reveal delay={180} className="lg:pt-3">
-            <div className="rounded-2xl bg-ink-700 p-7 shadow-[0_28px_64px_-28px_rgba(0,0,0,0.9)] md:p-9">
+            <div className="rounded-2xl bg-ink-800 p-7 ring-1 ring-hairline md:p-9">
               <h3 className="text-[13px] uppercase tracking-[0.16em] text-text-tertiary">
                 {start.aside.heading}
               </h3>

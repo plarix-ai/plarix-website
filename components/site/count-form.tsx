@@ -52,7 +52,7 @@ export function CountForm() {
 
   if (status === "done") {
     return (
-      <div className="rounded-2xl bg-ink-700 p-8 md:p-10">
+      <div className="rounded-2xl bg-ink-800 p-8 ring-1 ring-hairline md:p-10">
         <span className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-black">
           <Check size={20} strokeWidth={2.4} />
         </span>
@@ -72,7 +72,7 @@ export function CountForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="rounded-2xl bg-ink-700 p-6 md:p-8">
+    <form onSubmit={onSubmit} className="rounded-2xl bg-ink-800 p-6 ring-1 ring-hairline md:p-8">
       <div className="grid gap-3 sm:grid-cols-2">
         <div>
           <label htmlFor="firstName" className="sr-only">

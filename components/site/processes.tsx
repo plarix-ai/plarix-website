@@ -54,7 +54,7 @@ export function Processes() {
           </ul>
 
           <div className="relative lg:pt-4">
-            <div key={current.id} className="animate-[blurFadeUp_600ms_var(--ease-out)_forwards]">
+            <div key={current.id} className="animate-swap">
               <p className="text-xl leading-snug text-white md:text-2xl">{current.short}</p>
               <p className="mt-6 max-w-[58ch] text-base leading-relaxed text-text-secondary md:text-lg">
                 {current.detail}

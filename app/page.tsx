@@ -1,6 +1,3 @@
-import fs from "node:fs";
-import path from "node:path";
-
 import { Hero } from "@/components/site/hero";
 import { AfterTheCall } from "@/components/site/after-the-call";
 import { Processes } from "@/components/site/processes";
@@ -13,28 +10,6 @@ import { Closing } from "@/components/site/closing";
 import { Footer } from "@/components/site/footer";
 import { faqs } from "@/content/site";
 
-/**
- * The cinematic loop is optional. Drop it at public/video/hero.mp4 (plus an
- * optional first frame at public/video/hero-poster.jpg) and it takes over the
- * hero on the next build. Until then the canvas scene behind it carries the page.
- */
-function heroMedia() {
-  const dir = path.join(process.cwd(), "public", "video");
-  const has = (file: string) => {
-    try {
-      return fs.existsSync(path.join(dir, file));
-    } catch {
-      return false;
-    }
-  };
-  const video = ["hero.mp4", "hero.webm"].find(has);
-  const poster = ["hero-poster.jpg", "hero-poster.png", "hero-poster.webp"].find(has);
-  return {
-    videoSrc: video ? `/video/${video}` : undefined,
-    posterSrc: poster ? `/video/${poster}` : undefined,
-  };
-}
-
 const faqJsonLd = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -46,8 +21,6 @@ const faqJsonLd = {
 };
 
 export default function Home() {
-  const { videoSrc, posterSrc } = heroMedia();
-
   return (
     <>
       <script
@@ -55,10 +28,33 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
 
-      <Hero videoSrc={videoSrc} posterSrc={posterSrc} />
+      <Hero />
 
-      {/* Everything below scrolls up over the fixed hero footage. */}
+      {/* Everything below scrolls up over the fixed hero surface. */}
       <main className="relative z-20 bg-background">
+        {/*
+          Column rules marking the measure. The page is built on a fixed shell, and
+          on a wide display saying so plainly reads as precision rather than as
+          decoration. They fade out at both ends so they never terminate abruptly.
+        */}
+        <div className="pointer-events-none absolute inset-0 hidden lg:block" aria-hidden="true">
+          <div className="shell h-full">
+            <div className="relative h-full">
+              {(["left", "right"] as const).map((side) => (
+                <span
+                  key={side}
+                  className="absolute top-0 h-full w-px"
+                  style={{
+                    [side]: "-0.5px",
+                    background:
+                      "linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.07) 6%, rgba(255,255,255,0.07) 94%, rgba(255,255,255,0) 100%)",
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+
         <AfterTheCall />
         <Processes />
         <Method />

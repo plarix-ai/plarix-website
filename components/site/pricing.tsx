@@ -17,10 +17,10 @@ export function Pricing() {
             <Reveal
               key={tier.name}
               delay={i * 90}
-              className={`flex flex-col rounded-2xl p-7 md:p-8 ${
+              className={`flex flex-col rounded-2xl p-7 md:p-8 ring-1 ${
                 tier.featured
-                  ? "bg-ink-600 shadow-[0_32px_70px_-30px_rgba(0,0,0,1)]"
-                  : "bg-ink-700"
+                  ? "bg-ink-600 ring-hairline-strong"
+                  : "bg-ink-800 ring-hairline"
               }`}
             >
               <h3 className="text-[13px] uppercase tracking-[0.16em] text-text-tertiary">

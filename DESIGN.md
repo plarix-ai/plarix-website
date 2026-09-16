@@ -9,9 +9,10 @@ The category sells itself with product screenshots, purple gradients and stock "
 This refuses all three. There is no dashboard hero, because the promise is that the owner never has
 to look at a dashboard. The page shows the world the work happens in, and then gets out of the way.
 
-**OWN-WORLD:** Pure black ground. Full-bleed cinematic video of a suburban neighborhood at dusk,
-lights coming on in sequence, held behind the entire first viewport. A single fixed blur veil masked
-to the bottom 45% lifts the type off the footage without darkening it. Type is Inter, 300–600,
+**OWN-WORLD:** Pure black ground. Behind the entire first viewport, a full-viewport fragment shader
+renders light raking across brushed, machined metal: the logo's own material at viewport scale. A
+single fixed blur veil masked to the bottom 45% lifts the type off it without darkening it. Type is
+Inter, 300–600,
 tracking -0.03em on display. Colour is monochrome: black, graphite, silver, off-white, taken
 straight from the logo's own brushed-metal material. One warm amber note, used only where real money
 is named. Controls are "liquid glass": near-transparent, 4px backdrop blur, a 1.4px gradient stroke
@@ -47,8 +48,13 @@ calm in-view reveal, not a second entrance competing with the first.
 - Selection colour, focus rings, scrollbar and tabular numerals are themed from the palette.
 - Every `:active` on a pressable element scales to 0.97. Every entrance eases out, never in.
 - No em dashes in shipped copy.
-- The video is progressive enhancement. The page is finished and cinematic with the video absent,
-  failed, or suppressed by `prefers-reduced-motion`.
+- No video, anywhere. The hero surface is drawn live at the device pixel ratio, which is the only
+  way a background is genuinely sharp on a 4K or 5K panel; an encoded file cannot be. It also ships
+  zero bytes of media.
+- The surface is graded inside the shader, never under a scrim. SpaceX's rule: grade the image so
+  the type lands cleanly on it.
+- Every dark ramp is dithered. An eight bit near-black gradient bands into visible steps without it,
+  and banding is the single most common tell of a cheap dark page.
 
 ## Motion recipe
 
@@ -80,4 +86,51 @@ running through three moments, a full-width list of refusals, three pricing surf
 two-column accordion, a paper-trail timeline. Variety lives in the bodies.
 
 Verified at 1440x900 and 390x844: no horizontal overflow, no console errors, small
+labels above 4.5:1, the mechanical detector clean.
+
+
+## Reference world, and what was taken from each
+
+Researched before the visual layer was rebuilt, and each borrowing is deliberate:
+
+- **SpaceX / Tesla.** Two colours: black and white. No decorative chrome. Type sits directly on the
+  imagery at full opacity with no scrim, because the imagery is graded to receive it. Hierarchy
+  comes from scale contrast, never from colour. Spacing on a strict 4px grid.
+- **Linear.** Near-black ground. Hairlines carry surface separation, not soft shadows, so no panel
+  reads as a floating SaaS card. One accent, used scarcely. Linear deliberately refuses atmospheric
+  gradients and spotlight cards; so does this.
+- **Vercel.** Column rules marking the shell measure on wide displays, which reads as precision
+  rather than decoration. Extreme negative tracking on display type.
+- **Awwwards / Three.js work, 2026.** Real-time shaders over encoded media. SDF and raymarched
+  surfaces have, in the literature's own phrase, virtually infinite resolution. That is the actual
+  answer to "must be sharp at 4K and 8K", and it is why there is no video file in this repository.
+- **Apple.** One idea per viewport. The restraint to leave most of the frame empty and black.
+
+## Built result
+
+**The hero surface.** A WebGL fragment shader: an anisotropic brushed-metal read, where a fine
+screen-space grain modulates the coordinate at which a dark environment of three soft light bars is
+sampled. The panel is gently formed rather than flat, so highlights bend as they travel on a roughly
+100 second cycle. Grain is measured in CSS pixels so the brush reads at one density on any panel,
+with one extra octave below that pitch which only a high-density display resolves. Output is
+dithered at one part in 255. Brightness is graded up toward the top right and held down across the
+navigation strip, so the headline in the lower left always sits on near black and the nav never
+washes out. It pauses on tab hide, renders a single composed frame under `prefers-reduced-motion`,
+and falls back to a composed radial surface if WebGL is missing or the context is lost. Verified in
+all three states.
+
+**Motion.** Two entrances, deliberately different weights. The hero plays a staggered blur-fade-up
+once, 0 to 900ms. Anything that repeats, like the rotator swapping every five seconds, uses a 260ms
+`swapIn` instead: a heavy entrance on a repeating element reads as the panel breaking rather than
+changing, which is exactly how it failed on first build.
+
+**Sections.** Four share a two-column head. Their bodies deliberately do not share a shape: a
+directory with a live detail pane, a rail running through three moments, a full-width list of
+refusals, three pricing surfaces, a two-column accordion, a paper-trail timeline.
+
+**Raster inventory.** The logo lockup and mark, cropped tight from the source art, plus a 2400x1260
+social card rendered from the live hero. Nothing else. There are no photographs, no stock, and no
+video to compress.
+
+Verified at 1920x1080, 1440x900 and 390x844 at 3x: no horizontal overflow, no console errors, small
 labels above 4.5:1, the mechanical detector clean.

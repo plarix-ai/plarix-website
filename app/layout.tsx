@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     siteName: "Plarix",
     type: "website",
     locale: "en_US",
-    images: [{ url: "/brand/plarix-lockup.png", width: 1372, height: 353, alt: "Plarix" }],
+    images: [{ url: "/brand/og.png", width: 2400, height: 1260, alt: "Plarix. Everything after the call." }],
   },
   twitter: {
     card: "summary_large_image",
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     description: DESCRIPTION,
     site: "@theplarix",
     creator: "@theplarix",
-    images: ["/brand/plarix-lockup.png"],
+    images: ["/brand/og.png"],
   },
   robots: {
     index: true,

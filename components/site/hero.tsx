@@ -11,7 +11,7 @@ import { hero, processes } from "@/content/site";
 const factIcons = [Layers, Timer, Unlink];
 const ROTATE_MS = 5200;
 
-export function Hero({ videoSrc, posterSrc }: { videoSrc?: string; posterSrc?: string }) {
+export function Hero() {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -37,11 +37,12 @@ export function Hero({ videoSrc, posterSrc }: { videoSrc?: string; posterSrc?: s
 
   return (
     <section className="relative flex min-h-[100svh] flex-col">
-      <HeroBackdrop videoSrc={videoSrc} posterSrc={posterSrc} />
+      <HeroBackdrop />
 
       {/*
-        The blur veil. No darkening gradient anywhere: the footage keeps its own
-        exposure and the type sits on a bed of blur that fades out by mid screen.
+        The blur veil. No darkening gradient anywhere: the surface keeps its own
+        exposure, graded in the shader, and the type sits on a bed of blur that
+        fades out by mid screen.
       */}
       <div
         className="pointer-events-none fixed inset-0 z-[1] backdrop-blur-xl"
@@ -138,7 +139,7 @@ export function Hero({ videoSrc, posterSrc }: { videoSrc?: string; posterSrc?: s
               style={{ minHeight: "8.5rem" }}
             >
               {/* Blur bridges the two states so the swap reads as one object changing. */}
-              <div key={current.id} className="w-full animate-[blurFadeUp_600ms_var(--ease-out)_forwards]">
+              <div key={current.id} className="animate-swap w-full">
                 <p className="mb-2 text-[15px] font-medium leading-snug text-white">
                   {current.name}
                 </p>

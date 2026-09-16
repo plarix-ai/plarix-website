@@ -234,6 +234,28 @@
   animation: blurFadeUp 1s var(--ease-out) forwards;
 }
 
+/*
+ * The swap used when a rotator or a detail pane changes its contents. Short and
+ * light on purpose: the hero entrance plays once, this plays every few seconds,
+ * and anything heavier reads as the panel breaking rather than changing.
+ */
+@keyframes swapIn {
+  from {
+    opacity: 0;
+    filter: blur(6px);
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+.animate-swap {
+  animation: swapIn 260ms var(--ease-out) both;
+}
+
 /* the calm section reveal: one per section, never a second entrance */
 .reveal {
   opacity: 0;
@@ -258,6 +280,9 @@
     opacity: 1;
     transform: none;
     transition: none;
+  }
+  .animate-swap {
+    animation: none;
   }
   .liquid-glass:active,
   .solid-btn:active {
