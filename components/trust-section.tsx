@@ -1,28 +1,32 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { XCircle, Users, Eye, MessageCircle } from "lucide-react";
+import { Ban, Users, Ear, TrendingUp, Database, Layers } from "lucide-react";
 
-const blocks = [
+const promises = [
   {
-    icon: <XCircle className="w-5 h-5 text-amber-500" />,
-    title: "No long contract, cancel anytime",
-    description: "You are not locked into a 12-month agreement. If Plarix stops recovering money for you, you walk. No termination fee, no notice period games. We earn your business every month.",
+    icon: <Ban className="w-5 h-5 text-amber-500" />,
+    text: "We will never lock you into a long contract.",
   },
   {
     icon: <Users className="w-5 h-5 text-amber-500" />,
-    title: "Nobody on your team loses their job",
-    description: "Plarix automates the portal-login-and-upload part of warranty claims — not the people part. Your office staff stops doing data entry and starts doing things that actually need a human. We do not replace anyone.",
+    text: "We will never touch your team's jobs. We automate paperwork, not people.",
   },
   {
-    icon: <Eye className="w-5 h-5 text-amber-500" />,
-    title: "You see the number before you commit to anything",
-    description: "The free warranty audit gives you a dollar figure: here is what you are owed and not filing. You decide whether it is worth pursuing. No upfront payment, no credit card required to see the number.",
+    icon: <Ear className="w-5 h-5 text-amber-500" />,
+    text: "We will never record your technicians, score their calls, or put anything in the field that makes anyone feel watched.",
   },
   {
-    icon: <MessageCircle className="w-5 h-5 text-amber-500" />,
-    title: "Built from conversations with shop owners, not a lab",
-    description: "Every feature in Plarix came from sitting down with HVAC and plumbing contractors and asking: what part of this process actually hurts? The answer is never 'we need more dashboards.' It is usually 'I do not know what we are not filing.'",
+    icon: <TrendingUp className="w-5 h-5 text-amber-500" />,
+    text: "We will never promise a recovery number we haven't proven on your data specifically.",
+  },
+  {
+    icon: <Database className="w-5 h-5 text-amber-500" />,
+    text: "We will never make you migrate your data, rebuild your pricebook, or retrain your team.",
+  },
+  {
+    icon: <Layers className="w-5 h-5 text-amber-500" />,
+    text: "We will never become the platform. Whatever you already run, we sit beside it — not on top of it, not instead of it.",
   },
 ];
 
@@ -51,11 +55,11 @@ export function TrustSection() {
           <div className="flex items-center gap-3 px-4 py-2 border border-slate-800/50 w-fit">
             <div className="w-2.5 h-2.5 bg-amber-500" />
             <span className="text-sm font-medium text-slate-500 tracking-wide">
-              Why Plarix
+              Promises
             </span>
           </div>
           <h2 className="text-balance text-4xl md:text-5xl font-normal tracking-tight text-white">
-            {"Four things we will never do to a contractor".split(" ").map((word, i) => (
+            {"Promises, in writing".split(" ").map((word, i) => (
               <motion.span
                 key={i}
                 initial={{ filter: "blur(10px)", opacity: 0 }}
@@ -77,19 +81,16 @@ export function TrustSection() {
           viewport={{ once: true, margin: "-100px" }}
           className="grid grid-cols-1 md:grid-cols-2 gap-6"
         >
-          {blocks.map((block, index) => (
+          {promises.map((promise, index) => (
             <motion.div
               key={index}
               variants={itemVariants}
               className="flex gap-6 p-8 border border-slate-800/30 bg-slate-900/20 hover:bg-slate-900/40 transition-colors"
             >
               <div className="w-10 h-10 flex items-center justify-center bg-amber-500/10 border border-amber-500/20 shrink-0">
-                {block.icon}
+                {promise.icon}
               </div>
-              <div className="flex flex-col gap-2">
-                <h3 className="text-lg font-medium text-white">{block.title}</h3>
-                <p className="text-sm text-slate-400 leading-relaxed">{block.description}</p>
-              </div>
+              <p className="text-base text-white leading-relaxed">{promise.text}</p>
             </motion.div>
           ))}
         </motion.div>

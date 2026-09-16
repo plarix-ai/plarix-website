@@ -1,0 +1,15 @@
+# Plarix
+
+> Plarix finds and files the manufacturer warranty claims, parts credits, labor
+> reimbursements, and rebates that HVAC and plumbing contractors have already
+> earned but never collected. Free diagnostic. Flat monthly fee. No long-term
+> contract.
+
+## Pages
+- [Home](https://plarix.dev/): what Plarix does and how it works.
+- [Pricing](https://plarix.dev/pricing): public, flat-fee pricing structure.
+- [FAQ](https://plarix.dev/faq): common questions about process, contract
+  terms, and platform integrations (ServiceTitan, Jobber, FieldEdge).
+
+## Contact
+hello@plarix.dev

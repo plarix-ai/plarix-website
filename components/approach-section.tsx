@@ -3,15 +3,15 @@
 import React from "react"
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Zap, DollarSign, ChevronRight } from "lucide-react";
+import { Search, Wrench, RefreshCw, Gift, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const workflowSteps = [
   {
     id: 1,
-    title: "1. Diagnose",
+    title: "1. Count",
     description:
-      "We pull your job data, identify every part and labor line that qualifies for a warranty claim, and give you a dollar figure: here is what you are owed, here is what has not been filed. No guesswork.",
+      "We look at your last 90 days of jobs and claims. Free. Takes about twenty minutes of your time, once.",
     icon: <Search className="w-5 h-5" />,
     visual: (
       <div className="flex h-full w-full items-center justify-center bg-slate-900/60 p-8">
@@ -19,7 +19,7 @@ const workflowSteps = [
           <div className="flex items-center gap-3">
             <div className="px-3 py-2 bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-mono">Your Job Data</div>
             <span className="text-slate-600">&rarr;</span>
-            <div className="px-3 py-2 bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-mono">Eligibility Check</div>
+            <div className="px-3 py-2 bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-mono">90-Day Count</div>
           </div>
           <div className="mt-4 flex flex-col items-center gap-2">
             <span className="text-3xl font-normal text-amber-500">$12,470</span>
@@ -31,20 +31,20 @@ const workflowSteps = [
   },
   {
     id: 2,
-    title: "2. Automate",
+    title: "2. Build",
     description:
-      "We prepare and submit claims to each manufacturer's portal — Carrier, Trane, Lennox, whichever — using their exact format and rules. Your team does nothing. The claim goes in correctly the first time.",
-    icon: <Zap className="w-5 h-5" />,
+      "If there's real money, we build the system that catches it — plugged into ServiceTitan, Jobber, FieldEdge, whatever you already run. You don't switch platforms.",
+    icon: <Wrench className="w-5 h-5" />,
     visual: (
       <div className="flex h-full w-full items-center justify-center bg-slate-900/60 p-8">
         <div className="flex flex-col items-center gap-4">
           <div className="flex items-center gap-3">
-            <div className="px-3 py-2 bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-mono">Claim Prepared</div>
+            <div className="px-3 py-2 bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-mono">Built</div>
             <span className="text-slate-600">&rarr;</span>
-            <div className="px-3 py-2 bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-mono">Filed With Manufacturer&rarr;</div>
+            <div className="px-3 py-2 bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-mono">Plugged In</div>
           </div>
           <div className="mt-4 grid grid-cols-3 gap-2">
-            {["Carrier", "Trane", "Lennox", "Rheem", "Goodman", "Daikin"].map((mfr) => (
+            {["ServiceTitan", "Jobber", "FieldEdge", "Carrier", "Trane", "Lennox"].map((mfr) => (
               <div key={mfr} className="px-2 py-1 text-[10px] text-slate-400 border border-slate-800/30 text-center">{mfr}</div>
             ))}
           </div>
@@ -54,15 +54,15 @@ const workflowSteps = [
   },
   {
     id: 3,
-    title: "3. Recover",
+    title: "3. Run",
     description:
-      "We track every claim through to payment, chase denials, and report what came back: claims filed, dollars recovered, month over month. You get a number you can take to a budget review.",
-    icon: <DollarSign className="w-5 h-5" />,
+      "Flat monthly fee, billed like every other tool you already pay for. No twelve-month contract. Cancel anytime.",
+    icon: <RefreshCw className="w-5 h-5" />,
     visual: (
       <div className="flex h-full w-full items-center justify-center bg-slate-900/60 p-8">
         <div className="flex flex-col items-center gap-4">
           <div className="flex items-center gap-3">
-            <div className="px-3 py-2 bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-mono">Tracked</div>
+            <div className="px-3 py-2 bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-mono">Filed</div>
             <span className="text-slate-600">&rarr;</span>
             <div className="px-3 py-2 bg-green-500/10 border border-green-500/20 text-green-400 text-xs font-mono">Money Back</div>
           </div>
@@ -75,9 +75,27 @@ const workflowSteps = [
       </div>
     ),
   },
+  {
+    id: 4,
+    title: "4. Bonus",
+    description:
+      "After 90 days of proven numbers on your data, a small share of what we recover above your baseline. Bonus, not the paycheck.",
+    icon: <Gift className="w-5 h-5" />,
+    visual: (
+      <div className="flex h-full w-full items-center justify-center bg-slate-900/60 p-8">
+        <div className="flex flex-col items-center gap-4">
+          <div className="px-3 py-2 bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-mono">90 Days Proven</div>
+          <div className="mt-2 flex flex-col items-center gap-1">
+            <span className="text-2xl font-normal text-white">Baseline + share</span>
+            <span className="text-xs text-slate-500">of verified recovery above it</span>
+          </div>
+        </div>
+      </div>
+    ),
+  },
 ];
 
-export function ApproachSection() {
+export function HowItWorksSection() {
   const [activeIndex, setActiveIndex] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -115,17 +133,17 @@ export function ApproachSection() {
   }, [startTimer]);
 
   return (
-    <section ref={sectionRef} id="approach" className="w-full bg-slate-950 text-white py-24 flex flex-col items-center overflow-hidden border-b border-slate-800/30">
+    <section ref={sectionRef} id="how-it-works" className="w-full bg-slate-950 text-white py-24 flex flex-col items-center overflow-hidden border-b border-slate-800/30">
       <div className="max-w-7xl w-full px-6 md:px-12 lg:px-16 gap-12 flex flex-col">
         <div className="flex flex-col gap-4 max-w-[600px]">
           <div className="flex items-center gap-3 px-4 py-2 border border-slate-800/50 w-fit">
             <div className="w-2.5 h-2.5 bg-amber-500" />
             <span className="text-sm font-medium text-slate-500 tracking-wide">
-              How we do it
+              How it works
             </span>
           </div>
           <h2 className="text-balance text-4xl md:text-5xl font-normal leading-[1.1] tracking-tight text-white">
-            {"Diagnose, automate, recover".split(" ").map((word, i) => (
+            {"Count, build, run, bonus".split(" ").map((word, i) => (
               <motion.span
                 key={i}
                 initial={{ filter: "blur(10px)", opacity: 0 }}
@@ -139,7 +157,8 @@ export function ApproachSection() {
             ))}
           </h2>
           <p className="text-balance text-slate-400 text-base leading-relaxed">
-            We pull your existing job data, identify every unfiled warranty claim, submit it to the manufacturer, and track it through to payment. Your team does nothing except see the money come back.
+            No long implementation. No new platform for your team to learn. We count what is unfiled,
+            build the system that catches it, and run it beside whatever you already use.
           </p>
         </div>
 
@@ -234,7 +253,7 @@ export function ApproachSection() {
             onClick={() => window.dispatchEvent(new CustomEvent("open-consultation"))}
             className="px-8 py-4 bg-amber-500 text-slate-950 font-medium flex items-center gap-2 hover:bg-amber-400 transition-colors"
           >
-            Get a Free Warranty Audit
+            Get your free claim count
             <ChevronRight className="w-4 h-4" />
           </motion.button>
         </div>

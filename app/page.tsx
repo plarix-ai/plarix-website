@@ -2,9 +2,9 @@ import { Navbar, Hero } from "@/components/hero";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { ProblemSection } from "@/components/problem-section";
 import { StatsSection } from "@/components/stats-section";
-import { ApproachSection } from "@/components/approach-section";
+import { HowItWorksSection } from "@/components/approach-section";
 import { FeaturesSection } from "@/components/features-section";
-import { ProcessSection } from "@/components/process-section";
+import { PricingSection } from "@/components/pricing-section";
 import { DeliverablesSection } from "@/components/deliverables-section";
 import { WhoWeServeSection } from "@/components/who-we-serve-section";
 import { TrustSection } from "@/components/trust-section";
@@ -34,9 +34,9 @@ export default function Home() {
         <Hero />
         <ProblemSection />
         <StatsSection />
-        <ApproachSection />
+        <HowItWorksSection />
         <FeaturesSection />
-        <ProcessSection />
+        <PricingSection />
         <DeliverablesSection />
         <WhoWeServeSection />
         <TrustSection />

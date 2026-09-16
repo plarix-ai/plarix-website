@@ -95,7 +95,7 @@ export function CtaSection() {
               className="bg-slate-950 px-8 text-white hover:bg-slate-800 font-medium"
               onClick={() => setFormOpen(true)}
             >
-              Get a Free Warranty Audit
+              Get your free claim count
             </Button>
           </div>
         </div>
@@ -149,7 +149,7 @@ export function CtaSection() {
                       </div>
                       <div>
                         <h3 className="text-white text-lg font-medium">
-                          Get a Free Warranty Audit
+                          Get your free claim count
                         </h3>
                         <p className="text-slate-500 text-sm mt-1">
                           Tell us what FSM you use and we will show you what is sitting unfiled.

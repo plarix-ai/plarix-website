@@ -5,6 +5,13 @@ import Link from "next/link"
 import Image from "next/image"
 import { Menu, X } from "lucide-react"
 
+const NAV_LINKS = [
+  { href: "/#problem", label: "Problem" },
+  { href: "/#how-it-works", label: "How it works" },
+  { href: "/pricing", label: "Pricing" },
+  { href: "/faq", label: "FAQ" },
+]
+
 export function NavbarSubpage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
@@ -26,18 +33,11 @@ export function NavbarSubpage() {
 
         {/* Desktop nav */}
         <div className="hidden lg:flex items-center gap-8 text-sm text-white/60 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-          <Link href="/#approach" className="transition-colors hover:text-white whitespace-nowrap">
-            Approach
-          </Link>
-          <Link href="/about" className="transition-colors hover:text-white whitespace-nowrap">
-            About
-          </Link>
-          <Link href="/glossary" className="transition-colors hover:text-white whitespace-nowrap">
-            Glossary
-          </Link>
-          <Link href="/blog" className="transition-colors hover:text-white whitespace-nowrap">
-            Blog
-          </Link>
+          {NAV_LINKS.map((link) => (
+            <Link key={link.href} href={link.href} className="transition-colors hover:text-white whitespace-nowrap">
+              {link.label}
+            </Link>
+          ))}
         </div>
 
         {/* Right side */}
@@ -46,7 +46,7 @@ export function NavbarSubpage() {
             href="/#cta"
             className="hidden text-sm font-medium text-white transition-colors hover:text-white/80 lg:block"
           >
-            Get a Free Process Audit
+            Get your free claim count
           </Link>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -66,40 +66,22 @@ export function NavbarSubpage() {
       {mobileMenuOpen && (
         <div className="bg-slate-950/95 backdrop-blur-sm border-t border-slate-800/50 lg:hidden">
           <div className="flex flex-col px-6 py-6 gap-4">
-            <Link
-              href="/#approach"
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-white/60 transition-colors hover:text-white py-2"
-            >
-              Approach
-            </Link>
-            <Link
-              href="/about"
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-white/60 transition-colors hover:text-white py-2"
-            >
-              About
-            </Link>
-            <Link
-              href="/glossary"
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-white/60 transition-colors hover:text-white py-2"
-            >
-              Glossary
-            </Link>
-            <Link
-              href="/blog"
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-white/60 transition-colors hover:text-white py-2"
-            >
-              Blog
-            </Link>
+            {NAV_LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-white/60 transition-colors hover:text-white py-2"
+              >
+                {link.label}
+              </Link>
+            ))}
             <Link
               href="/#cta"
               onClick={() => setMobileMenuOpen(false)}
               className="mt-2 text-white font-medium py-2 border-t border-slate-800/50"
             >
-              Get a Free Process Audit
+              Get your free claim count
             </Link>
           </div>
         </div>

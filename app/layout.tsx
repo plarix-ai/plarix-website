@@ -1,6 +1,7 @@
 import React from "react"
 import type { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/next'
+import { MotionConfig } from 'framer-motion'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -57,15 +58,31 @@ export const metadata: Metadata = {
   },
 }
 
-const jsonLd = {
+const organizationJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: 'Plarix',
   description: 'Plarix finds and files the warranty claims your HVAC or plumbing shop is currently missing — and shows you the dollar amount before you commit.',
   url: 'https://plarix.dev',
+  logo: 'https://plarix.dev/images/plarix-logo-dark.png',
   contactPoint: {
     '@type': 'ContactPoint',
     email: 'hello@plarix.dev',
+  },
+  sameAs: [
+    'https://x.com/theplarix',
+  ],
+}
+
+const serviceJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'Warranty claim recovery automation',
+  provider: { '@type': 'Organization', name: 'Plarix' },
+  areaServed: 'US',
+  audience: {
+    '@type': 'Audience',
+    audienceType: 'HVAC and plumbing contractors',
   },
 }
 
@@ -77,19 +94,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@300..800&display=swap"
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
         />
       </head>
       <body className="font-sans antialiased">
-        {children}
+        <MotionConfig reducedMotion="user">{children}</MotionConfig>
         <Analytics />
       </body>
     </html>

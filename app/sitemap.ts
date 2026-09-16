@@ -9,7 +9,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
-      url: 'https://plarix.dev/about',
+      url: 'https://plarix.dev/pricing',
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: 'https://plarix.dev/faq',
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
@@ -18,18 +24,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: 'https://plarix.dev/blog',
       lastModified: new Date(),
       changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://plarix.dev/blog/what-is-an-economically-engineered-agentic-system',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: 'https://plarix.dev/glossary',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
       priority: 0.6,
     },
     {
