@@ -6,7 +6,7 @@ import { useState, useCallback } from "react"
 import { Menu, X } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 
 const NAV_LINKS = [
   { href: "#problem", label: "Problem" },
@@ -84,28 +84,36 @@ export function Navbar() {
         </div>
       </div>
 
-      {mobileMenuOpen && (
-        <div className="bg-slate-950/95 backdrop-blur-sm border-t border-slate-800/50 lg:hidden">
-          <div className="flex flex-col px-6 py-6 gap-4">
-            {NAV_LINKS.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={(e) => handleScrollClick(e, link.href)}
-                className="text-white/60 transition-colors hover:text-white py-2"
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="bg-slate-950/95 backdrop-blur-sm border-t border-slate-800/50 lg:hidden"
+          >
+            <div className="flex flex-col px-6 py-6 gap-4">
+              {NAV_LINKS.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={(e) => handleScrollClick(e, link.href)}
+                  className="text-white/60 transition-colors hover:text-white py-2"
+                >
+                  {link.label}
+                </a>
+              ))}
+              <button
+                onClick={openForm}
+                className="mt-2 text-white font-medium py-2 border-t border-slate-800/50 text-left"
               >
-                {link.label}
-              </a>
-            ))}
-            <button
-              onClick={openForm}
-              className="mt-2 text-white font-medium py-2 border-t border-slate-800/50 text-left"
-            >
-              Get your free claim count
-            </button>
-          </div>
-        </div>
-      )}
+                Get your free claim count
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   )
 }
@@ -114,15 +122,17 @@ export function Hero() {
   return (
     <section className="relative h-screen w-full overflow-hidden">
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/images/space-bg.jpg')" }}
+        className="absolute inset-0 opacity-[0.07]"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle at 50% 40%, #F2F1ED 0%, #9CA3AF 35%, transparent 70%)",
+        }}
       />
-      <div className="absolute inset-0 bg-slate-950/40" />
       <div className="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-transparent to-slate-950" />
 
       <div className="relative z-10 flex h-full flex-col justify-center items-center px-6 pt-14 text-center">
         <div className="flex items-center gap-3 px-4 py-2 border border-slate-800/50 mb-8">
-          <div className="w-2.5 h-2.5 bg-amber-500" />
+          <div className="w-2.5 h-2.5 bg-white/30" />
           <span className="text-sm font-medium text-slate-500 tracking-wide">
             Warranty Claims Automation for HVAC &amp; Plumbing
           </span>

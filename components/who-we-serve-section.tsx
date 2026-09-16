@@ -5,21 +5,21 @@ import { Wrench, Droplets, Zap } from "lucide-react";
 
 const audiences = [
   {
-    icon: <Wrench className="w-6 h-6 text-amber-500" />,
+    icon: <Wrench className="w-6 h-6 text-white/70" />,
     title: "HVAC contractors",
     description:
       "You are running 20–100 trucks, using ServiceTitan, Jobber, or FieldEdge, and someone on your team is already doing warranty claims by hand — or you are hiring for it. You know parts are being replaced under warranty every week, and you are not sure how many are actually getting filed.",
     concerns: ["$3M–$25M revenue", "20–100 employees", "Uses ServiceTitan, Jobber, or FieldEdge", "Someone already filing claims manually"],
   },
   {
-    icon: <Droplets className="w-6 h-6 text-amber-500" />,
+    icon: <Droplets className="w-6 h-6 text-white/70" />,
     title: "Plumbing contractors",
     description:
       "Same profile as HVAC: mid-sized shop, running an FSM platform, dealing with manufacturer warranties on fixtures, water heaters, and pumps — and nobody has time to chase the portals.",
     concerns: ["$3M–$25M revenue", "20–100 employees", "Uses ServiceTitan, Jobber, or FieldEdge", "Warranty parts billed to customer instead of filed"],
   },
   {
-    icon: <Zap className="w-6 h-6 text-amber-500" />,
+    icon: <Zap className="w-6 h-6 text-white/70" />,
     title: "Also a fit: electrical & roofing",
     description:
       "Electrical and roofing contractors that carry manufacturer warranties on equipment and materials — panels, inverters, shingles, underlayment. If you have a parts warranty and a portal to file through, Plarix works the same way.",
@@ -50,7 +50,7 @@ export function WhoWeServeSection() {
       <div className="mx-auto max-w-7xl px-6 md:px-12 lg:px-16">
         <div className="flex flex-col gap-6 mb-16">
           <div className="flex items-center gap-3 px-4 py-2 border border-slate-800/50 w-fit">
-            <div className="w-2.5 h-2.5 bg-amber-500" />
+            <div className="w-2.5 h-2.5 bg-white/30" />
             <span className="text-sm font-medium text-slate-500 tracking-wide">
               Who we serve
             </span>
@@ -87,7 +87,7 @@ export function WhoWeServeSection() {
               variants={itemVariants}
               className="flex flex-col gap-6 p-8 border border-slate-800/30 bg-slate-900/20 hover:bg-slate-900/40 transition-colors"
             >
-              <div className="w-12 h-12 flex items-center justify-center bg-amber-500/10 border border-amber-500/20">
+              <div className="w-12 h-12 flex items-center justify-center bg-white/[0.06] border border-white/10">
                 {audience.icon}
               </div>
               <div>
@@ -96,7 +96,7 @@ export function WhoWeServeSection() {
               </div>
               <div className="flex flex-wrap gap-2 mt-auto">
                 {audience.concerns.map((concern, idx) => (
-                  <span key={idx} className="px-3 py-1 text-xs text-amber-500/80 bg-amber-500/5 border border-amber-500/10">
+                  <span key={idx} className="px-3 py-1 text-xs text-white/70 bg-white/[0.05] border border-white/10">
                     {concern}
                   </span>
                 ))}

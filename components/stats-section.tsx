@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 const stats = [
   {
@@ -48,7 +49,7 @@ export function StatsSection() {
       <div className="relative z-10 mx-auto max-w-7xl px-6 md:px-12 lg:px-16">
         <div className="flex flex-col items-center text-center gap-8 mb-16">
           <div className="flex items-center gap-3 px-4 py-2 border border-slate-800/50 w-fit">
-            <div className="w-2.5 h-2.5 bg-amber-500" />
+            <div className="w-2.5 h-2.5 bg-white/30" />
             <span className="text-sm font-medium text-slate-500 tracking-wide">
               The reality
             </span>
@@ -82,7 +83,12 @@ export function StatsSection() {
               variants={itemVariants}
               className="flex flex-col items-center text-center gap-3 p-8 border border-slate-800/30 bg-slate-900/20"
             >
-              <span className="text-4xl md:text-5xl font-normal text-amber-500 tracking-tight">
+              <span
+                className={cn(
+                  "text-4xl md:text-5xl font-normal tracking-tight tabular-nums",
+                  stat.value.startsWith("$") ? "text-amber-500" : "text-white"
+                )}
+              >
                 {stat.value}
               </span>
               <span className="text-sm font-medium text-white uppercase tracking-wider">

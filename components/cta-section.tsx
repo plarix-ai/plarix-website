@@ -66,8 +66,8 @@ export function CtaSection() {
     <section id="cta" className="relative w-full overflow-hidden bg-slate-100">
       <div className="relative mx-auto max-w-7xl px-6 md:px-12 lg:px-16 py-14 md:py-20 flex justify-center">
         <div className="max-w-2xl flex flex-col items-center text-center gap-6">
-          <div className="w-16 h-16 flex items-center justify-center bg-amber-500/15 border border-amber-500/30">
-            <TrendingUp className="w-8 h-8 text-amber-600" />
+          <div className="w-16 h-16 flex items-center justify-center bg-white/[0.06] border border-white/10">
+            <TrendingUp className="w-8 h-8 text-white/70" />
           </div>
 
           <h2 className="text-balance text-4xl font-normal tracking-tight text-slate-950 md:text-5xl lg:text-6xl">
@@ -131,8 +131,8 @@ export function CtaSection() {
 
                 {submitted ? (
                   <div className="flex flex-col items-center gap-4 py-8">
-                    <div className="w-12 h-12 flex items-center justify-center bg-amber-500/15 border border-amber-500/30">
-                      <TrendingUp className="w-6 h-6 text-amber-500" />
+                    <div className="w-12 h-12 flex items-center justify-center bg-white/[0.06] border border-white/10">
+                      <TrendingUp className="w-6 h-6 text-white/70" />
                     </div>
                     <p className="text-white text-lg font-medium">
                       Request received.
@@ -144,8 +144,8 @@ export function CtaSection() {
                 ) : (
                   <>
                     <div className="flex items-start gap-3 mb-2">
-                      <div className="w-10 h-10 flex items-center justify-center bg-amber-500/15 border border-amber-500/30 shrink-0 mt-0.5">
-                        <TrendingUp className="w-5 h-5 text-amber-500" />
+                      <div className="w-10 h-10 flex items-center justify-center bg-white/[0.06] border border-white/10 shrink-0 mt-0.5">
+                        <TrendingUp className="w-5 h-5 text-white/70" />
                       </div>
                       <div>
                         <h3 className="text-white text-lg font-medium">

@@ -31,7 +31,7 @@ export function PricingSection() {
       <div className="mx-auto max-w-7xl px-6 md:px-12 lg:px-16">
         <div className="flex flex-col items-center text-center gap-6 mb-16">
           <div className="flex items-center gap-3 px-4 py-2 border border-slate-800/50 w-fit">
-            <div className="w-2.5 h-2.5 bg-amber-500" />
+            <div className="w-2.5 h-2.5 bg-white/30" />
             <span className="text-sm font-medium text-slate-500 tracking-wide">
               Pricing
             </span>
@@ -58,7 +58,7 @@ export function PricingSection() {
               className="flex flex-col gap-3 p-8 border border-slate-800/30 bg-slate-900/20"
             >
               <span className="text-sm font-medium text-white uppercase tracking-wider">{tier.name}</span>
-              <span className="text-2xl font-normal text-amber-500 tracking-tight">{tier.price}</span>
+              <span className="text-2xl font-normal text-white tracking-tight">{tier.price}</span>
               <p className="text-sm text-slate-400 leading-relaxed">{tier.description}</p>
             </div>
           ))}

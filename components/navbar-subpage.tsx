@@ -4,6 +4,7 @@ import React, { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Menu, X } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
 
 const NAV_LINKS = [
   { href: "/#problem", label: "Problem" },
@@ -63,29 +64,37 @@ export function NavbarSubpage() {
       </div>
 
       {/* Mobile menu */}
-      {mobileMenuOpen && (
-        <div className="bg-slate-950/95 backdrop-blur-sm border-t border-slate-800/50 lg:hidden">
-          <div className="flex flex-col px-6 py-6 gap-4">
-            {NAV_LINKS.map((link) => (
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="bg-slate-950/95 backdrop-blur-sm border-t border-slate-800/50 lg:hidden"
+          >
+            <div className="flex flex-col px-6 py-6 gap-4">
+              {NAV_LINKS.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-white/60 transition-colors hover:text-white py-2"
+                >
+                  {link.label}
+                </Link>
+              ))}
               <Link
-                key={link.href}
-                href={link.href}
+                href="/#cta"
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-white/60 transition-colors hover:text-white py-2"
+                className="mt-2 text-white font-medium py-2 border-t border-slate-800/50"
               >
-                {link.label}
+                Get your free claim count
               </Link>
-            ))}
-            <Link
-              href="/#cta"
-              onClick={() => setMobileMenuOpen(false)}
-              className="mt-2 text-white font-medium py-2 border-t border-slate-800/50"
-            >
-              Get your free claim count
-            </Link>
-          </div>
-        </div>
-      )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   )
 }

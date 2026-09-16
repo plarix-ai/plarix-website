@@ -22,7 +22,7 @@ export function FaqSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
           <div className="flex flex-col gap-6">
             <div className="flex items-center gap-3 px-4 py-2 border border-slate-800/50 w-fit">
-              <div className="w-2.5 h-2.5 bg-amber-500" />
+              <div className="w-2.5 h-2.5 bg-white/30" />
               <span className="text-sm font-medium text-slate-500 tracking-wide">
                 FAQ
               </span>
@@ -49,7 +49,7 @@ export function FaqSection() {
 
             <p className="text-sm text-slate-500">
               Do not see your question?{" "}
-              <a href="mailto:hello@plarix.dev" className="text-amber-500 hover:text-amber-400 transition-colors">
+              <a href="mailto:hello@plarix.dev" className="text-white hover:text-slate-300 underline underline-offset-4 transition-colors">
                 Ask us directly.
               </a>
             </p>
@@ -86,7 +86,7 @@ export function FaqSection() {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                      transition={{ duration: 0.25, ease: "easeOut" }}
                       className="overflow-hidden"
                     >
                       <div className="pb-5 pr-12">

@@ -5,8 +5,8 @@ import { MotionConfig } from 'framer-motion'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Plarix — Warranty Claims, Filed. Money, Recovered.',
-  description: 'Plarix finds and files the warranty claims your HVAC or plumbing shop is currently missing, and shows you the dollar amount before you commit to anything.',
+  title: 'Plarix — Warranty Claim Recovery for HVAC & Plumbing Contractors',
+  description: 'Plarix finds and files the manufacturer warranty claims, parts credits, and rebates HVAC and plumbing contractors have already earned but never collected. Free diagnostic. No contract.',
   keywords: [
     'warranty claims automation',
     'HVAC warranty claims',
@@ -23,8 +23,8 @@ export const metadata: Metadata = {
     canonical: 'https://plarix.dev',
   },
   openGraph: {
-    title: 'Plarix — Warranty Claims, Filed. Money, Recovered.',
-    description: 'Plarix finds and files the warranty claims your HVAC or plumbing shop is currently missing, and shows you the dollar amount before you commit to anything.',
+    title: 'Plarix — Warranty Claim Recovery for HVAC & Plumbing Contractors',
+    description: 'Plarix finds and files the manufacturer warranty claims, parts credits, and rebates HVAC and plumbing contractors have already earned but never collected. Free diagnostic. No contract.',
     url: 'https://plarix.dev',
     siteName: 'Plarix',
     type: 'website',
@@ -32,8 +32,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Plarix — Warranty Claims, Filed. Money, Recovered.',
-    description: 'Plarix finds and files the warranty claims your HVAC or plumbing shop is currently missing, and shows you the dollar amount before you commit to anything.',
+    title: 'Plarix — Warranty Claim Recovery for HVAC & Plumbing Contractors',
+    description: 'Plarix finds and files the manufacturer warranty claims, parts credits, and rebates HVAC and plumbing contractors have already earned but never collected. Free diagnostic. No contract.',
     site: '@theplarix',
     creator: '@theplarix',
   },
@@ -62,7 +62,7 @@ const organizationJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: 'Plarix',
-  description: 'Plarix finds and files the warranty claims your HVAC or plumbing shop is currently missing — and shows you the dollar amount before you commit.',
+  description: 'Plarix finds and files the manufacturer warranty claims, parts credits, labor reimbursements, and rebates that HVAC and plumbing contractors have already earned but never collected.',
   url: 'https://plarix.dev',
   logo: 'https://plarix.dev/images/plarix-logo-dark.png',
   contactPoint: {
@@ -70,6 +70,7 @@ const organizationJsonLd = {
     email: 'hello@plarix.dev',
   },
   sameAs: [
+    'https://www.linkedin.com/company/plarix',
     'https://x.com/theplarix',
   ],
 }

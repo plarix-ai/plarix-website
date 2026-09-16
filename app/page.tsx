@@ -9,6 +9,7 @@ import { DeliverablesSection } from "@/components/deliverables-section";
 import { WhoWeServeSection } from "@/components/who-we-serve-section";
 import { TrustSection } from "@/components/trust-section";
 import { FaqSection } from "@/components/faq-section";
+import { FounderSection } from "@/components/founder-section";
 import { CtaSection } from "@/components/cta-section";
 import { Footer } from "@/components/footer";
 
@@ -41,6 +42,7 @@ export default function Home() {
         <WhoWeServeSection />
         <TrustSection />
         <FaqSection />
+        <FounderSection />
         <CtaSection />
       </main>
 

@@ -17,12 +17,12 @@ const workflowSteps = [
       <div className="flex h-full w-full items-center justify-center bg-slate-900/60 p-8">
         <div className="flex flex-col items-center gap-4">
           <div className="flex items-center gap-3">
-            <div className="px-3 py-2 bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-mono">Your Job Data</div>
+            <div className="px-3 py-2 bg-white/[0.06] border border-white/10 text-white/70 text-xs font-mono">Your Job Data</div>
             <span className="text-slate-600">&rarr;</span>
-            <div className="px-3 py-2 bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-mono">90-Day Count</div>
+            <div className="px-3 py-2 bg-white/[0.06] border border-white/10 text-white/70 text-xs font-mono">90-Day Count</div>
           </div>
           <div className="mt-4 flex flex-col items-center gap-2">
-            <span className="text-3xl font-normal text-amber-500">$12,470</span>
+            <span className="text-3xl font-normal text-amber-500 tabular-nums">$12,470</span>
             <span className="text-xs text-slate-500">unfiled warranty value found</span>
           </div>
         </div>
@@ -39,9 +39,9 @@ const workflowSteps = [
       <div className="flex h-full w-full items-center justify-center bg-slate-900/60 p-8">
         <div className="flex flex-col items-center gap-4">
           <div className="flex items-center gap-3">
-            <div className="px-3 py-2 bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-mono">Built</div>
+            <div className="px-3 py-2 bg-white/[0.06] border border-white/10 text-white/70 text-xs font-mono">Built</div>
             <span className="text-slate-600">&rarr;</span>
-            <div className="px-3 py-2 bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-mono">Plugged In</div>
+            <div className="px-3 py-2 bg-white/[0.06] border border-white/10 text-white/70 text-xs font-mono">Plugged In</div>
           </div>
           <div className="mt-4 grid grid-cols-3 gap-2">
             {["ServiceTitan", "Jobber", "FieldEdge", "Carrier", "Trane", "Lennox"].map((mfr) => (
@@ -62,12 +62,12 @@ const workflowSteps = [
       <div className="flex h-full w-full items-center justify-center bg-slate-900/60 p-8">
         <div className="flex flex-col items-center gap-4">
           <div className="flex items-center gap-3">
-            <div className="px-3 py-2 bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-mono">Filed</div>
+            <div className="px-3 py-2 bg-white/[0.06] border border-white/10 text-white/70 text-xs font-mono">Filed</div>
             <span className="text-slate-600">&rarr;</span>
             <div className="px-3 py-2 bg-green-500/10 border border-green-500/20 text-green-400 text-xs font-mono">Money Back</div>
           </div>
           <div className="mt-4 flex flex-col items-center gap-1">
-            <span className="text-2xl font-normal text-white">$9,840</span>
+            <span className="text-2xl font-normal text-white tabular-nums">$9,840</span>
             <span className="text-xs text-slate-500">recovered this month</span>
             <span className="text-xs text-slate-600">34 claims, 3 manufacturers</span>
           </div>
@@ -84,7 +84,7 @@ const workflowSteps = [
     visual: (
       <div className="flex h-full w-full items-center justify-center bg-slate-900/60 p-8">
         <div className="flex flex-col items-center gap-4">
-          <div className="px-3 py-2 bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-mono">90 Days Proven</div>
+          <div className="px-3 py-2 bg-white/[0.06] border border-white/10 text-white/70 text-xs font-mono">90 Days Proven</div>
           <div className="mt-2 flex flex-col items-center gap-1">
             <span className="text-2xl font-normal text-white">Baseline + share</span>
             <span className="text-xs text-slate-500">of verified recovery above it</span>
@@ -137,7 +137,7 @@ export function HowItWorksSection() {
       <div className="max-w-7xl w-full px-6 md:px-12 lg:px-16 gap-12 flex flex-col">
         <div className="flex flex-col gap-4 max-w-[600px]">
           <div className="flex items-center gap-3 px-4 py-2 border border-slate-800/50 w-fit">
-            <div className="w-2.5 h-2.5 bg-amber-500" />
+            <div className="w-2.5 h-2.5 bg-white/30" />
             <span className="text-sm font-medium text-slate-500 tracking-wide">
               How it works
             </span>
@@ -182,14 +182,14 @@ export function HowItWorksSection() {
                 <div key={idx} className="h-full flex-1 bg-white/10 overflow-hidden">
                   {activeIndex === idx && (
                     <motion.div
-                      className="h-full bg-amber-500/80"
+                      className="h-full bg-white/50"
                       initial={{ width: "0%" }}
                       animate={{ width: "100%" }}
                       transition={{ duration: 8, ease: "linear" }}
                     />
                   )}
                   {idx < activeIndex && (
-                    <div className="h-full w-full bg-amber-500/80" />
+                    <div className="h-full w-full bg-white/50" />
                   )}
                 </div>
               ))}
@@ -209,11 +209,12 @@ export function HowItWorksSection() {
                 )}
                 whileHover={{ x: 4 }}
                 whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.15, ease: "easeOut" }}
               >
                 <div className="flex items-start gap-4">
                   <div className={cn(
                     "mt-1 p-2 transition-colors duration-300",
-                    activeIndex === index ? "bg-amber-500 text-slate-950" : "bg-white/5 text-slate-600"
+                    activeIndex === index ? "bg-white text-slate-950" : "bg-white/5 text-slate-600"
                   )}>
                     {step.icon}
                   </div>
@@ -250,6 +251,7 @@ export function HowItWorksSection() {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.15, ease: "easeOut" }}
             onClick={() => window.dispatchEvent(new CustomEvent("open-consultation"))}
             className="px-8 py-4 bg-amber-500 text-slate-950 font-medium flex items-center gap-2 hover:bg-amber-400 transition-colors"
           >

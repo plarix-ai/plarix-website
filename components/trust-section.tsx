@@ -5,27 +5,27 @@ import { Ban, Users, Ear, TrendingUp, Database, Layers } from "lucide-react";
 
 const promises = [
   {
-    icon: <Ban className="w-5 h-5 text-amber-500" />,
+    icon: <Ban className="w-5 h-5 text-white/70" />,
     text: "We will never lock you into a long contract.",
   },
   {
-    icon: <Users className="w-5 h-5 text-amber-500" />,
+    icon: <Users className="w-5 h-5 text-white/70" />,
     text: "We will never touch your team's jobs. We automate paperwork, not people.",
   },
   {
-    icon: <Ear className="w-5 h-5 text-amber-500" />,
+    icon: <Ear className="w-5 h-5 text-white/70" />,
     text: "We will never record your technicians, score their calls, or put anything in the field that makes anyone feel watched.",
   },
   {
-    icon: <TrendingUp className="w-5 h-5 text-amber-500" />,
+    icon: <TrendingUp className="w-5 h-5 text-white/70" />,
     text: "We will never promise a recovery number we haven't proven on your data specifically.",
   },
   {
-    icon: <Database className="w-5 h-5 text-amber-500" />,
+    icon: <Database className="w-5 h-5 text-white/70" />,
     text: "We will never make you migrate your data, rebuild your pricebook, or retrain your team.",
   },
   {
-    icon: <Layers className="w-5 h-5 text-amber-500" />,
+    icon: <Layers className="w-5 h-5 text-white/70" />,
     text: "We will never become the platform. Whatever you already run, we sit beside it — not on top of it, not instead of it.",
   },
 ];
@@ -53,7 +53,7 @@ export function TrustSection() {
       <div className="mx-auto max-w-7xl px-6 md:px-12 lg:px-16">
         <div className="flex flex-col gap-6 mb-16 items-center text-center">
           <div className="flex items-center gap-3 px-4 py-2 border border-slate-800/50 w-fit">
-            <div className="w-2.5 h-2.5 bg-amber-500" />
+            <div className="w-2.5 h-2.5 bg-white/30" />
             <span className="text-sm font-medium text-slate-500 tracking-wide">
               Promises
             </span>
@@ -87,7 +87,7 @@ export function TrustSection() {
               variants={itemVariants}
               className="flex gap-6 p-8 border border-slate-800/30 bg-slate-900/20 hover:bg-slate-900/40 transition-colors"
             >
-              <div className="w-10 h-10 flex items-center justify-center bg-amber-500/10 border border-amber-500/20 shrink-0">
+              <div className="w-10 h-10 flex items-center justify-center bg-white/[0.06] border border-white/10 shrink-0">
                 {promise.icon}
               </div>
               <p className="text-base text-white leading-relaxed">{promise.text}</p>
