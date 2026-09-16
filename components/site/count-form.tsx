@@ -122,7 +122,7 @@ export function CountForm() {
             className={`${field} appearance-none pr-11`}
           >
             <option value="" className="bg-ink-700">
-              Not sure yet, show me the whole count
+              Show me the whole count
             </option>
             {processes.map((p) => (
               <option key={p.id} value={p.name} className="bg-ink-700">
