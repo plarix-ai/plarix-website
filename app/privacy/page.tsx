@@ -1,178 +1,111 @@
-import type { Metadata } from "next"
-import { NavbarSubpage } from "@/components/navbar-subpage"
-import { Footer } from "@/components/footer"
+import type { Metadata } from "next";
+import Link from "next/link";
+
+import { SiteNav } from "@/components/site/site-nav";
+import { Footer } from "@/components/site/footer";
+import { CONTACT_EMAIL } from "@/content/site";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy - Plarix",
-  description: "How Plarix collects, uses, and protects information submitted through plarix.dev.",
-  alternates: {
-    canonical: "https://plarix.dev/privacy",
+  title: "Privacy",
+  description: "How Plarix collects, uses and protects information submitted through plarix.dev.",
+  alternates: { canonical: "https://plarix.dev/privacy" },
+};
+
+const sections = [
+  {
+    h: "What we collect",
+    p: [
+      "When you submit the count request or contact form on plarix.dev, we collect your first and last name, company name, work email, and the process you told us to look at first. We also record the IP address the request came from, to rate limit abuse.",
+      "We do not collect payment information, passwords, or any sensitive personal data through this site.",
+    ],
   },
-}
+  {
+    h: "How we use it",
+    p: [
+      "Form submissions are used to respond to your request and work out whether what we do is a fit for your situation. We email you once in response. We do not add you to a mailing list, share your details with third parties, or contact you repeatedly without your consent.",
+    ],
+  },
+  {
+    h: "Analytics",
+    p: [
+      "This site uses Vercel Analytics, which collects aggregated, anonymised traffic data such as page views, referrers and device type. No cookies are set. No personally identifiable information is collected or stored by the analytics system.",
+    ],
+  },
+  {
+    h: "Retention and deletion",
+    p: [
+      "Form submissions are kept for as long as they are needed to manage the business relationship. If you want your information deleted, email us and we will remove it within 30 days.",
+    ],
+  },
+  {
+    h: "Who processes it",
+    p: [
+      "The site is hosted on Vercel. Form submissions are processed by a Plarix controlled API endpoint and stored in a Plarix controlled database. We do not use third party CRMs, marketing platforms or data brokers.",
+    ],
+  },
+  {
+    h: "Your rights",
+    p: [
+      "You have the right to access, correct or delete any personal information we hold about you. To exercise any of these rights, contact us at the address below.",
+    ],
+  },
+  {
+    h: "Changes",
+    p: [
+      "If this policy changes materially we will update the effective date at the top of this page. Continued use of plarix.dev after a change means you accept the updated policy.",
+    ],
+  },
+];
 
 export default function PrivacyPage() {
   return (
     <>
-      {/* Vertical margin lines */}
-      <div className="pointer-events-none fixed inset-0 z-50">
-        <div className="mx-auto h-full max-w-7xl">
-          <div className="relative h-full">
-            <div className="absolute left-0 top-0 h-full w-px bg-slate-800/20" />
-            <div className="absolute right-0 top-0 h-full w-px bg-slate-800/20" />
-          </div>
+      <SiteNav />
+
+      <main className="shell pb-24 pt-16 md:pb-32 md:pt-24">
+        <p className="text-[13px] text-text-tertiary">Effective August 19, 2026</p>
+        <h1 className="display mt-4 text-[clamp(2.25rem,6vw,3.75rem)]">Privacy</h1>
+        <p className="mt-7 max-w-[62ch] text-lg leading-relaxed text-text-secondary">
+          We collect the minimum necessary. We do not sell data. We do not run third party
+          advertising. This page explains exactly what happens to anything you send us through
+          plarix.dev.
+        </p>
+
+        <div className="mt-16 max-w-[68ch] space-y-12">
+          {sections.map((s) => (
+            <section key={s.h}>
+              <h2 className="text-xl text-white md:text-2xl" style={{ letterSpacing: "-0.02em" }}>
+                {s.h}
+              </h2>
+              {s.p.map((p, i) => (
+                <p key={i} className="mt-4 text-base leading-relaxed text-text-secondary md:text-[17px]">
+                  {p}
+                </p>
+              ))}
+            </section>
+          ))}
+
+          <section>
+            <h2 className="text-xl text-white md:text-2xl" style={{ letterSpacing: "-0.02em" }}>
+              Contact
+            </h2>
+            <p className="mt-4 text-base leading-relaxed text-text-secondary md:text-[17px]">
+              <a href={`mailto:${CONTACT_EMAIL}`} className="text-white underline">
+                {CONTACT_EMAIL}
+              </a>
+            </p>
+          </section>
         </div>
-      </div>
 
-      <NavbarSubpage />
-
-      <main className="bg-slate-950 min-h-screen">
-        {/* Header */}
-        <section className="w-full bg-slate-950 pt-32 pb-12 border-b border-slate-800/30">
-          <div className="mx-auto max-w-7xl px-6 md:px-12 lg:px-16">
-            <div className="flex flex-col gap-6 max-w-3xl">
-              <h1 className="text-3xl md:text-4xl font-medium tracking-tight text-white">
-                Privacy Policy
-              </h1>
-              <p className="text-slate-500 text-sm">
-                Effective date: August 19, 2026
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Body */}
-        <section className="w-full bg-slate-950 py-16">
-          <div className="mx-auto max-w-7xl px-6 md:px-12 lg:px-16">
-            <div className="max-w-3xl flex flex-col gap-10">
-
-              <div className="flex flex-col gap-3">
-                <h2 className="text-lg font-medium text-white">Overview</h2>
-                <p className="text-base text-slate-400 leading-relaxed">
-                  Plarix ("we," "us," or "our") operates plarix.dev. This policy explains what
-                  information we collect when you visit the site or submit a contact request,
-                  how we use it, and how you can ask us to delete it.
-                </p>
-                <p className="text-base text-slate-400 leading-relaxed">
-                  We collect the minimum necessary. We do not sell data. We do not run
-                  third-party advertising.
-                </p>
-              </div>
-
-              <div className="flex flex-col gap-3">
-                <h2 className="text-lg font-medium text-white">What We Collect</h2>
-                <p className="text-base text-slate-400 leading-relaxed">
-                  When you submit the process audit or contact form on plarix.dev, we collect:
-                </p>
-                <ul className="flex flex-col gap-2 mt-1">
-                  {["First and last name", "Company name", "Business email address"].map((item) => (
-                    <li key={item} className="flex items-center gap-3 text-sm text-slate-400">
-                      <div className="w-1 h-1 bg-amber-500 shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                <p className="text-base text-slate-400 leading-relaxed mt-1">
-                  We do not collect payment information, passwords, or any sensitive personal
-                  data through this site.
-                </p>
-              </div>
-
-              <div className="flex flex-col gap-3">
-                <h2 className="text-lg font-medium text-white">How We Use It</h2>
-                <p className="text-base text-slate-400 leading-relaxed">
-                  Form submissions are used solely to respond to your inquiry and determine
-                  whether Plarix's services are a fit for your situation. We will email you
-                  once in response. We will not add you to a mailing list, share your details
-                  with third parties, or contact you repeatedly without your consent.
-                </p>
-              </div>
-
-              <div className="flex flex-col gap-3">
-                <h2 className="text-lg font-medium text-white">Analytics</h2>
-                <p className="text-base text-slate-400 leading-relaxed">
-                  This site uses{" "}
-                  <a
-                    href="https://vercel.com/docs/analytics"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-amber-500 hover:text-amber-400 transition-colors underline underline-offset-2"
-                  >
-                    Vercel Analytics
-                  </a>
-                  , which collects aggregated, anonymised traffic data (page views, referrers,
-                  device type). No cookies are set. No personally identifiable information is
-                  collected or stored by the analytics system.
-                </p>
-              </div>
-
-              <div className="flex flex-col gap-3">
-                <h2 className="text-lg font-medium text-white">Data Retention</h2>
-                <p className="text-base text-slate-400 leading-relaxed">
-                  Contact form submissions are retained for as long as necessary to manage the
-                  business relationship. If you would like your information deleted, email us
-                  at{" "}
-                  <a
-                    href="mailto:hello@plarix.dev"
-                    className="text-amber-500 hover:text-amber-400 transition-colors underline underline-offset-2"
-                  >
-                    hello@plarix.dev
-                  </a>{" "}
-                  and we will remove it within 30 days.
-                </p>
-              </div>
-
-              <div className="flex flex-col gap-3">
-                <h2 className="text-lg font-medium text-white">Third-Party Services</h2>
-                <p className="text-base text-slate-400 leading-relaxed">
-                  The site is hosted on Vercel. Form submissions are processed via a Plarix-
-                  controlled API endpoint. We do not use third-party CRMs, marketing platforms,
-                  or data brokers.
-                </p>
-              </div>
-
-              <div className="flex flex-col gap-3">
-                <h2 className="text-lg font-medium text-white">Your Rights</h2>
-                <p className="text-base text-slate-400 leading-relaxed">
-                  You have the right to access, correct, or delete any personal information we
-                  hold about you. To exercise any of these rights, contact us at{" "}
-                  <a
-                    href="mailto:hello@plarix.dev"
-                    className="text-amber-500 hover:text-amber-400 transition-colors underline underline-offset-2"
-                  >
-                    hello@plarix.dev
-                  </a>
-                  .
-                </p>
-              </div>
-
-              <div className="flex flex-col gap-3">
-                <h2 className="text-lg font-medium text-white">Changes to This Policy</h2>
-                <p className="text-base text-slate-400 leading-relaxed">
-                  If this policy changes materially, we will update the effective date at the
-                  top of this page. Continued use of plarix.dev after a change constitutes
-                  acceptance of the updated policy.
-                </p>
-              </div>
-
-              <div className="flex flex-col gap-3">
-                <h2 className="text-lg font-medium text-white">Contact</h2>
-                <p className="text-base text-slate-400 leading-relaxed">
-                  Plarix<br />
-                  <a
-                    href="mailto:hello@plarix.dev"
-                    className="text-amber-500 hover:text-amber-400 transition-colors underline underline-offset-2"
-                  >
-                    hello@plarix.dev
-                  </a>
-                </p>
-              </div>
-
-            </div>
-          </div>
-        </section>
+        <Link
+          href="/"
+          className="mt-16 inline-flex text-[15px] text-text-secondary transition-colors duration-200 hover:text-white"
+        >
+          Back to the site
+        </Link>
       </main>
 
       <Footer />
     </>
-  )
+  );
 }

@@ -1,44 +1,77 @@
-import { Navbar, Hero } from "@/components/hero";
-import { ScrollToTop } from "@/components/scroll-to-top";
-import { ProblemSection } from "@/components/problem-section";
-import { HowItWorksSection } from "@/components/approach-section";
-import { FeaturesSection } from "@/components/features-section";
-import { PricingSection } from "@/components/pricing-section";
-import { TrustSection } from "@/components/trust-section";
-import { FaqSection } from "@/components/faq-section";
-import { CtaSection } from "@/components/cta-section";
-import { Footer } from "@/components/footer";
+import fs from "node:fs";
+import path from "node:path";
+
+import { Hero } from "@/components/site/hero";
+import { AfterTheCall } from "@/components/site/after-the-call";
+import { Processes } from "@/components/site/processes";
+import { Method } from "@/components/site/method";
+import { Start } from "@/components/site/start";
+import { Refusals } from "@/components/site/refusals";
+import { Pricing } from "@/components/site/pricing";
+import { Faq } from "@/components/site/faq";
+import { Closing } from "@/components/site/closing";
+import { Footer } from "@/components/site/footer";
+import { faqs } from "@/content/site";
+
+/**
+ * The cinematic loop is optional. Drop it at public/video/hero.mp4 (plus an
+ * optional first frame at public/video/hero-poster.jpg) and it takes over the
+ * hero on the next build. Until then the canvas scene behind it carries the page.
+ */
+function heroMedia() {
+  const dir = path.join(process.cwd(), "public", "video");
+  const has = (file: string) => {
+    try {
+      return fs.existsSync(path.join(dir, file));
+    } catch {
+      return false;
+    }
+  };
+  const video = ["hero.mp4", "hero.webm"].find(has);
+  const poster = ["hero-poster.jpg", "hero-poster.png", "hero-poster.webp"].find(has);
+  return {
+    videoSrc: video ? `/video/${video}` : undefined,
+    posterSrc: poster ? `/video/${poster}` : undefined,
+  };
+}
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
 
 export default function Home() {
+  const { videoSrc, posterSrc } = heroMedia();
+
   return (
     <>
-      {/* Vertical margin lines */}
-      <div className="pointer-events-none fixed inset-0 z-50">
-        <div className="mx-auto h-full max-w-7xl">
-          <div className="relative h-full">
-            <div className="absolute left-0 top-0 h-full w-px bg-slate-800/20" />
-            <div className="absolute right-0 top-0 h-full w-px bg-slate-800/20" />
-          </div>
-        </div>
-      </div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
 
-      <ScrollToTop />
+      <Hero videoSrc={videoSrc} posterSrc={posterSrc} />
 
-      {/* Single sticky navbar - always sticks to top on scroll, no jiggle */}
-      <Navbar />
-
-      <main>
-        <Hero />
-        <ProblemSection />
-        <HowItWorksSection />
-        <FeaturesSection />
-        <PricingSection />
-        <TrustSection />
-        <FaqSection />
-        <CtaSection />
+      {/* Everything below scrolls up over the fixed hero footage. */}
+      <main className="relative z-20 bg-background">
+        <AfterTheCall />
+        <Processes />
+        <Method />
+        <Start />
+        <Refusals />
+        <Pricing />
+        <Faq />
+        <Closing />
       </main>
 
-      <Footer />
+      <div className="relative z-20 bg-background">
+        <Footer />
+      </div>
     </>
   );
 }
