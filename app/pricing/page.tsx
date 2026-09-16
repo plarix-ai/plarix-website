@@ -4,14 +4,14 @@ import { Footer } from "@/components/footer"
 import { PricingSection } from "@/components/pricing-section"
 
 export const metadata: Metadata = {
-  title: "Pricing — Plarix",
+  title: "Pricing - Plarix",
   description:
     "Plarix pricing: a free diagnostic, a one-time build scoped to what we find, a flat monthly fee, and an optional outcome bonus after 90 days of proven numbers.",
   alternates: {
     canonical: "https://plarix.dev/pricing",
   },
   openGraph: {
-    title: "Pricing — Plarix",
+    title: "Pricing - Plarix",
     description:
       "Plarix pricing: a free diagnostic, a one-time build scoped to what we find, a flat monthly fee, and an optional outcome bonus after 90 days of proven numbers.",
     url: "https://plarix.dev/pricing",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pricing — Plarix",
+    title: "Pricing - Plarix",
     description:
       "Plarix pricing: a free diagnostic, a one-time build scoped to what we find, a flat monthly fee, and an optional outcome bonus after 90 days of proven numbers.",
   },

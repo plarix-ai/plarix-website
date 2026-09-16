@@ -5,14 +5,14 @@ import { FaqSection } from "@/components/faq-section"
 import { faqs } from "@/lib/faq-data"
 
 export const metadata: Metadata = {
-  title: "FAQ — Plarix",
+  title: "FAQ - Plarix",
   description:
     "Common questions about how Plarix finds and files warranty claims, contract terms, and platform integrations with ServiceTitan, Jobber, and FieldEdge.",
   alternates: {
     canonical: "https://plarix.dev/faq",
   },
   openGraph: {
-    title: "FAQ — Plarix",
+    title: "FAQ - Plarix",
     description:
       "Common questions about how Plarix finds and files warranty claims, contract terms, and platform integrations with ServiceTitan, Jobber, and FieldEdge.",
     url: "https://plarix.dev/faq",
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "FAQ — Plarix",
+    title: "FAQ - Plarix",
     description:
       "Common questions about how Plarix finds and files warranty claims, contract terms, and platform integrations.",
   },

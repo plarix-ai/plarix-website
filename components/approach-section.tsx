@@ -33,7 +33,7 @@ const workflowSteps = [
     id: 2,
     title: "2. Build",
     description:
-      "If there's real money, we build the system that catches it — plugged into ServiceTitan, Jobber, FieldEdge, whatever you already run. You don't switch platforms.",
+      "If there's real money, we build the system that catches it, plugged into ServiceTitan, Jobber, FieldEdge, whatever you already run. You don't switch platforms.",
     icon: <Wrench className="w-5 h-5" />,
     visual: (
       <div className="flex h-full w-full items-center justify-center bg-slate-900/60 p-8">

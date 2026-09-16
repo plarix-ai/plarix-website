@@ -9,7 +9,7 @@ const CATCHES = [
   "Labor reimbursement claims",
   "Rebate and incentive deadlines",
   "Claims rejected once and never resubmitted",
-  "Every manufacturer's portal, tracked in one place — you don't juggle logins",
+  "Every manufacturer's portal, tracked in one place. You don't juggle logins",
 ];
 
 const containerVariants = {

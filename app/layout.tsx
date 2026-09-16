@@ -5,7 +5,7 @@ import { MotionConfig } from 'framer-motion'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Plarix — Warranty Claim Recovery for HVAC & Plumbing Contractors',
+  title: 'Plarix - Warranty Claim Recovery for HVAC & Plumbing Contractors',
   description: 'Plarix finds and files the manufacturer warranty claims, parts credits, and rebates HVAC and plumbing contractors have already earned but never collected. Free diagnostic. No contract.',
   keywords: [
     'warranty claims automation',
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     canonical: 'https://plarix.dev',
   },
   openGraph: {
-    title: 'Plarix — Warranty Claim Recovery for HVAC & Plumbing Contractors',
+    title: 'Plarix - Warranty Claim Recovery for HVAC & Plumbing Contractors',
     description: 'Plarix finds and files the manufacturer warranty claims, parts credits, and rebates HVAC and plumbing contractors have already earned but never collected. Free diagnostic. No contract.',
     url: 'https://plarix.dev',
     siteName: 'Plarix',
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Plarix — Warranty Claim Recovery for HVAC & Plumbing Contractors',
+    title: 'Plarix - Warranty Claim Recovery for HVAC & Plumbing Contractors',
     description: 'Plarix finds and files the manufacturer warranty claims, parts credits, and rebates HVAC and plumbing contractors have already earned but never collected. Free diagnostic. No contract.',
     site: '@theplarix',
     creator: '@theplarix',

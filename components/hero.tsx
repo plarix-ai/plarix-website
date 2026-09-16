@@ -154,8 +154,8 @@ export function Hero() {
         </h1>
 
         <p className="mt-6 max-w-2xl text-balance text-center text-sm leading-relaxed text-white/50 md:text-base">
-          We go through your open and closed warranty claims — parts, labor, rebates, every manufacturer
-          portal — and find what should&apos;ve been filed and wasn&apos;t. Free to check. If we don&apos;t
+          We go through your open and closed warranty claims: parts, labor, rebates, every manufacturer
+          portal. We find what should&apos;ve been filed and wasn&apos;t. Free to check. If we don&apos;t
           find anything, you don&apos;t pay anything.
         </p>
 

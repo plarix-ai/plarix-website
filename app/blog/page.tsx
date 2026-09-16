@@ -3,25 +3,25 @@ import { NavbarSubpage } from "@/components/navbar-subpage"
 import { Footer } from "@/components/footer"
 
 export const metadata: Metadata = {
-  title: "Blog — Plarix",
+  title: "Blog - Plarix",
   description:
-    "Writing on warranty claim recovery for HVAC and plumbing contractors — what gets missed, what it costs, and how to catch it.",
+    "Writing on warranty claim recovery for HVAC and plumbing contractors. What gets missed, what it costs, and how to catch it.",
   alternates: {
     canonical: "https://plarix.dev/blog",
   },
   openGraph: {
-    title: "Blog — Plarix",
+    title: "Blog - Plarix",
     description:
-      "Writing on warranty claim recovery for HVAC and plumbing contractors — what gets missed, what it costs, and how to catch it.",
+      "Writing on warranty claim recovery for HVAC and plumbing contractors. What gets missed, what it costs, and how to catch it.",
     url: "https://plarix.dev/blog",
     siteName: "Plarix",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Blog — Plarix",
+    title: "Blog - Plarix",
     description:
-      "Writing on warranty claim recovery for HVAC and plumbing contractors — what gets missed, what it costs, and how to catch it.",
+      "Writing on warranty claim recovery for HVAC and plumbing contractors. What gets missed, what it costs, and how to catch it.",
   },
 }
 
