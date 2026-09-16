@@ -9,8 +9,8 @@ import { Pricing } from "@/components/site/pricing";
 import { Faq } from "@/components/site/faq";
 import { Closing } from "@/components/site/closing";
 import { ColumnRules } from "@/components/site/column-rules";
-import { JsonLd, faqLd, itemListLd } from "@/lib/seo";
-import { faqs, processes } from "@/content/site";
+import { JsonLd, itemListLd } from "@/lib/seo";
+import { processes } from "@/content/site";
 
 export const metadata = {
   alternates: { canonical: "/" },
@@ -21,7 +21,6 @@ export default function Home() {
     <>
       <JsonLd
         data={[
-          faqLd(faqs.slice(0, 8)),
           itemListLd(
             "Processes Plarix runs for home services companies",
             processes.map((p) => ({

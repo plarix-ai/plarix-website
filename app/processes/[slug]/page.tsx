@@ -31,8 +31,7 @@ export default async function ProcessPage({ params }: { params: Promise<{ slug: 
   const process = processes.find((p) => p.slug === slug);
   if (!process) notFound();
 
-  const index = processes.findIndex((p) => p.slug === slug);
-  const next = processes[(index + 1) % processes.length];
+  const others = processes.filter((p) => p.slug !== slug);
 
   const crumbs = [
     { label: "Plarix", href: "/" },
@@ -103,21 +102,30 @@ export default async function ProcessPage({ params }: { params: Promise<{ slug: 
             </div>
           </Reveal>
 
-          <Reveal delay={260} className="mt-14">
-            <Link
-              href={`/processes/${next.slug}`}
-              className="group inline-flex items-center gap-3 text-base text-text-secondary transition-colors duration-200 hover:text-white md:text-lg"
-            >
-              <span className="text-text-tertiary">Next</span>
-              <span className="link-sweep">{next.name}</span>
-              <ArrowRight
-                size={18}
-                strokeWidth={1.75}
-                aria-hidden="true"
-                className="transition-transform duration-200 ease-out group-hover:translate-x-1"
-              />
-            </Link>
+          <Reveal delay={260} className="mt-16 border-t border-hairline pt-12 md:mt-24">
+            <h2 className="t-label mb-8 text-text-tertiary">The other five</h2>
+            <ul className="grid gap-x-12 gap-y-1 md:grid-cols-2">
+              {others.map((o) => (
+                <li key={o.slug}>
+                  <Link
+                    href={`/processes/${o.slug}`}
+                    className="group flex items-baseline justify-between gap-6 border-b border-hairline py-5"
+                  >
+                    <span className="t-h4 text-text-secondary transition-colors duration-200 group-hover:text-white">
+                      {o.name}
+                    </span>
+                    <ArrowRight
+                      size={17}
+                      strokeWidth={1.75}
+                      aria-hidden="true"
+                      className="shrink-0 translate-y-0.5 text-text-tertiary transition-all duration-200 ease-out group-hover:translate-x-1 group-hover:text-white"
+                    />
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </Reveal>
+
         </section>
 
         <Closing />

@@ -182,3 +182,27 @@ assistant crawlers and allows them.
 Verified at 320, 390, 768, 1024, 1440 and 1920 across all eleven route shapes: no
 horizontal overflow anywhere, no console errors, nothing below the legible type floor,
 and the mechanical detector clean.
+
+
+## Audit results
+
+Measured rather than asserted, on the shipped build:
+
+- **Accessibility.** axe-core against WCAG 2.0 and 2.1 A and AA, all twelve route shapes:
+  zero violations. Tab order from a cold load runs skip link, logo, the four nav items,
+  then the primary action, which is the order the page is written in.
+- **Layout.** 320, 390, 768, 1024, 1440 and 1920 across every route: no horizontal
+  overflow, exactly one h1 per page, no console errors, and nothing below the type floor.
+- **Stability.** Cumulative layout shift 0.000 on the home page, pricing and a journal
+  post. First contentful paint 60 to 232ms locally. The shader carries no layout cost
+  because it is a fixed full-viewport canvas that never participates in flow.
+- **Structured data.** FAQPage resolves on exactly one route. Repeating the same
+  question set across three pages, which the first multi-page pass did, is duplicate
+  structured data rather than three chances to be cited.
+
+## Copy that reaches a user
+
+Error text is written for the person reading it, not the person who wrote it. The lead
+endpoint used to answer a failed submission with "Missing server configuration", which is
+a sentence about our infrastructure shown to a contractor. It now says we could not
+record it and names the email address that will.

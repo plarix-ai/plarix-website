@@ -44,8 +44,8 @@ export function CountForm() {
       setStatus("error");
       setMessage(
         err instanceof Error
-          ? `${err.message} You can also reach us at ${CONTACT_EMAIL}.`
-          : `Something went wrong. Email us at ${CONTACT_EMAIL}.`,
+          ? `${err.message} Email ${CONTACT_EMAIL} and we will pick it up from there.`
+          : `Something went wrong on our end. Email ${CONTACT_EMAIL} and we will pick it up from there.`,
       );
     }
   }
