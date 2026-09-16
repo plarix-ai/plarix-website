@@ -1,24 +1,61 @@
 # Plarix — Design Direction
 
+Replaces the previous direction entirely. The old look is evidence and anti-reference, not a base.
+
 ## Direction contract
 
-**THESIS:** A B2B utility product for people who don't want to be sold to — the page proves it by refusing to decorate. No kicker labels, no icon-card grids, no matching-entrance animations. The category default here is the generic SaaS template (six-card grids, badge pills over every heading); this refuses it by building each section as a distinct composition instead of the same shell reused twelve times.
+**THESIS:** A cinematic, near-silent industrial page for a company whose product is invisible work.
+The category sells itself with product screenshots, purple gradients and stock "AI" abstraction.
+This refuses all three. There is no dashboard hero, because the promise is that the owner never has
+to look at a dashboard. The page shows the world the work happens in, and then gets out of the way.
 
-**OWN-WORLD:** Near-black (`slate-950`) ground, off-white text, one warm gold accent (`amber-500`) used only for real dollar figures and the primary CTA — nowhere else. Geist throughout. Sharp corners (no radius) as the consistent geometric signature — a ledger/precision feel, not a rounded-friendly SaaS feel. Depth comes from soft tinted shadows and subtle gradient glow, never from borders stacked on borders.
+**OWN-WORLD:** Pure black ground. Full-bleed cinematic video of a suburban neighborhood at dusk,
+lights coming on in sequence, held behind the entire first viewport. A single fixed blur veil masked
+to the bottom 45% lifts the type off the footage without darkening it. Type is Inter, 300–600,
+tracking -0.03em on display. Colour is monochrome: black, graphite, silver, off-white, taken
+straight from the logo's own brushed-metal material. One warm amber note, used only where real money
+is named. Controls are "liquid glass": near-transparent, 4px backdrop blur, a 1.4px gradient stroke
+that catches light top and bottom, never a flat border. Pills for controls, 14–16px radius for
+surfaces.
 
-**STORY:** A shop owner reading on a phone between jobs understands in one scroll: there's money sitting unfiled, Plarix finds it for free, files it, and only gets paid when they do. Nothing here asks for trust before it's earned — the pricing is public, the promises are specific, the FAQ answers the skeptical questions directly.
+**STORY:** An owner lands and reads four words that name a problem he has never heard named. He
+scrolls and sees the trail of work every job leaves behind. He sees the six processes we run, and
+that warranty is one of them and not the company. He sees how we work, in three verbs. He sees what
+we will never do, which is the part he actually believes. He books the count.
 
-**FIRST VIEWPORT:** Full-height hero, centered, one confident headline at real display scale (not a template hero-with-badge), a one-line proof-first subhead, a single gold CTA. Behind it: a slow, barely-there radial glow using the brand's own graphite-to-white gradient — not a neon AI-glow, a suggestion of the logo's own material.
+**FIRST VIEWPORT:** Full height. Video behind everything. Nav at top with an oversized logo lockup.
+Content anchored to the bottom, not centred: three facts, one four-word headline at display scale,
+one line of subhead, two buttons, and a rotating process panel on the right whose arrows do real
+work. Everything arrives on a single staggered blur-fade-up, 0 to 900ms, and never repeats.
 
-**FORM:** Code-led, no comp round (session has no practical image-gen/decision-page loop available; brief is already explicit and specific — dark, Linear-reference, premium, remarkable). Reference world: Linear's own marketing site — restrained color, confident oversized type, generous whitespace, sections that vary in composition rather than repeating a card-grid shell, motion that's purposeful and singular rather than scattered.
+**FORM:** Code-led. Next.js App Router, Tailwind v4, Lucide icons, Framer Motion only where a spring
+or scroll-linked value is genuinely needed; CSS transitions and keyframes everywhere else so motion
+stays off the main thread.
 
-**FINISH:** unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance.
+**FINISH:** The hero entrance is the page's one authored moment. Every section below it gets a single
+calm in-view reveal, not a second entrance competing with the first.
 
-## Rules this build follows (from the Impeccable craft floor)
+## Rules this build follows
 
-- No eyebrow/kicker pill above any heading, anywhere. Ever.
-- No default "bordered box grid" as a section's structure. Cards only where grouping genuinely needs a boundary (pricing tiers), and then a soft shadow, never a border-plus-shadow ghost card.
-- No repeated identical per-word blur-in heading animation on every section — that's one entrance, scattered. The hero gets the signature moment; other sections get a single calm fade/slide.
-- No "big number / small label / accent" stat-tile template as the default stats treatment.
-- Tracking stays in the -0.02em to -0.03em range for display type, not maxed to -0.04em.
-- Selection color, focus rings, and tabular numerals are themed from the palette, not left as browser defaults.
+- No eyebrow or kicker label above any heading. Anywhere. Ever.
+- No same-size icon-card grid as a section's structure. Each section is its own composition.
+- No gradient text. Emphasis is weight and size.
+- No section numbers except where they mark real position in a sequence (the hero rotator counter).
+- Display tracking -0.03em, never past -0.04em. Body measure 65–75ch.
+- Glass is a specific material with a stated recipe, used on controls only, never sprinkled as decor.
+- Elevation declared once: shadow or stroke, never a 1px border sitting under a wide soft shadow.
+- Selection colour, focus rings, scrollbar and tabular numerals are themed from the palette.
+- Every `:active` on a pressable element scales to 0.97. Every entrance eases out, never in.
+- No em dashes in shipped copy.
+- The video is progressive enhancement. The page is finished and cinematic with the video absent,
+  failed, or suppressed by `prefers-reduced-motion`.
+
+## Motion recipe
+
+```
+--ease-out:    cubic-bezier(0.23, 1, 0.32, 1)     entrances, reveals
+--ease-in-out: cubic-bezier(0.77, 0, 0.175, 1)    on-screen movement
+```
+
+Hero entrance 1000ms, stagger 50ms. Section reveals 700ms. Controls 160–220ms. Nothing in the UI
+layer runs past 300ms.
