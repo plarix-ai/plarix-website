@@ -40,7 +40,7 @@ export function ProblemSection() {
 
           <p className="text-balance text-sm leading-relaxed text-slate-500 max-w-xl">
             Six major FSM platforms, 1,400+ reviews analyzed. Not one handles manufacturer warranty
-            claim tracking — not ServiceTitan, not Jobber, not Housecall Pro. The process is entirely
+            claim tracking: not ServiceTitan, not Jobber, not Housecall Pro. The process is entirely
             manual, entirely off-platform.
           </p>
 
@@ -52,10 +52,10 @@ export function ProblemSection() {
             className="mt-4 flex gap-4 border-l-2 border-white/15 pl-6 text-left max-w-xl"
           >
             <p className="text-base italic leading-relaxed text-slate-300">
-              &ldquo;We eat warranty labor all the time — it&apos;s just the cost of doing business
+              &ldquo;We eat warranty labor all the time. It&apos;s just the cost of doing business
               at this point.&rdquo;
               <span className="block mt-2 not-italic text-sm text-slate-500">
-                — what shop owners tell us, before they see the number
+                What shop owners tell us, before they see the number
               </span>
             </p>
           </motion.div>

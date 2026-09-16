@@ -12,12 +12,12 @@ const deliverables = [
   {
     icon: <BarChart3 className="w-6 h-6 text-white/70" />,
     title: "Monthly recovery report",
-    description: "Claims filed, claims paid, dollars recovered, staff hours freed — reported on a schedule you set. One email. No login required.",
+    description: "Claims filed, claims paid, dollars recovered, staff hours freed. Reported on a schedule you set. One email. No login required.",
   },
   {
     icon: <Phone className="w-6 h-6 text-white/70" />,
     title: "Quarterly walkthrough call",
-    description: "A plain-language call to review what came back, what is still pending, and what we recommend filing next. No deck, no upsell — just the numbers.",
+    description: "A plain-language call to review what came back, what is still pending, and what we recommend filing next. No deck, no upsell. Just the numbers.",
   },
 ];
 

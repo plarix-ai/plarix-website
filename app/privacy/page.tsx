@@ -3,7 +3,7 @@ import { NavbarSubpage } from "@/components/navbar-subpage"
 import { Footer } from "@/components/footer"
 
 export const metadata: Metadata = {
-  title: "Privacy Policy — Plarix",
+  title: "Privacy Policy - Plarix",
   description: "How Plarix collects, uses, and protects information submitted through plarix.dev.",
   alternates: {
     canonical: "https://plarix.dev/privacy",

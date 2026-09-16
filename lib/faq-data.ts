@@ -9,13 +9,13 @@ export const faqs: FaqItem[] = [
     id: "is-this-ai",
     question: "Is this AI?",
     answer:
-      "We almost never lead with that word. You don't hire a plumber because he uses copper pipe — you hire him because your basement stops flooding. We use modern software to read manufacturer portals and file claims. Call it whatever you want.",
+      "We almost never lead with that word. You don't hire a plumber because he uses copper pipe. You hire him because your basement stops flooding. We use modern software to read manufacturer portals and file claims. Call it whatever you want.",
   },
   {
     id: "replace-team",
     question: "Will this replace someone on my team?",
     answer:
-      "No. It picks up the paperwork nobody has time for. If a role changes, it's because that person got freed up for something better — never because they got replaced.",
+      "No. It picks up the paperwork nobody has time for. If a role changes, it's because that person got freed up for something better, never because they got replaced.",
   },
   {
     id: "already-have-someone",
@@ -27,7 +27,7 @@ export const faqs: FaqItem[] = [
     id: "switch-platforms",
     question: "Do I need to switch off ServiceTitan, Jobber, or FieldEdge?",
     answer:
-      "No. We sit beside whatever you already run. We read what's there — that's the whole ask.",
+      "No. We sit beside whatever you already run. We read what's there. That's the whole ask.",
   },
   {
     id: "free-count-cost",
@@ -39,7 +39,7 @@ export const faqs: FaqItem[] = [
     id: "find-nothing",
     question: "What if you don't find anything?",
     answer:
-      "Then you don't pay us anything. That's not a guarantee — that's just what counting honestly looks like.",
+      "Then you don't pay us anything. That's not a guarantee. That's just what counting honestly looks like.",
   },
   {
     id: "data-access",

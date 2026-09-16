@@ -41,7 +41,7 @@ export function PricingSection() {
           </h2>
           <p className="text-slate-400 text-base leading-relaxed max-w-xl">
             No contact form standing between you and the number. Exact figures land here once your
-            diagnostic is done — this is the structure, not a guess.
+            diagnostic is done. This is the structure, not a guess.
           </p>
         </div>
 

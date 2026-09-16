@@ -26,7 +26,7 @@ const promises = [
   },
   {
     icon: <Layers className="w-5 h-5 text-white/70" />,
-    text: "We will never become the platform. Whatever you already run, we sit beside it — not on top of it, not instead of it.",
+    text: "We will never become the platform. Whatever you already run, we sit beside it, not on top of it, not instead of it.",
   },
 ];
 

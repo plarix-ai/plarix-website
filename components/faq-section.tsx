@@ -44,7 +44,7 @@ export function FaqSection() {
             </h2>
 
             <p className="text-balance text-base md:text-lg text-slate-400 leading-relaxed max-w-md">
-              Straight answers about how Plarix finds, files, and tracks warranty claims — and what it costs.
+              Straight answers about how Plarix finds, files, and tracks warranty claims, and what it costs.
             </p>
 
             <p className="text-sm text-slate-500">

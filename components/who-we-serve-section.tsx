@@ -8,21 +8,21 @@ const audiences = [
     icon: <Wrench className="w-6 h-6 text-white/70" />,
     title: "HVAC contractors",
     description:
-      "You are running 20–100 trucks, using ServiceTitan, Jobber, or FieldEdge, and someone on your team is already doing warranty claims by hand — or you are hiring for it. You know parts are being replaced under warranty every week, and you are not sure how many are actually getting filed.",
+      "You are running 20–100 trucks, using ServiceTitan, Jobber, or FieldEdge, and someone on your team is already doing warranty claims by hand, or you are hiring for it. You know parts are being replaced under warranty every week, and you are not sure how many are actually getting filed.",
     concerns: ["$3M–$25M revenue", "20–100 employees", "Uses ServiceTitan, Jobber, or FieldEdge", "Someone already filing claims manually"],
   },
   {
     icon: <Droplets className="w-6 h-6 text-white/70" />,
     title: "Plumbing contractors",
     description:
-      "Same profile as HVAC: mid-sized shop, running an FSM platform, dealing with manufacturer warranties on fixtures, water heaters, and pumps — and nobody has time to chase the portals.",
+      "Same profile as HVAC: mid-sized shop, running an FSM platform, dealing with manufacturer warranties on fixtures, water heaters, and pumps. Nobody has time to chase the portals.",
     concerns: ["$3M–$25M revenue", "20–100 employees", "Uses ServiceTitan, Jobber, or FieldEdge", "Warranty parts billed to customer instead of filed"],
   },
   {
     icon: <Zap className="w-6 h-6 text-white/70" />,
     title: "Also a fit: electrical & roofing",
     description:
-      "Electrical and roofing contractors that carry manufacturer warranties on equipment and materials — panels, inverters, shingles, underlayment. If you have a parts warranty and a portal to file through, Plarix works the same way.",
+      "Electrical and roofing contractors that carry manufacturer warranties on equipment and materials: panels, inverters, shingles, underlayment. If you have a parts warranty and a portal to file through, Plarix works the same way.",
     concerns: ["Manufacturer warranty on materials", "Multiple portals to manage", "Same manual filing bottleneck", "Also a fit if you meet the revenue range"],
   },
 ];

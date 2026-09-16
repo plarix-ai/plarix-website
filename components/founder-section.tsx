@@ -20,7 +20,7 @@ export function FounderSection() {
             </span>
           </div>
           <p className="text-base text-slate-400 leading-relaxed max-w-xl">
-            In the founders&apos; own words — which shop, which conversation, which number made this
+            In the founders&apos; own words: which shop, which conversation, which number made this
             worth building. Coming as we take on our first shops.
           </p>
         </motion.div>
