@@ -30,13 +30,7 @@ export default function PrivacyPage() {
         <section className="w-full bg-slate-950 pt-32 pb-12 border-b border-slate-800/30">
           <div className="mx-auto max-w-7xl px-6 md:px-12 lg:px-16">
             <div className="flex flex-col gap-6 max-w-3xl">
-              <div className="flex items-center gap-3 px-4 py-2 border border-slate-800/50 w-fit">
-                <div className="w-2.5 h-2.5 bg-amber-500" />
-                <span className="text-sm font-medium text-slate-500 tracking-wide">
-                  Legal
-                </span>
-              </div>
-              <h1 className="text-3xl md:text-4xl font-normal tracking-tight text-white">
+              <h1 className="text-3xl md:text-4xl font-medium tracking-tight text-white">
                 Privacy Policy
               </h1>
               <p className="text-slate-500 text-sm">

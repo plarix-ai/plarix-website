@@ -21,7 +21,7 @@ export function NavbarSubpage() {
       <div className="relative mx-auto flex h-14 max-w-7xl items-center px-6">
         {/* Logo */}
         <Link href="/" className="absolute left-6 top-1/2 -translate-y-1/2 z-10">
-          <PlarixLogo markSize={28} textClassName="text-base" />
+          <PlarixLogo height={32} />
         </Link>
 
         {/* Desktop nav */}

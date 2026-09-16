@@ -1,6 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { SectionHeading } from "@/components/section-heading";
 
 const tiers = [
   {
@@ -28,41 +30,40 @@ const tiers = [
 export function PricingSection() {
   return (
     <section id="pricing" className="w-full bg-slate-950 py-24 md:py-32 border-b border-slate-800/30">
-      <div className="mx-auto max-w-7xl px-6 md:px-12 lg:px-16">
-        <div className="flex flex-col items-center text-center gap-6 mb-16">
-          <div className="flex items-center gap-3 px-4 py-2 border border-slate-800/50 w-fit">
-            <div className="w-2.5 h-2.5 bg-white/30" />
-            <span className="text-sm font-medium text-slate-500 tracking-wide">
-              Pricing
-            </span>
-          </div>
-          <h2 className="text-balance text-4xl md:text-5xl font-normal tracking-tight text-white max-w-2xl">
+      <div className="mx-auto max-w-6xl px-6 md:px-12 lg:px-16">
+        <div className="flex flex-col gap-6 mb-16 max-w-2xl">
+          <SectionHeading className="text-4xl md:text-5xl">
             Pricing, in public. Same as everything else you pay for.
-          </h2>
-          <p className="text-slate-400 text-base leading-relaxed max-w-xl">
+          </SectionHeading>
+          <p className="text-slate-400 text-base leading-relaxed">
             No contact form standing between you and the number. Exact figures land here once your
             diagnostic is done. This is the structure, not a guess.
           </p>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.5 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-        >
-          {tiers.map((tier) => (
-            <div
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+          {tiers.map((tier, index) => (
+            <motion.div
               key={tier.name}
-              className="flex flex-col gap-3 p-8 border border-slate-800/30 bg-slate-900/20"
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: index * 0.08 }}
+              className={cn(
+                "flex flex-col gap-3 py-6 lg:py-2",
+                index > 0 && "lg:border-l lg:border-slate-800/50 lg:pl-8",
+                index > 0 && "lg:mt-0",
+                "border-t border-slate-800/40 lg:border-t-0 pt-6 lg:pt-0"
+              )}
             >
-              <span className="text-sm font-medium text-white uppercase tracking-wider">{tier.name}</span>
-              <span className="text-2xl font-normal text-white tracking-tight">{tier.price}</span>
+              <span className="text-xs font-medium text-slate-500 uppercase tracking-[0.15em]">
+                {String(index + 1).padStart(2, "0")} · {tier.name}
+              </span>
+              <span className="text-2xl font-medium text-white tracking-[-0.02em]">{tier.price}</span>
               <p className="text-sm text-slate-400 leading-relaxed">{tier.description}</p>
-            </div>
+            </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

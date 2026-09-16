@@ -39,7 +39,7 @@ export function Navbar() {
     <nav className="fixed top-0 left-0 z-[100] w-full bg-slate-950/25 backdrop-blur-md">
       <div className="relative mx-auto flex h-14 max-w-7xl items-center px-6">
         <Link href="/" className="absolute left-6 top-1/2 -translate-y-1/2 z-10">
-          <PlarixLogo markSize={28} textClassName="text-base" />
+          <PlarixLogo height={32} />
         </Link>
 
         <div className="hidden lg:flex items-center gap-8 text-sm text-white/60 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
@@ -123,14 +123,7 @@ export function Hero() {
       <div className="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-transparent to-slate-950" />
 
       <div className="relative z-10 flex h-full flex-col justify-center items-center px-6 pt-14 text-center">
-        <div className="flex items-center gap-3 px-4 py-2 border border-slate-800/50 mb-8">
-          <div className="w-2.5 h-2.5 bg-white/30" />
-          <span className="text-sm font-medium text-slate-500 tracking-wide">
-            Warranty Claims Automation for HVAC &amp; Plumbing
-          </span>
-        </div>
-
-        <h1 className="max-w-4xl text-balance text-5xl font-normal tracking-tight text-white md:text-6xl lg:text-7xl">
+        <h1 className="max-w-4xl text-balance text-5xl font-medium tracking-tight text-white md:text-6xl lg:text-7xl">
           {"The money was never lost. It was just never collected.".split(" ").map((word, i) => (
             <motion.span
               key={`hero-word-${word}-${i}`}

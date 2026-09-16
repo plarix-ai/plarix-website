@@ -66,24 +66,17 @@ export function CtaSection() {
     <section id="cta" className="relative w-full overflow-hidden bg-slate-100">
       <div className="relative mx-auto max-w-7xl px-6 md:px-12 lg:px-16 py-14 md:py-20 flex justify-center">
         <div className="max-w-2xl flex flex-col items-center text-center gap-6">
-          <div className="w-16 h-16 flex items-center justify-center bg-white/[0.06] border border-white/10">
-            <TrendingUp className="w-8 h-8 text-white/70" />
-          </div>
+          <TrendingUp className="w-8 h-8 text-slate-400" strokeWidth={1.5} />
 
-          <h2 className="text-balance text-4xl font-normal tracking-tight text-slate-950 md:text-5xl lg:text-6xl">
-            {"There is money sitting in your job history that the manufacturer owes you".split(" ").map((word, i) => (
-              <motion.span
-                key={`cta-${i}`}
-                initial={{ filter: "blur(10px)", opacity: 0 }}
-                whileInView={{ filter: "blur(0px)", opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.05 }}
-                className="inline-block mr-[0.25em]"
-              >
-                {word}
-              </motion.span>
-            ))}
-          </h2>
+          <motion.h2
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="text-balance text-4xl font-medium tracking-[-0.02em] text-slate-950 md:text-5xl lg:text-6xl"
+          >
+            There is money sitting in your job history that the manufacturer owes you
+          </motion.h2>
 
           <p className="text-balance max-w-xl text-base leading-relaxed text-slate-500 md:text-lg">
             Let us find it. The audit is free, the number is real, and there is no obligation to continue. No sales pressure. Just an honest look at what you are not filing.
