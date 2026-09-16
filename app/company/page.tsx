@@ -26,12 +26,12 @@ export default function CompanyPage() {
       <div id="main">
         <PageHeader eyebrowCrumbs={crumbs} title={company.heading} lede={company.lede} />
 
-        <section className="shell pb-20 md:pb-28">
+        <section className="shell pb-16 md:pb-24">
           {company.sections.map((s, i) => (
             <Reveal
               key={s.h}
               delay={i * 80}
-              className="grid gap-6 border-t border-hairline py-12 md:grid-cols-[minmax(0,20rem)_1fr] md:gap-16 md:py-16"
+              className="grid gap-6 border-t border-hairline py-12 md:grid-cols-[minmax(0,20rem)_1fr] md:gap-12 md:py-12"
             >
               <h2 className="t-h3 text-white">
                 {s.h}
@@ -48,7 +48,7 @@ export default function CompanyPage() {
         </section>
 
         <section className="border-t border-hairline bg-ink-900">
-          <div className="shell py-20 md:py-28">
+          <div className="shell py-16 md:py-24">
             <Reveal as="h2" className="t-h2 max-w-[14ch]">
               What we believe.
             </Reveal>

@@ -55,7 +55,7 @@ export default function HowItWorksPage() {
             <Reveal
               key={step.verb}
               delay={i * 90}
-              className="grid gap-6 border-t border-hairline py-12 md:grid-cols-[minmax(0,18rem)_1fr] md:gap-16 md:py-16"
+              className="grid gap-6 border-t border-hairline py-12 md:grid-cols-[minmax(0,18rem)_1fr] md:gap-12 md:py-12"
             >
               <div>
                 <h2 className="t-h2 text-white">

@@ -6,7 +6,7 @@ import { CONTACT_EMAIL, footerNav } from "@/content/site";
 export function Footer() {
   return (
     <footer className="relative z-20 border-t border-hairline bg-background">
-      <div className="shell py-16 md:py-20">
+      <div className="shell py-14 md:py-12">
         <div className="flex flex-col gap-12 md:flex-row md:items-start md:justify-between">
           <div className="max-w-[34ch]">
             <Logo scale={1.5} />

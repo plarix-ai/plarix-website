@@ -44,8 +44,8 @@ export default function CountPage() {
       <div id="main">
         <PageHeader eyebrowCrumbs={crumbs} title={closing.heading} lede={closing.body} />
 
-        <section className="shell pb-28 md:pb-40">
-          <div className="grid gap-14 lg:grid-cols-[0.95fr_1.05fr] lg:items-start lg:gap-20">
+        <section className="shell pb-16 md:pb-24">
+          <div className="grid gap-14 lg:grid-cols-[0.95fr_1.05fr] lg:items-start lg:gap-14">
             <Reveal className="reveal-stagger">
               <h2 className="mb-8 t-label text-text-tertiary">
                 What happens next

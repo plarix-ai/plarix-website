@@ -86,7 +86,7 @@ export default async function JournalPost({ params }: { params: Promise<{ slug: 
           </p>
         </PageHeader>
 
-        <div className="shell grid gap-14 pb-16 lg:grid-cols-[minmax(0,1fr)_15rem] lg:gap-20">
+        <div className="shell grid gap-14 pb-16 lg:grid-cols-[minmax(0,1fr)_15rem] lg:gap-14">
           <article className="measure">
             {post.body.map((block, i) => (
               <Reveal key={i} delay={i * 50} className="mt-14 first:mt-0">
@@ -111,7 +111,7 @@ export default async function JournalPost({ params }: { params: Promise<{ slug: 
           </aside>
         </div>
 
-        <div className="shell pb-20 md:pb-28">
+        <div className="shell pb-16 md:pb-24">
           <Reveal delay={200} className="border-t border-hairline pt-10">
             <Link
               href={`/journal/${next.slug}`}

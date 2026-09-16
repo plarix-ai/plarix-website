@@ -9,8 +9,8 @@ const dot = {
 
 export function AfterTheCall() {
   return (
-    <section className="shell py-28 md:py-40">
-      <div className="grid gap-16 lg:grid-cols-[1.15fr_0.85fr] lg:gap-24">
+    <section className="shell py-16 md:py-24">
+      <div className="grid gap-16 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
         <div>
           <Reveal as="h2" className="t-h2 max-w-[18ch]">
             {afterTheCall.heading}

@@ -3,7 +3,10 @@ import { PageHeader } from "@/components/site/page-header";
 import { Reveal } from "@/components/site/reveal";
 import { Comparison } from "@/components/site/comparison";
 import { Closing } from "@/components/site/closing";
-import { JsonLd, breadcrumbLd, faqLd, pageMeta } from "@/lib/seo";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+
+import { JsonLd, breadcrumbLd, pageMeta } from "@/lib/seo";
 import { faqs, pricing } from "@/content/site";
 
 export const metadata = pageMeta({
@@ -25,7 +28,7 @@ const priceFaqs = faqs.filter((f) =>
 export default function PricingPage() {
   return (
     <PageFrame>
-      <JsonLd data={[breadcrumbLd(crumbs), faqLd(priceFaqs)]} />
+      <JsonLd data={breadcrumbLd(crumbs)} />
 
       <div id="main">
         <PageHeader
@@ -40,7 +43,7 @@ export default function PricingPage() {
           }
         />
 
-        <section className="shell pb-20 md:pb-28">
+        <section className="shell pb-16 md:pb-24">
           <div className="grid gap-5 md:grid-cols-3">
             {pricing.tiers.map((tier, i) => (
               <Reveal
@@ -76,7 +79,7 @@ export default function PricingPage() {
 
         <Comparison />
 
-        <section className="shell border-t border-hairline py-20 md:py-28">
+        <section className="shell border-t border-hairline py-16 md:py-24">
           <Reveal as="h2" className="t-h2 max-w-[16ch]">
             Questions about the money.
           </Reveal>
@@ -91,6 +94,21 @@ export default function PricingPage() {
                 </p>
               </Reveal>
             ))}
+
+            <Reveal delay={120} className="pt-9">
+              <Link
+                href="/faq"
+                className="group inline-flex items-center gap-2.5 t-body text-text-secondary transition-colors duration-200 hover:text-white"
+              >
+                <span className="link-sweep">Every other question we get</span>
+                <ArrowRight
+                  size={17}
+                  strokeWidth={1.75}
+                  aria-hidden="true"
+                  className="transition-transform duration-200 ease-out group-hover:translate-x-1"
+                />
+              </Link>
+            </Reveal>
           </div>
         </section>
 

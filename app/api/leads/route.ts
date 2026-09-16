@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
     const supabase = getSupabaseClientOrNull();
     if (!supabase) {
       return NextResponse.json(
-        { error: "Service unavailable. Missing server configuration." },
+        { error: "We could not record that just now." },
         { status: 503 }
       );
     }
@@ -78,11 +78,11 @@ export async function POST(request: NextRequest) {
 
     if (error) {
       console.error("Supabase insert error:", error.message);
-      return NextResponse.json({ error: "Failed to save lead." }, { status: 500 });
+      return NextResponse.json({ error: "We could not record that just now." }, { status: 500 });
     }
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch {
-    return NextResponse.json({ error: "Something went wrong." }, { status: 500 });
+    return NextResponse.json({ error: "Something went wrong on our end." }, { status: 500 });
   }
 }

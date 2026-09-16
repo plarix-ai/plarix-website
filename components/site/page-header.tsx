@@ -26,7 +26,7 @@ export function PageHeader({
   children?: ReactNode;
 }) {
   return (
-    <header className="shell relative pb-14 pt-12 md:pb-20 md:pt-20">
+    <header className="shell relative pb-10 pt-10 md:pb-14 md:pt-16">
       {eyebrowCrumbs?.length ? (
         <nav aria-label="Breadcrumb" className="mb-8">
           <ol className="flex flex-wrap items-center gap-1.5 t-caption text-text-tertiary">
@@ -51,7 +51,7 @@ export function PageHeader({
         </nav>
       ) : null}
 
-      <div className="grid gap-7 lg:grid-cols-[1.05fr_0.95fr] lg:items-end lg:gap-20">
+      <div className="grid gap-7 lg:grid-cols-[1.05fr_0.95fr] lg:items-end lg:gap-14">
         <Reveal as="h1" className="t-h1 max-w-[15ch]">
           {title}
         </Reveal>

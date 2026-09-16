@@ -5,11 +5,11 @@ import { method } from "@/content/site";
 export function Method() {
   return (
     <section id="method" className="scroll-mt-24 border-t border-hairline">
-      <div className="shell py-28 md:py-40">
+      <div className="shell py-16 md:py-24">
         <SectionHead heading={method.heading}>{method.intro}</SectionHead>
 
         {/* A single rail running through three moments, not three boxes. */}
-        <div className="relative mt-16 md:mt-24">
+        <div className="relative mt-10 md:mt-14">
           <span
             className="absolute left-0 right-0 top-[7px] hidden h-px bg-white/10 md:block"
             aria-hidden="true"

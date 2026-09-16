@@ -52,7 +52,7 @@ export default function JournalPage() {
           lede="Plain explanations of one specific mechanism at a time. No pitch attached, and nothing here needs us to be useful to you."
         />
 
-        <section className="shell pb-28 md:pb-40">
+        <section className="shell pb-16 md:pb-24">
           <ol>
             {posts.map((post, i) => (
               <Reveal as="li" key={post.slug} delay={i * 80}>

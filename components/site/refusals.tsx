@@ -5,10 +5,10 @@ import { refusals } from "@/content/site";
 export function Refusals() {
   return (
     <section className="border-t border-hairline">
-      <div className="shell py-28 md:py-40">
+      <div className="shell py-16 md:py-24">
         <SectionHead heading={refusals.heading}>{refusals.intro}</SectionHead>
 
-        <ul className="mt-14 md:mt-20">
+        <ul className="mt-10 md:mt-14">
           {refusals.items.map((item, i) => (
             <Reveal
               as="li"

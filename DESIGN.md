@@ -182,3 +182,67 @@ assistant crawlers and allows them.
 Verified at 320, 390, 768, 1024, 1440 and 1920 across all eleven route shapes: no
 horizontal overflow anywhere, no console errors, nothing below the legible type floor,
 and the mechanical detector clean.
+
+
+## Audit results
+
+Measured rather than asserted, on the shipped build:
+
+- **Accessibility.** axe-core against WCAG 2.0 and 2.1 A and AA, all twelve route shapes:
+  zero violations. Tab order from a cold load runs skip link, logo, the four nav items,
+  then the primary action, which is the order the page is written in.
+- **Layout.** 320, 390, 768, 1024, 1440 and 1920 across every route: no horizontal
+  overflow, exactly one h1 per page, no console errors, and nothing below the type floor.
+- **Stability.** Cumulative layout shift 0.000 on the home page, pricing and a journal
+  post. First contentful paint 60 to 232ms locally. The shader carries no layout cost
+  because it is a fixed full-viewport canvas that never participates in flow.
+- **Structured data.** FAQPage resolves on exactly one route. Repeating the same
+  question set across three pages, which the first multi-page pass did, is duplicate
+  structured data rather than three chances to be cited.
+
+## Copy that reaches a user
+
+Error text is written for the person reading it, not the person who wrote it. The lead
+endpoint used to answer a failed submission with "Missing server configuration", which is
+a sentence about our infrastructure shown to a contractor. It now says we could not
+record it and names the email address that will.
+
+
+## Compaction pass
+
+The shell came in from 1440 to 1200, which is where a marketing page stops reading as a
+wide dashboard. The scale came down another step with it, section rhythm tightened, and
+the nav and logo shrank in proportion. The two smallest type steps still hold at 12 and
+13px; the floor does not move when the scale does.
+
+## Navigation that opens pages
+
+Two of the four top level entries open a panel of real pages: Processes lists the six and
+Resources lists the journal, glossary, questions and company. The panel is derived from
+the same arrays the pages are generated from, so a menu entry cannot point at a page that
+does not exist.
+
+The trigger is a **link to the section index, not a toggle**. Hovering or focusing opens
+the panel; clicking goes to the index. That was a correction: as a toggle button, hover
+opened the panel and the click that followed closed it, which is a trap. As a link, a
+click always does something useful, including on a phone where there is no hover and the
+panel never opens at all. The mobile menu lists every child inline instead, so nothing in
+the panel is reachable only by hovering.
+
+Escape closes and returns focus to the trigger. Panel links are removed from the tab
+order while closed. Verified with axe while open: zero violations.
+
+## Content built for citation
+
+`/glossary` publishes eighteen plain definitions of the vocabulary that shows up in a
+warranty rejection or a supplier statement, marked up as a `DefinedTermSet` with one
+`DefinedTerm` per entry and an anchor each. It is the single most quotable thing a site
+like this can publish, and it is useful whether or not anyone ever buys anything.
+
+`/integrations` names the platforms a shop actually runs on and states plainly what we
+are not: no certified partnership, no reseller status, no app store listing. Read access
+during the count, and anything that writes is scoped and approved first.
+
+The journal is six pieces now, each teaching one specific mechanism, with the anchor
+structure and `Article` markup an answer engine needs to quote a section rather than a
+page.

@@ -5,7 +5,7 @@ import { pricing } from "@/content/site";
 export function Pricing() {
   return (
     <section id="pricing" className="scroll-mt-24 border-t border-hairline bg-ink-900">
-      <div className="shell py-28 md:py-40">
+      <div className="shell py-16 md:py-24">
         <SectionHead heading={pricing.heading}>
           A warranty coordinator costs <span className="text-gold">$45,000 to $110,000</span> a
           year fully loaded, and needs a desk, training and a reason to stay. That is the number
