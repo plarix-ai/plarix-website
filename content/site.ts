@@ -9,11 +9,43 @@
 export const CONTACT_EMAIL = "hello@plarix.dev";
 export const SITE_URL = "https://plarix.dev";
 
+/**
+ * Top level navigation. Two entries open a panel of real pages rather than
+ * navigating on their own; the rest go straight somewhere.
+ */
 export const nav = [
-  { label: "Processes", href: "/processes" },
+  {
+    label: "Processes",
+    href: "/processes",
+    panel: {
+      blurb: "Six pieces of a home services back office, each handed over completely.",
+      // items are filled from `processes` at render, so the menu can never drift
+      // out of step with the pages it points at
+      source: "processes" as const,
+      extra: [],
+      footerLinks: [
+        { label: "All six processes", href: "/processes" },
+        { label: "Works with what you already run", href: "/integrations" },
+      ],
+    },
+  },
   { label: "How it works", href: "/how-it-works" },
   { label: "Pricing", href: "/pricing" },
-  { label: "Journal", href: "/journal" },
+  {
+    label: "Resources",
+    href: "/journal",
+    panel: {
+      blurb: "Plain explanations, the vocabulary, and the answers to what we get asked.",
+      source: "links" as const,
+      footerLinks: [{ label: "Read the journal", href: "/journal" }],
+      extra: [
+        { label: "Journal", href: "/journal", description: "Where the money goes, one mechanism at a time." },
+        { label: "Glossary", href: "/glossary", description: "The back office vocabulary, defined plainly." },
+        { label: "Questions", href: "/faq", description: "What we get asked, answered directly." },
+        { label: "What we believe", href: "/company", description: "What we are, and the six things we will never do." },
+      ],
+    },
+  },
 ] as const;
 
 export const footerNav = {
@@ -21,12 +53,16 @@ export const footerNav = {
     { label: "Processes", href: "/processes" },
     { label: "How it works", href: "/how-it-works" },
     { label: "Pricing", href: "/pricing" },
+    { label: "Integrations", href: "/integrations" },
     { label: "Get your count", href: "/count" },
+  ],
+  Resources: [
+    { label: "Journal", href: "/journal" },
+    { label: "Glossary", href: "/glossary" },
+    { label: "Questions", href: "/faq" },
   ],
   Company: [
     { label: "What we believe", href: "/company" },
-    { label: "Journal", href: "/journal" },
-    { label: "Questions", href: "/faq" },
     { label: "Privacy", href: "/privacy" },
   ],
 } as const;
@@ -423,6 +459,63 @@ export const company = {
   ],
 } as const;
 
+
+/**
+ * The platforms a shop already runs on. We read what is in them; we are not a
+ * certified partner of any of them and the page says so plainly.
+ */
+export const integrations = {
+  heading: "We read what you already run.",
+  lede: "Your field service platform runs the business. We run the work it produces. Read access is the whole ask, and nothing about your setup changes.",
+  platforms: [
+    { name: "ServiceTitan", note: "Jobs, invoices, equipment records, purchase orders and memberships." },
+    { name: "Jobber", note: "Work orders, quotes, invoices and recurring visits." },
+    { name: "FieldEdge", note: "Service calls, equipment history, agreements and dispatch records." },
+    { name: "Housecall Pro", note: "Jobs, estimates, invoices and service plans." },
+    { name: "Service Fusion", note: "Work orders, inventory movement and customer equipment." },
+    { name: "ServiceTrade", note: "Commercial service history, quotes and asset records." },
+  ],
+  alsoRead: [
+    { name: "Accounting", note: "QuickBooks, Sage and the rest, where the invoice and the payment actually land." },
+    { name: "Supplier portals", note: "Distributor pricing, order history, credit memos and open returns." },
+    { name: "Manufacturer portals", note: "Claim submission, registration, rebate programs and dealer tier status." },
+  ],
+  honest: {
+    h: "What this is not",
+    p: [
+      "We are not a certified partner, reseller or app store listing for any of these platforms, and we do not claim to be. We connect the way any authorised integration does, through the access your account already grants.",
+      "We do not write to your system of record during the count. Read access is enough to tell you what is sitting there. Anything that writes gets scoped, approved by you, and logged.",
+      "If you run something not on this list, say so. The question we ask is whether the data can be read, not whether we have seen the logo before.",
+    ],
+  },
+} as const;
+
+/** Plain definitions. The single most quotable thing a site like this can publish. */
+export const glossary = {
+  heading: "The vocabulary.",
+  lede: "The words that show up in a warranty rejection, a supplier statement or a payroll dispute, defined the way an owner would explain them. No pitch attached.",
+  terms: [
+    { term: "Warranty labor reimbursement", def: "What a manufacturer pays a contractor for the labor of replacing a part that failed under warranty. The part is covered separately. Labor is claimed, and it is the piece most often left unfiled." },
+    { term: "Filing window", def: "The period a manufacturer allows between the service date and the claim being submitted. It is measured from when the work happened, not from when anyone got to the paperwork, and it varies by manufacturer and program." },
+    { term: "RA number", def: "Return Authorization number. The reference a manufacturer issues so a failed part can be sent back and matched to a claim. Without it the part is usually just a part, and the claim usually fails." },
+    { term: "Equipment registration", def: "Recording a unit's serial number and install date with the manufacturer, normally within a set window of installation. Unregistered equipment often carries a shorter warranty term, which is discovered at the worst possible moment." },
+    { term: "Dealer tier", def: "A status level a manufacturer assigns based on volume or training, carrying pricing, rebate and support benefits. Tiers are reassessed on a schedule, and a tier can lapse without anyone in the shop being told." },
+    { term: "Spiff", def: "A one time payment from a manufacturer to the technician or the company for selling specific equipment. Usually claimed separately from the sale, often on a different deadline, and frequently never matched to the technician who earned it." },
+    { term: "Co-op funds", def: "Marketing money a manufacturer sets aside for a dealer, usually accrued as a percentage of purchases and claimable against approved advertising. Unclaimed co-op typically expires at the end of a program year." },
+    { term: "Credit memo", def: "A supplier's record that money is owed back to you, from a return, a pricing correction or an overcharge. It is not cash. It is a credit against future purchases, and most carry an expiry." },
+    { term: "Core charge", def: "A deposit added to the price of a part that is refunded when the old unit is returned. A core that never goes back is a charge that never comes off." },
+    { term: "Underbilling", def: "Invoicing less than the job actually consumed in parts, labor or time. It produces no complaint and no dispute, which is exactly why it is rarely caught." },
+    { term: "Job costing", def: "Assigning the real cost of a job, including labor burden, truck and overhead, against what it billed. Without it, a company can grow revenue and lose margin at the same time and not know which jobs did it." },
+    { term: "Callback", def: "A return visit to a job already completed and billed, at the company's cost. Callbacks are the clearest signal in the data of where the real cost of a job is hiding." },
+    { term: "Service agreement", def: "A recurring contract for scheduled maintenance, often called a membership or a maintenance plan. It is usually a home services company's most valuable asset and its easiest one to lose by forgetting to deliver a visit." },
+    { term: "Truck stock", def: "Parts carried on a vehicle rather than held at a branch. Consumed on a job and logged later, if at all, which is where the gap between the work order and the invoice usually opens." },
+    { term: "Certificate of insurance", def: "Proof of coverage a general contractor, property manager or municipality requires before work starts. Routinely requested at short notice and routinely the reason a crew waits." },
+    { term: "Permit and inspection", def: "Municipal authorisation to perform work and the sign off that closes it out. Requirements vary by jurisdiction and by scope, and an unclosed permit can sit open long after the customer has paid." },
+    { term: "Field service management platform", def: "The software a home services company runs on: scheduling, dispatch, invoicing and customer records. ServiceTitan, Jobber, FieldEdge and their peers. It runs the business; it does not chase what the business is owed." },
+    { term: "Back office", def: "Everything that happens after the truck leaves. Claims, reconciliation, purchasing, compliance, payroll and renewals. It produces no revenue by itself and it is where revenue quietly leaks." },
+  ],
+} as const;
+
 export const closing = {
   heading: "Start with the count.",
   body: "Twenty minutes and read access to your data. We come back with a real number for what is sitting there unclaimed, unreconciled or unfiled. Then you decide whether any of it is worth doing.",
@@ -481,6 +574,118 @@ export const faqs = [
 ] as const;
 
 export const journal = [
+  {
+    slug: "what-a-dealer-tier-actually-costs-you",
+    title: "What a dealer tier actually costs you",
+    dek: "A status level you were told about once, reassessed on a schedule nobody in your office tracks.",
+    date: "2026-09-16",
+    readingMinutes: 4,
+    body: [
+      {
+        h: null,
+        p: [
+          "Somewhere early in the relationship, a manufacturer rep explained your dealer tier. There was a chart. It made sense at the time.",
+          "Since then it has been reassessed, probably more than once, against volume or training or both. Nobody called to tell you where you landed.",
+        ],
+      },
+      {
+        h: "What the tier is attached to",
+        p: [
+          "Tiers usually govern more than pricing. They can carry rebate eligibility, co-op accrual rates, extended warranty terms on registered equipment, lead referral priority, and how quickly a claim gets looked at.",
+          "That means a tier change is not one price moving. It is several separate things moving at once, each in a different system, none of which announces itself on an invoice.",
+        ],
+      },
+      {
+        h: "Why nobody notices a drop",
+        p: [
+          "Because the shop keeps buying the same equipment from the same distributor at prices that still look normal. A few percent on a price you have never had a reason to audit does not look like anything.",
+          "The rebate side is worse. A program you no longer qualify for does not send a rejection. It simply stops being a line you were ever going to see.",
+          "The training requirement is the one that catches most shops. Tiers often carry a minimum number of certified technicians. Two good techs leave in the same quarter, and the tier goes with them while everyone is busy covering the schedule.",
+        ],
+      },
+      {
+        h: "The question worth asking this week",
+        p: [
+          "Call your rep and ask three things. What tier are we in today. What were we in twelve months ago. What are the current requirements to move up one.",
+          "Most owners who make that call learn something. Some learn they have been buying at the wrong number for a year.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "the-permit-is-not-the-problem",
+    title: "The permit is not the problem. The calendar is.",
+    dek: "Nobody loses a day to a permit application. They lose it to when the application was started.",
+    date: "2026-09-29",
+    readingMinutes: 3,
+    body: [
+      {
+        h: null,
+        p: [
+          "A crew is in a driveway. The job is sold, the equipment is on the truck, and the permit is not approved. Everybody involved is competent and everybody is stuck.",
+          "The application itself was not hard. It took about fifteen minutes. It was started on Monday for a job scheduled Tuesday.",
+        ],
+      },
+      {
+        h: "Where the time actually lives",
+        p: [
+          "Filing takes minutes. Review takes days, and how many days is a property of the jurisdiction, not of your paperwork. Some approve mechanical permits same day online. Some take a week. Some take a week except in the spring.",
+          "A company working across four municipalities is running four different clocks, each with its own forms, fees and definitions of what scope even needs a permit. None of that is written down anywhere in the business.",
+        ],
+      },
+      {
+        h: "The fix is a trigger, not a reminder",
+        p: [
+          "Reminders fail because they compete with everything else on a Monday. The thing that works is tying the filing to the moment the job is sold rather than to the moment it is scheduled, so the review clock starts as early as it possibly can.",
+          "That single change absorbs almost all of the variance. A jurisdiction that takes five days is not a problem if you filed eleven days out. It is only a problem if you filed yesterday.",
+        ],
+      },
+      {
+        h: "What to look at",
+        p: [
+          "Pull every job in the last quarter that got rescheduled. Mark the ones where the reason was a permit or an inspection. Then look at the gap between the sold date and the filing date on each.",
+          "The number you want is not how long the city took. It is how long you waited before asking.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "your-best-month-can-be-your-worst-margin",
+    title: "Your best month can be your worst margin",
+    dek: "Revenue and profit come from the same jobs and move in opposite directions more often than anyone expects.",
+    date: "2026-10-14",
+    readingMinutes: 4,
+    body: [
+      {
+        h: null,
+        p: [
+          "July was the biggest month the company has ever had. Everyone worked six days. The deposits were enormous.",
+          "The margin was the worst of the year. This is not unusual, and it is not a mystery once you look at what a peak month is actually made of.",
+        ],
+      },
+      {
+        h: "What a busy month does to cost",
+        p: [
+          "Overtime replaces regular hours, at a rate that does not appear in any estimate. Parts get bought at counter prices because there was no time to order properly. Callbacks rise because work gets done fast. Warranty claims rise with equipment volume, and the paperwork behind them is exactly what gets deferred when the schedule is full.",
+          "Every one of those costs lands on jobs that were priced from a pricebook built on a normal week.",
+        ],
+      },
+      {
+        h: "Why the books do not show it",
+        p: [
+          "Because most of it arrives late. The overtime hits payroll immediately, but the callback comes in August, the supplier statement reconciles in September, and the unfiled warranty claim never arrives at all. By the time the real cost of July is visible, everyone is looking at October.",
+          "Revenue is recognised on the day. Cost is discovered over the following quarter. That gap is the whole illusion.",
+        ],
+      },
+      {
+        h: "Measuring it without new software",
+        p: [
+          "Take your busiest month last year and your quietest. For each, work out revenue per completed job, average parts cost per job, and callbacks as a share of jobs completed.",
+          "If the busy month is worse on two of those three, the problem is not your pricing. It is what happens to a business at capacity, and it is fixable in the back office rather than in the field.",
+        ],
+      },
+    ],
+  },
   {
     slug: "the-clock-on-a-warranty-claim",
     title: "The clock on a warranty claim",

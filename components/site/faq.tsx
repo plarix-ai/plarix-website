@@ -14,8 +14,8 @@ export function Faq({ limit = 6 }: { limit?: number }) {
 
   return (
     <section id="faq" className="scroll-mt-24 border-t border-hairline">
-      <div className="shell py-24 md:py-36">
-        <div className="grid gap-12 lg:grid-cols-[0.75fr_1.25fr] lg:gap-24">
+      <div className="shell py-18 md:py-26">
+        <div className="grid gap-12 lg:grid-cols-[0.75fr_1.25fr] lg:gap-16">
           <Reveal>
             <h2 className="t-h2 lg:sticky lg:top-28">
               The questions

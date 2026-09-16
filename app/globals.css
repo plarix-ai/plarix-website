@@ -33,26 +33,26 @@
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 
-  --shell: 1440px;
+  --shell: 1200px;
   --gutter: 1.25rem;
 
   /* The logo is composed from two exact crops, so the nav can collapse the
      wordmark into the mark without either one shifting a pixel. */
-  --logo-h: 26px;
+  --logo-h: 24px;
   --logo-mark-ratio: 0.991;
   --logo-word-ratio: 2.874;
   --logo-gap-ratio: 0.195;
 
-  --nav-h: 4rem;
-  --nav-h-compact: 3.375rem;
+  --nav-h: 3.75rem;
+  --nav-h-compact: 3.125rem;
 }
 
 @media (min-width: 768px) {
   :root {
-    --gutter: 3rem;
-    --logo-h: 32px;
-    --nav-h: 4.75rem;
-    --nav-h-compact: 3.75rem;
+    --gutter: 2.5rem;
+    --logo-h: 29px;
+    --nav-h: 4.25rem;
+    --nav-h-compact: 3.5rem;
   }
 }
 
@@ -397,35 +397,35 @@
 ------------------------------------------------------------------ */
 
 .t-display {
-  font-size: clamp(2.25rem, 6.9vw, 4.8rem);
+  font-size: clamp(2.125rem, 6.2vw, 4.25rem);
   line-height: 1.0;
   letter-spacing: -0.034em;
   font-weight: 400;
 }
 
 .t-h1 {
-  font-size: clamp(2rem, 5.1vw, 3.6rem);
+  font-size: clamp(1.875rem, 4.6vw, 3.25rem);
   line-height: 1.05;
   letter-spacing: -0.032em;
   font-weight: 400;
 }
 
 .t-h2 {
-  font-size: clamp(1.625rem, 3.9vw, 2.6rem);
+  font-size: clamp(1.5rem, 3.4vw, 2.3rem);
   line-height: 1.1;
   letter-spacing: -0.029em;
   font-weight: 400;
 }
 
 .t-h3 {
-  font-size: clamp(1.25rem, 2.25vw, 1.6rem);
+  font-size: clamp(1.1875rem, 2vw, 1.5rem);
   line-height: 1.2;
   letter-spacing: -0.024em;
   font-weight: 400;
 }
 
 .t-h4 {
-  font-size: clamp(1.0625rem, 1.5vw, 1.25rem);
+  font-size: clamp(1rem, 1.35vw, 1.1875rem);
   line-height: 1.32;
   letter-spacing: -0.018em;
   font-weight: 500;
@@ -433,21 +433,21 @@
 
 /* The one that carries a claim: large, but set as a sentence, not a heading. */
 .t-lead {
-  font-size: clamp(1.125rem, 1.85vw, 1.5rem);
+  font-size: clamp(1.0625rem, 1.65vw, 1.375rem);
   line-height: 1.38;
   letter-spacing: -0.016em;
   font-weight: 400;
 }
 
 .t-body-lg {
-  font-size: clamp(1rem, 1.1vw, 1.125rem);
+  font-size: clamp(0.9375rem, 1vw, 1.0625rem);
   line-height: 1.6;
   letter-spacing: -0.003em;
 }
 
 .t-body {
-  font-size: 1rem;
-  line-height: 1.68;
+  font-size: 0.9375rem;
+  line-height: 1.66;
   letter-spacing: -0.001em;
 }
 
@@ -471,13 +471,13 @@
 
 /* Long-form reading measure, used by the journal and the policy pages. */
 .t-prose {
-  font-size: clamp(1rem, 1.15vw, 1.0625rem);
-  line-height: 1.76;
+  font-size: clamp(0.9375rem, 1.05vw, 1rem);
+  line-height: 1.74;
   letter-spacing: -0.002em;
 }
 
 .measure {
-  max-width: 68ch;
+  max-width: 64ch;
 }
 .measure-tight {
   max-width: 46ch;

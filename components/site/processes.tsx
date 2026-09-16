@@ -12,7 +12,7 @@ export function Processes() {
 
   return (
     <section id="processes" className="scroll-mt-24 border-t border-hairline bg-ink-900">
-      <div className="shell py-28 md:py-40">
+      <div className="shell py-16 md:py-24">
         <SectionHead heading="We run one process at a time, and we finish it.">
           Not a platform. Not a suite. A specific piece of your operation, handed over
           completely, then the next one.

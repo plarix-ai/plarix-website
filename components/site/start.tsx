@@ -4,8 +4,8 @@ import { start } from "@/content/site";
 export function Start() {
   return (
     <section id="start" className="scroll-mt-24 border-t border-hairline bg-ink-900">
-      <div className="shell py-28 md:py-40">
-        <div className="grid gap-14 lg:grid-cols-[1.2fr_0.8fr] lg:gap-24">
+      <div className="shell py-16 md:py-24">
+        <div className="grid gap-14 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16">
           <div>
             <Reveal as="h2" className="t-h2 max-w-[16ch]">
               {start.heading}

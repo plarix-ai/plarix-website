@@ -206,3 +206,43 @@ Error text is written for the person reading it, not the person who wrote it. Th
 endpoint used to answer a failed submission with "Missing server configuration", which is
 a sentence about our infrastructure shown to a contractor. It now says we could not
 record it and names the email address that will.
+
+
+## Compaction pass
+
+The shell came in from 1440 to 1200, which is where a marketing page stops reading as a
+wide dashboard. The scale came down another step with it, section rhythm tightened, and
+the nav and logo shrank in proportion. The two smallest type steps still hold at 12 and
+13px; the floor does not move when the scale does.
+
+## Navigation that opens pages
+
+Two of the four top level entries open a panel of real pages: Processes lists the six and
+Resources lists the journal, glossary, questions and company. The panel is derived from
+the same arrays the pages are generated from, so a menu entry cannot point at a page that
+does not exist.
+
+The trigger is a **link to the section index, not a toggle**. Hovering or focusing opens
+the panel; clicking goes to the index. That was a correction: as a toggle button, hover
+opened the panel and the click that followed closed it, which is a trap. As a link, a
+click always does something useful, including on a phone where there is no hover and the
+panel never opens at all. The mobile menu lists every child inline instead, so nothing in
+the panel is reachable only by hovering.
+
+Escape closes and returns focus to the trigger. Panel links are removed from the tab
+order while closed. Verified with axe while open: zero violations.
+
+## Content built for citation
+
+`/glossary` publishes eighteen plain definitions of the vocabulary that shows up in a
+warranty rejection or a supplier statement, marked up as a `DefinedTermSet` with one
+`DefinedTerm` per entry and an anchor each. It is the single most quotable thing a site
+like this can publish, and it is useful whether or not anyone ever buys anything.
+
+`/integrations` names the platforms a shop actually runs on and states plainly what we
+are not: no certified partnership, no reseller status, no app store listing. Read access
+during the count, and anything that writes is scoped and approved first.
+
+The journal is six pieces now, each teaching one specific mechanism, with the anchor
+structure and `Article` markup an answer engine needs to quote a section rather than a
+page.

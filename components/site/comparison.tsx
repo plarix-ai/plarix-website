@@ -7,7 +7,7 @@ export function Comparison() {
 
   return (
     <section className="border-t border-hairline bg-ink-900">
-      <div className="shell py-20 md:py-28">
+      <div className="shell py-16 md:py-24">
         <Reveal as="h2" className="t-h2 max-w-[16ch]">
           {comparison.heading}
         </Reveal>

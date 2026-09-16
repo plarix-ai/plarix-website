@@ -44,7 +44,7 @@ export default function ProcessesPage() {
           lede="Not a platform and not a suite. A specific piece of your operation, handed over completely, then the next one. These are the six we run today."
         />
 
-        <section className="shell pb-24 md:pb-32">
+        <section className="shell pb-18 md:pb-26">
           <ol>
             {processes.map((p, i) => (
               <Reveal as="li" key={p.slug} delay={i * 70}>

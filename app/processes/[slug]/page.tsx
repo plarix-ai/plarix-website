@@ -64,7 +64,7 @@ export default async function ProcessPage({ params }: { params: Promise<{ slug: 
       <div id="main">
         <PageHeader eyebrowCrumbs={crumbs} title={process.name} lede={process.short} />
 
-        <section className="shell pb-20 md:pb-28">
+        <section className="shell pb-16 md:pb-24">
           <Reveal className="max-w-[68ch]">
             <p className="t-body-lg text-text-secondary">
               {process.detail}
@@ -91,7 +91,7 @@ export default async function ProcessPage({ params }: { params: Promise<{ slug: 
             ))}
           </div>
 
-          <Reveal delay={220} className="mt-16 md:mt-24">
+          <Reveal delay={220} className="mt-10 md:mt-14">
             <div className="rounded-2xl bg-ink-800 p-8 ring-1 ring-hairline md:p-10">
               <h2 className="t-label text-text-tertiary">
                 Why this one

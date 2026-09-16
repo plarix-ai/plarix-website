@@ -10,6 +10,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/processes`, changeFrequency: "monthly", priority: 0.9 },
     { url: `${SITE_URL}/how-it-works`, changeFrequency: "monthly", priority: 0.9 },
     { url: `${SITE_URL}/pricing`, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${SITE_URL}/integrations`, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${SITE_URL}/glossary`, changeFrequency: "monthly", priority: 0.7 },
     { url: `${SITE_URL}/count`, changeFrequency: "monthly", priority: 0.8 },
     { url: `${SITE_URL}/company`, changeFrequency: "monthly", priority: 0.7 },
     { url: `${SITE_URL}/journal`, changeFrequency: "weekly", priority: 0.7 },

@@ -29,7 +29,7 @@ export default function FaqPage() {
           lede="The ones we actually get asked, with the answer first and the reasoning after it."
         />
 
-        <section className="shell pb-24 md:pb-32">
+        <section className="shell pb-18 md:pb-26">
           <div className="max-w-[72ch]">
             {faqs.map((item, i) => (
               <Reveal key={item.q} delay={i * 45} className="border-t border-hairline py-8 last:border-b">

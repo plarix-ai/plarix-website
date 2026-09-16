@@ -6,7 +6,8 @@ import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 
 import { Logo } from "./logo";
-import { nav } from "@/content/site";
+import { NavMenu, type PanelItem } from "./nav-menu";
+import { nav, processes } from "@/content/site";
 
 export function SiteNav() {
   const [open, setOpen] = useState(false);
@@ -42,6 +43,20 @@ export function SiteNav() {
   const isCurrent = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
+  /** Panel contents, derived so the menu cannot drift from the pages it points at. */
+  const panelItems = (entry: (typeof nav)[number]): PanelItem[] => {
+    if (!("panel" in entry) || !entry.panel) return [];
+    const fromProcesses: PanelItem[] =
+      entry.panel.source === "processes"
+        ? processes.map((p) => ({
+            label: p.name,
+            href: `/processes/${p.slug}`,
+            description: p.short,
+          }))
+        : [];
+    return [...fromProcesses, ...entry.panel.extra];
+  };
+
   return (
     <header className="sticky top-0 z-50">
       {/*
@@ -70,19 +85,31 @@ export function SiteNav() {
       >
         <Logo collapsed={compact} />
 
-        <nav className="hidden items-center gap-8 lg:flex" aria-label="Primary">
-          {nav.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              aria-current={isCurrent(item.href) ? "page" : undefined}
-              className={`link-sweep t-body-sm transition-colors duration-200 ${
-                isCurrent(item.href) ? "text-white" : "text-text-secondary hover:text-white"
-              }`}
-            >
-              {item.label}
-            </Link>
-          ))}
+        <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary">
+          {nav.map((item) =>
+            "panel" in item && item.panel ? (
+              <NavMenu
+                key={item.href}
+                label={item.label}
+                items={panelItems(item)}
+                blurb={item.panel.blurb}
+                indexHref={item.href}
+                footerLinks={[...item.panel.footerLinks]}
+                active={isCurrent(item.href)}
+              />
+            ) : (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={isCurrent(item.href) ? "page" : undefined}
+                className={`link-sweep t-body-sm transition-colors duration-200 ${
+                  isCurrent(item.href) ? "text-white" : "text-text-secondary hover:text-white"
+                }`}
+              >
+                {item.label}
+              </Link>
+            ),
+          )}
         </nav>
 
         <div className="flex items-center gap-2.5">
@@ -123,24 +150,45 @@ export function SiteNav() {
         style={{ transitionTimingFunction: "var(--ease-out)" }}
       >
         <div className="mx-4 overflow-hidden rounded-2xl bg-ink-700 shadow-[0_24px_60px_-12px_rgba(0,0,0,0.95)] md:mx-12">
-          <nav className="flex flex-col p-2" aria-label="Mobile">
-            {nav.map((item, i) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                aria-current={isCurrent(item.href) ? "page" : undefined}
-                className={`rounded-xl px-4 py-3.5 text-base transition-all duration-200 hover:bg-white/5 hover:text-white ${
-                  isCurrent(item.href) ? "text-white" : "text-text-secondary"
-                }`}
-                style={{
-                  transform: open ? "none" : "translateX(-8px)",
-                  opacity: open ? 1 : 0,
-                  transitionDelay: open ? `${60 + i * 45}ms` : "0ms",
-                }}
-              >
-                {item.label}
-              </Link>
-            ))}
+          <nav className="flex max-h-[70svh] flex-col overflow-y-auto p-2" aria-label="Mobile">
+            {nav.map((item, i) => {
+              const children = panelItems(item);
+              return (
+                <div
+                  key={item.href}
+                  style={{
+                    transform: open ? "none" : "translateX(-8px)",
+                    opacity: open ? 1 : 0,
+                    transition: "transform 200ms var(--ease-out), opacity 200ms var(--ease-out)",
+                    transitionDelay: open ? `${60 + i * 45}ms` : "0ms",
+                  }}
+                >
+                  <Link
+                    href={item.href}
+                    aria-current={isCurrent(item.href) ? "page" : undefined}
+                    className={`block rounded-xl px-4 py-3 text-base transition-colors duration-200 hover:bg-white/5 hover:text-white ${
+                      isCurrent(item.href) ? "text-white" : "text-text-secondary"
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                  {children.length ? (
+                    <ul className="mb-1 ml-4 border-l border-hairline pl-3">
+                      {children.map((c) => (
+                        <li key={c.href}>
+                          <Link
+                            href={c.href}
+                            className="block rounded-lg px-3 py-2 t-body-sm text-text-tertiary transition-colors duration-200 hover:bg-white/5 hover:text-white"
+                          >
+                            {c.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
+                </div>
+              );
+            })}
             <Link
               href="/count"
               className="solid-btn mt-2 rounded-xl bg-white px-4 py-3.5 text-center text-base font-medium text-black hover:bg-white/90 sm:hidden"

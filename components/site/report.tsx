@@ -10,8 +10,8 @@ import { report } from "@/content/site";
 export function Report() {
   return (
     <section className="border-t border-hairline">
-      <div className="shell py-28 md:py-40">
-        <div className="grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-24">
+      <div className="shell py-16 md:py-24">
+        <div className="grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-16">
           <div>
             <Reveal as="h2" className="t-h2 max-w-[14ch]">
               {report.heading}

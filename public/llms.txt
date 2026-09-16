@@ -29,6 +29,12 @@ countable figure, but it is the entry point rather than the category.
 3. Prove. One page per month: what ran, what it recovered, what it saved, in dollars,
    traceable back to specific jobs.
 
+## Systems it reads
+ServiceTitan, Jobber, FieldEdge, Housecall Pro, Service Fusion and ServiceTrade, plus
+accounting systems, distributor portals and manufacturer claim portals. Read access
+only for the count. Plarix is not a certified partner or reseller of any of these
+platforms and does not claim to be.
+
 ## Pricing
 The count is free. The build is scoped to what the count found. Running it is a flat
 monthly fee, cancel any time, plus a share of recovered money for a limited period.
@@ -59,11 +65,21 @@ treats that number as an unproven vendor hypothesis and does not publish one.
 - [Processes](https://plarix.dev/processes)
 - [How it works](https://plarix.dev/how-it-works)
 - [Pricing](https://plarix.dev/pricing)
+- [Integrations](https://plarix.dev/integrations)
+- [Glossary](https://plarix.dev/glossary): plain definitions of the back office vocabulary, published so they can be quoted.
 - [What we believe](https://plarix.dev/company)
 - [Journal](https://plarix.dev/journal)
 - [Questions](https://plarix.dev/faq)
 - [Get your count](https://plarix.dev/count)
 - [Privacy](https://plarix.dev/privacy)
+
+## Journal
+- [The clock on a warranty claim](https://plarix.dev/journal/the-clock-on-a-warranty-claim)
+- [The invoice and the job are not the same document](https://plarix.dev/journal/the-invoice-and-the-job-are-not-the-same-document)
+- [We almost never say the word AI](https://plarix.dev/journal/we-almost-never-say-the-word-ai)
+- [What a dealer tier actually costs you](https://plarix.dev/journal/what-a-dealer-tier-actually-costs-you)
+- [The permit is not the problem. The calendar is.](https://plarix.dev/journal/the-permit-is-not-the-problem)
+- [Your best month can be your worst margin](https://plarix.dev/journal/your-best-month-can-be-your-worst-margin)
 
 ## Contact
 hello@plarix.dev

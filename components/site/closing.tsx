@@ -5,8 +5,8 @@ import { closing } from "@/content/site";
 export function Closing() {
   return (
     <section id="count" className="scroll-mt-24 border-t border-hairline bg-ink-900">
-      <div className="shell py-28 md:py-40">
-        <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-start lg:gap-24">
+      <div className="shell py-16 md:py-24">
+        <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-start lg:gap-16">
           <div>
             <Reveal as="h2" className="t-h1">
               {closing.heading}

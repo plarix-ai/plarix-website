@@ -78,7 +78,7 @@ export default function PrivacyPage() {
           <p className="t-caption text-text-tertiary">Effective August 19, 2026</p>
         </PageHeader>
 
-        <section className="shell pb-28 md:pb-40">
+        <section className="shell pb-16 md:pb-24">
           <div className="measure space-y-12">
             {sections.map((s) => (
               <Reveal key={s.h} as="section">

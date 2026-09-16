@@ -43,7 +43,7 @@ export default function PricingPage() {
           }
         />
 
-        <section className="shell pb-20 md:pb-28">
+        <section className="shell pb-16 md:pb-24">
           <div className="grid gap-5 md:grid-cols-3">
             {pricing.tiers.map((tier, i) => (
               <Reveal
@@ -79,7 +79,7 @@ export default function PricingPage() {
 
         <Comparison />
 
-        <section className="shell border-t border-hairline py-20 md:py-28">
+        <section className="shell border-t border-hairline py-16 md:py-24">
           <Reveal as="h2" className="t-h2 max-w-[16ch]">
             Questions about the money.
           </Reveal>
