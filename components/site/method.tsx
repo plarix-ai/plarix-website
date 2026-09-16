@@ -1,18 +1,12 @@
 import { Reveal } from "./reveal";
+import { SectionHead } from "./section-head";
 import { method } from "@/content/site";
 
 export function Method() {
   return (
     <section id="method" className="scroll-mt-24 border-t border-hairline">
       <div className="shell py-28 md:py-40">
-        <div className="max-w-[46ch]">
-          <Reveal as="h2" className="display text-[clamp(2rem,5.2vw,3.5rem)]">
-            {method.heading}
-          </Reveal>
-          <Reveal as="p" delay={80} className="mt-7 text-lg leading-relaxed text-text-secondary md:text-xl">
-            {method.intro}
-          </Reveal>
-        </div>
+        <SectionHead heading={method.heading}>{method.intro}</SectionHead>
 
         {/* A single rail running through three moments, not three boxes. */}
         <div className="relative mt-16 md:mt-24">

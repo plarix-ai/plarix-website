@@ -133,12 +133,12 @@ export function Hero({ videoSrc, posterSrc }: { videoSrc?: string; posterSrc?: s
             </div>
 
             <div
-              className="liquid-glass rounded-2xl p-5"
+              className="liquid-glass flex items-center rounded-2xl p-5"
               aria-live="polite"
-              style={{ minHeight: "9.5rem" }}
+              style={{ minHeight: "8.5rem" }}
             >
               {/* Blur bridges the two states so the swap reads as one object changing. */}
-              <div key={current.id} className="animate-[blurFadeUp_600ms_var(--ease-out)_forwards]">
+              <div key={current.id} className="w-full animate-[blurFadeUp_600ms_var(--ease-out)_forwards]">
                 <p className="mb-2 text-[15px] font-medium leading-snug text-white">
                   {current.name}
                 </p>

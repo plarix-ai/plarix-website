@@ -1,14 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Check, ChevronDown } from "lucide-react";
 
 import { CONTACT_EMAIL, closing, processes } from "@/content/site";
 
 type Status = "idle" | "sending" | "done" | "error";
 
 const field =
-  "w-full rounded-xl bg-white/[0.04] px-4 py-3.5 text-[15px] text-white placeholder:text-text-tertiary transition-colors duration-200 hover:bg-white/[0.06] focus:bg-white/[0.07] focus:outline-none";
+  "w-full rounded-xl bg-white/[0.05] px-4 py-3.5 text-[15px] text-white placeholder:text-[#9aa1ac] transition-colors duration-200 hover:bg-white/[0.08] focus:bg-white/[0.09] focus:outline-none";
 
 export function CountForm() {
   const [status, setStatus] = useState<Status>("idle");
@@ -111,19 +111,32 @@ export function CountForm() {
       </div>
 
       <div className="mt-3">
-        <label htmlFor="process" className="mb-2 block text-[13px] text-text-tertiary">
+        <label htmlFor="process" className="mb-2 block text-[13px] text-text-secondary">
           Where would you want us to look first?
         </label>
-        <select id="process" name="process" defaultValue="" className={`${field} appearance-none`}>
-          <option value="" className="bg-ink-700">
-            Not sure yet, show me the whole count
-          </option>
-          {processes.map((p) => (
-            <option key={p.id} value={p.name} className="bg-ink-700">
-              {p.name}
+        <div className="relative">
+          <select
+            id="process"
+            name="process"
+            defaultValue=""
+            className={`${field} appearance-none pr-11`}
+          >
+            <option value="" className="bg-ink-700">
+              Not sure yet, show me the whole count
             </option>
-          ))}
-        </select>
+            {processes.map((p) => (
+              <option key={p.id} value={p.name} className="bg-ink-700">
+                {p.name}
+              </option>
+            ))}
+          </select>
+          <ChevronDown
+            size={16}
+            strokeWidth={2}
+            aria-hidden="true"
+            className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-text-secondary"
+          />
+        </div>
       </div>
 
       <button
@@ -146,7 +159,7 @@ export function CountForm() {
           {message}
         </p>
       ) : (
-        <p className="mt-4 text-sm leading-relaxed text-text-tertiary">{closing.disclosure}</p>
+        <p className="mt-4 text-sm leading-relaxed text-text-secondary">{closing.disclosure}</p>
       )}
     </form>
   );

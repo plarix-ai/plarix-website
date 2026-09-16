@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import { Reveal } from "./reveal";
+import { SectionHead } from "./section-head";
 import { processes } from "@/content/site";
 
 export function Processes() {
@@ -12,15 +13,10 @@ export function Processes() {
   return (
     <section id="processes" className="scroll-mt-24 border-t border-hairline bg-ink-900">
       <div className="shell py-28 md:py-40">
-        <div className="max-w-[46ch]">
-          <Reveal as="h2" className="display text-[clamp(2rem,5.2vw,3.5rem)]">
-            We run one process at a time, and we finish it.
-          </Reveal>
-          <Reveal as="p" delay={80} className="mt-7 text-lg leading-relaxed text-text-secondary md:text-xl">
-            Not a platform. Not a suite. A specific piece of your operation, handed over
-            completely, then the next one.
-          </Reveal>
-        </div>
+        <SectionHead heading="We run one process at a time, and we finish it.">
+          Not a platform. Not a suite. A specific piece of your operation, handed over
+          completely, then the next one.
+        </SectionHead>
 
         {/* Desktop: a directory. Names on the left, the selected one open on the right. */}
         <Reveal delay={140} className="mt-16 hidden gap-16 lg:grid lg:grid-cols-[1fr_1fr] md:mt-20">
@@ -47,7 +43,7 @@ export function Processes() {
                     />
                     <span
                       className="text-xl transition-colors duration-200 md:text-2xl"
-                      style={{ color: on ? "#fff" : "var(--text-tertiary)" }}
+                      style={{ color: on ? "#fff" : "#828a95" }}
                     >
                       {p.name}
                     </span>

@@ -1,20 +1,16 @@
 import { Reveal } from "./reveal";
+import { SectionHead } from "./section-head";
 import { pricing } from "@/content/site";
 
 export function Pricing() {
   return (
     <section id="pricing" className="scroll-mt-24 border-t border-hairline bg-ink-900">
       <div className="shell py-28 md:py-40">
-        <div className="max-w-[46ch]">
-          <Reveal as="h2" className="display text-[clamp(2rem,5.2vw,3.5rem)]">
-            {pricing.heading}
-          </Reveal>
-          <Reveal as="p" delay={80} className="mt-7 text-lg leading-relaxed text-text-secondary md:text-xl">
-            A warranty coordinator costs <span className="text-gold">$45,000 to $110,000</span> a
-            year fully loaded, and needs a desk, training and a reason to stay. That is the number
-            we ask you to hold us against.
-          </Reveal>
-        </div>
+        <SectionHead heading={pricing.heading}>
+          A warranty coordinator costs <span className="text-gold">$45,000 to $110,000</span> a
+          year fully loaded, and needs a desk, training and a reason to stay. That is the number
+          we ask you to hold us against.
+        </SectionHead>
 
         <div className="mt-14 grid gap-5 md:mt-20 md:grid-cols-3">
           {pricing.tiers.map((tier, i) => (

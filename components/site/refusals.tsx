@@ -1,18 +1,12 @@
 import { Reveal } from "./reveal";
+import { SectionHead } from "./section-head";
 import { refusals } from "@/content/site";
 
 export function Refusals() {
   return (
     <section className="border-t border-hairline">
       <div className="shell py-28 md:py-40">
-        <div className="max-w-[44ch]">
-          <Reveal as="h2" className="display text-[clamp(2rem,5.2vw,3.5rem)]">
-            {refusals.heading}
-          </Reveal>
-          <Reveal as="p" delay={80} className="mt-7 text-lg leading-relaxed text-text-secondary md:text-xl">
-            {refusals.intro}
-          </Reveal>
-        </div>
+        <SectionHead heading={refusals.heading}>{refusals.intro}</SectionHead>
 
         <ul className="mt-14 md:mt-20">
           {refusals.items.map((item, i) => (
