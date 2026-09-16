@@ -105,6 +105,7 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans antialiased">
+        <div className="grain-overlay" aria-hidden="true" />
         <MotionConfig reducedMotion="user">{children}</MotionConfig>
         <Analytics />
       </body>

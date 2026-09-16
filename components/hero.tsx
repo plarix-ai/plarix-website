@@ -123,14 +123,7 @@ export function Hero() {
       <div className="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-transparent to-slate-950" />
 
       <div className="relative z-10 flex h-full flex-col justify-center items-center px-6 pt-14 text-center">
-        <div className="flex items-center gap-3 px-4 py-2 border border-slate-800/50 mb-8">
-          <div className="w-2.5 h-2.5 bg-white/30" />
-          <span className="text-sm font-medium text-slate-500 tracking-wide">
-            Warranty Claims Automation for HVAC &amp; Plumbing
-          </span>
-        </div>
-
-        <h1 className="max-w-4xl text-balance text-5xl font-normal tracking-tight text-white md:text-6xl lg:text-7xl">
+        <h1 className="max-w-4xl text-balance text-5xl font-medium tracking-tight text-white md:text-6xl lg:text-7xl">
           {"The money was never lost. It was just never collected.".split(" ").map((word, i) => (
             <motion.span
               key={`hero-word-${word}-${i}`}

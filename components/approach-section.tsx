@@ -5,6 +5,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Wrench, RefreshCw, Gift, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { SectionHeading } from "@/components/section-heading";
 
 const workflowSteps = [
   {
@@ -136,26 +137,9 @@ export function HowItWorksSection() {
     <section ref={sectionRef} id="how-it-works" className="w-full bg-slate-950 text-white py-24 flex flex-col items-center overflow-hidden border-b border-slate-800/30">
       <div className="max-w-7xl w-full px-6 md:px-12 lg:px-16 gap-12 flex flex-col">
         <div className="flex flex-col gap-4 max-w-[600px]">
-          <div className="flex items-center gap-3 px-4 py-2 border border-slate-800/50 w-fit">
-            <div className="w-2.5 h-2.5 bg-white/30" />
-            <span className="text-sm font-medium text-slate-500 tracking-wide">
-              How it works
-            </span>
-          </div>
-          <h2 className="text-balance text-4xl md:text-5xl font-normal leading-[1.1] tracking-tight text-white">
-            {"Count, build, run, bonus".split(" ").map((word, i) => (
-              <motion.span
-                key={i}
-                initial={{ filter: "blur(10px)", opacity: 0 }}
-                whileInView={{ filter: "blur(0px)", opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.05 }}
-                className="inline-block mr-[0.25em]"
-              >
-                {word}
-              </motion.span>
-            ))}
-          </h2>
+          <SectionHeading className="text-4xl md:text-5xl leading-[1.1]">
+            Count, build, run, bonus
+          </SectionHeading>
           <p className="text-balance text-slate-400 text-base leading-relaxed">
             No long implementation. No new platform for your team to learn. We count what is unfiled,
             build the system that catches it, and run it beside whatever you already use.

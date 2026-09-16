@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { SectionHeading } from "@/components/section-heading";
 
 const CATCHES = [
   "Manufacturer warranty parts claims",
@@ -42,31 +43,17 @@ export function FeaturesSection({ className }: FeaturesSectionProps) {
         className
       )}
     >
-      <div className="max-w-4xl mx-auto px-6 md:px-12 lg:px-16">
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="flex flex-col items-center text-center gap-6 mb-16"
-        >
-          <div className="flex items-center gap-3 px-4 py-2 border border-slate-800/50 w-fit">
-            <div className="w-2.5 h-2.5 bg-white/30" />
-            <span className="text-sm font-medium text-slate-500 tracking-wide">
-              What we catch
-            </span>
-          </div>
-          <h2 className="text-balance text-white text-4xl md:text-5xl font-normal leading-[1.1] max-w-2xl tracking-tight">
-            What we catch
-          </h2>
-        </motion.div>
+      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-6 md:px-12 lg:grid-cols-[0.8fr_1fr] lg:gap-16 lg:px-16">
+        <SectionHeading className="text-4xl md:text-5xl leading-[1.1] max-w-sm">
+          What we catch
+        </SectionHeading>
 
         <motion.ul
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="flex flex-col gap-1 max-w-xl mx-auto"
+          className="flex flex-col gap-1"
         >
           {CATCHES.map((item) => (
             <motion.li

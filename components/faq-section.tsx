@@ -5,6 +5,7 @@ import { ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { faqs } from "@/lib/faq-data";
+import { SectionHeading } from "@/components/section-heading";
 
 export function FaqSection() {
   const [openId, setOpenId] = useState<string | null>(null);
@@ -21,27 +22,9 @@ export function FaqSection() {
       <div className="mx-auto max-w-7xl px-6 md:px-12 lg:px-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
           <div className="flex flex-col gap-6">
-            <div className="flex items-center gap-3 px-4 py-2 border border-slate-800/50 w-fit">
-              <div className="w-2.5 h-2.5 bg-white/30" />
-              <span className="text-sm font-medium text-slate-500 tracking-wide">
-                FAQ
-              </span>
-            </div>
-
-            <h2 className="text-balance text-4xl md:text-5xl lg:text-6xl font-normal text-white tracking-tight leading-[1.1]">
-              {"Questions we hear from shop owners".split(" ").map((word, i) => (
-                <motion.span
-                  key={i}
-                  initial={{ filter: "blur(10px)", opacity: 0 }}
-                  whileInView={{ filter: "blur(0px)", opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.05 }}
-                  className="inline-block mr-[0.25em]"
-                >
-                  {word}
-                </motion.span>
-              ))}
-            </h2>
+            <SectionHeading className="text-4xl md:text-5xl lg:text-6xl leading-[1.1]">
+              Questions we hear from shop owners
+            </SectionHeading>
 
             <p className="text-balance text-base md:text-lg text-slate-400 leading-relaxed max-w-md">
               Straight answers about how Plarix finds, files, and tracks warranty claims, and what it costs.
