@@ -64,7 +64,7 @@ const organizationJsonLd = {
   name: 'Plarix',
   description: 'Plarix finds and files the manufacturer warranty claims, parts credits, labor reimbursements, and rebates that HVAC and plumbing contractors have already earned but never collected.',
   url: 'https://plarix.dev',
-  logo: 'https://plarix.dev/icon.png',
+  logo: 'https://plarix.dev/images/plarix-new-logo.png',
   contactPoint: {
     '@type': 'ContactPoint',
     email: 'hello@plarix.dev',
