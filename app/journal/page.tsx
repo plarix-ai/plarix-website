@@ -9,7 +9,7 @@ import { journal } from "@/content/site";
 export const metadata = pageMeta({
   title: "Journal",
   description:
-    "Plain explanations of where money goes missing in a home services business. One specific mechanism at a time, with no pitch attached.",
+    "Plain explanations of where money quietly goes missing in a home services business. One specific mechanism at a time, with no pitch attached.",
   path: "/journal",
 });
 

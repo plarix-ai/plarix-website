@@ -8,7 +8,7 @@ import { faqs } from "@/content/site";
 export const metadata = pageMeta({
   title: "Questions",
   description:
-    "What Plarix does, whether you have to leave ServiceTitan or Jobber, what it costs, how long it takes, what data it needs, and what happens if the count finds nothing.",
+    "What Plarix does, whether you leave ServiceTitan, what it costs, how long it takes, what data it needs, and what happens if we find nothing.",
   path: "/faq",
 });
 

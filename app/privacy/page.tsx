@@ -9,7 +9,7 @@ import { CONTACT_EMAIL } from "@/content/site";
 export const metadata = pageMeta({
   title: "Privacy",
   description:
-    "What Plarix collects through plarix.dev, what happens to it, how long it is kept, and how to have it deleted. We collect the minimum necessary and we do not sell data.",
+    "What Plarix collects through plarix.dev, what happens to it, how long it is kept, and how to have it deleted. We collect the minimum necessary.",
   path: "/privacy",
 });
 

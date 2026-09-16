@@ -9,7 +9,7 @@ import { company } from "@/content/site";
 export const metadata = pageMeta({
   title: "What we believe",
   description:
-    "Plarix is an AI integration company building agentic process automation for home services. What we are, why home services, why warranty claims first, and the six things we will never do.",
+    "What Plarix is, why home services, why warranty claims first, and the six things we put in writing that we will never do to your business.",
   path: "/company",
 });
 

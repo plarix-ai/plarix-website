@@ -8,7 +8,7 @@ import { closing } from "@/content/site";
 export const metadata = pageMeta({
   title: "Get your count",
   description:
-    "Twenty minutes and read access to your data. We come back with a written number for what is sitting unclaimed, unreconciled or unfiled. Free, no contract, and if we find nothing we say so.",
+    "Twenty minutes and read access. We return a written number for what is sitting unclaimed in your data. Free, no contract, and no pitch attached.",
   path: "/count",
 });
 

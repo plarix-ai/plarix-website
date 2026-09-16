@@ -31,7 +31,6 @@ export function pageMeta({
       siteName: "Plarix",
       type,
       locale: "en_US",
-      images: [{ url: "/brand/og.png", width: 2400, height: 1260, alt: "Plarix" }],
       ...(published ? { publishedTime: published } : {}),
     },
     twitter: {
@@ -40,7 +39,6 @@ export function pageMeta({
       description,
       site: "@theplarix",
       creator: "@theplarix",
-      images: ["/brand/og.png"],
     },
   };
 }

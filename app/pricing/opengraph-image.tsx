@@ -1,0 +1,9 @@
+import { ogImage, OG_SIZE, OG_CONTENT_TYPE } from "@/lib/og";
+
+export const alt = "Compare us to a hire, not to software.";
+export const size = OG_SIZE;
+export const contentType = OG_CONTENT_TYPE;
+
+export default function Image() {
+  return ogImage({ title: "Compare us to a hire, not to software.", kicker: "Pricing" });
+}
