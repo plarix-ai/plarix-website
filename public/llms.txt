@@ -1,15 +1,27 @@
 # Plarix
 
-> Plarix finds and files the manufacturer warranty claims, parts credits, labor
-> reimbursements, and rebates that HVAC and plumbing contractors have already
-> earned but never collected. Free diagnostic. Flat monthly fee. No long-term
-> contract.
+> Plarix builds operational AI for home services companies. We take over the back
+> office processes every job leaves behind, running them inside the systems a shop
+> already uses. No data migration, no new software to learn, no long contract.
+
+## What we run
+- Warranty and rebate recovery
+- Invoice and job reconciliation
+- Purchasing and vendor credits
+- Permits, licensing and compliance
+- Technician pay and commissions
+- Memberships and service agreements
+
+## How we work
+1. Count. We read the shop's real data and report what is actually sitting there,
+   before anything is sold. Free. If we find nothing, we say so.
+2. Build. We build the narrow process that handles exactly what we found, live in
+   weeks, running against existing systems.
+3. Prove. One page a month: what ran, what it recovered, what it saved.
 
 ## Pages
-- [Home](https://plarix.dev/): what Plarix does and how it works.
-- [Pricing](https://plarix.dev/pricing): public, flat-fee pricing structure.
-- [FAQ](https://plarix.dev/faq): common questions about process, contract
-  terms, and platform integrations (ServiceTitan, Jobber, FieldEdge).
+- [Home](https://plarix.dev/): what Plarix does, what we run, how it works, pricing.
+- [Privacy](https://plarix.dev/privacy): what we collect and what happens to it.
 
 ## Contact
 hello@plarix.dev
