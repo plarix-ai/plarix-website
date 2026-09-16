@@ -4,57 +4,7 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
-
-interface FAQItem {
-  id: string;
-  question: string;
-  answer: string;
-}
-
-const faqs: FAQItem[] = [
-  {
-    id: "1",
-    question: "Does this replace ServiceTitan?",
-    answer:
-      "No. Plarix works alongside your FSM — ServiceTitan, Jobber, FieldEdge, whatever you run. We pull job data from it, identify claims, and file them. Your team keeps using the same platform they already know.",
-  },
-  {
-    id: "2",
-    question: "What if we do not know how much we are losing?",
-    answer:
-      "That is exactly what the free audit is for. We pull your job history and tell you: this many claims qualify, this is the estimated dollar value. You find out the number before you spend a dollar with us.",
-  },
-  {
-    id: "3",
-    question: "Will this replace my office manager?",
-    answer:
-      "No. Your office manager currently spends hours logging into manufacturer portals, filling out forms, and chasing denials. Plarix handles that part. They get those hours back — to dispatch, handle customer calls, or do anything that actually needs a person.",
-  },
-  {
-    id: "4",
-    question: "What data do you need access to?",
-    answer:
-      "Your job data from your FSM: job records, parts used, labor logged, serial numbers when available. We do not need access to your financials, your bank accounts, or your customer data beyond what is on the work order itself.",
-  },
-  {
-    id: "5",
-    question: "What happens if you do not find anything?",
-    answer:
-      "Then we tell you, and you pay nothing. The audit is free either way. If there are no unfiled claims in your job history, we will tell you that directly and you move on. We would rather tell you the truth than sell you something you do not need.",
-  },
-  {
-    id: "6",
-    question: "How do you get paid?",
-    answer:
-      "We take a percentage of the dollars we recover for you. If we do not recover anything, you do not pay anything. This means our incentives are aligned: we only succeed when money actually lands back in your account.",
-  },
-  {
-    id: "7",
-    question: "How long until we see money coming back?",
-    answer:
-      "It depends on the manufacturer. Some pay within 30 days of a clean claim submission. Others take 60–90 days. We start filing as soon as the audit is complete, and we track every claim through to payment so you know exactly where each one stands.",
-  },
-];
+import { faqs } from "@/lib/faq-data";
 
 export function FaqSection() {
   const [openId, setOpenId] = useState<string | null>(null);
@@ -72,7 +22,7 @@ export function FaqSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
           <div className="flex flex-col gap-6">
             <div className="flex items-center gap-3 px-4 py-2 border border-slate-800/50 w-fit">
-              <div className="w-2.5 h-2.5 bg-amber-500" />
+              <div className="w-2.5 h-2.5 bg-white/30" />
               <span className="text-sm font-medium text-slate-500 tracking-wide">
                 FAQ
               </span>
@@ -99,7 +49,7 @@ export function FaqSection() {
 
             <p className="text-sm text-slate-500">
               Do not see your question?{" "}
-              <a href="mailto:hello@plarix.dev" className="text-amber-500 hover:text-amber-400 transition-colors">
+              <a href="mailto:hello@plarix.dev" className="text-white hover:text-slate-300 underline underline-offset-4 transition-colors">
                 Ask us directly.
               </a>
             </p>
@@ -136,7 +86,7 @@ export function FaqSection() {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                      transition={{ duration: 0.25, ease: "easeOut" }}
                       className="overflow-hidden"
                     >
                       <div className="pb-5 pr-12">

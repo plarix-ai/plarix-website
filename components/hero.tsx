@@ -6,7 +6,14 @@ import { useState, useCallback } from "react"
 import { Menu, X } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
+
+const NAV_LINKS = [
+  { href: "#problem", label: "Problem" },
+  { href: "#how-it-works", label: "How it works" },
+  { href: "#pricing", label: "Pricing" },
+  { href: "#faq", label: "FAQ" },
+]
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -44,41 +51,16 @@ export function Navbar() {
         </Link>
 
         <div className="hidden lg:flex items-center gap-8 text-sm text-white/60 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-          <a
-            href="#problem"
-            onClick={(e) => handleScrollClick(e, "#problem")}
-            className="transition-colors hover:text-white whitespace-nowrap"
-          >
-            Problem
-          </a>
-          <a
-            href="#approach"
-            onClick={(e) => handleScrollClick(e, "#approach")}
-            className="transition-colors hover:text-white whitespace-nowrap"
-          >
-            Solution
-          </a>
-          <a
-            href="#features"
-            onClick={(e) => handleScrollClick(e, "#features")}
-            className="transition-colors hover:text-white whitespace-nowrap"
-          >
-            Features
-          </a>
-          <a
-            href="#process"
-            onClick={(e) => handleScrollClick(e, "#process")}
-            className="transition-colors hover:text-white whitespace-nowrap"
-          >
-            Process
-          </a>
-          <a
-            href="#faq"
-            onClick={(e) => handleScrollClick(e, "#faq")}
-            className="transition-colors hover:text-white whitespace-nowrap"
-          >
-            FAQ
-          </a>
+          {NAV_LINKS.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              onClick={(e) => handleScrollClick(e, link.href)}
+              className="transition-colors hover:text-white whitespace-nowrap"
+            >
+              {link.label}
+            </a>
+          ))}
         </div>
 
         <div className="ml-auto flex items-center gap-4">
@@ -86,7 +68,7 @@ export function Navbar() {
             onClick={openForm}
             className="hidden text-sm font-medium text-white transition-colors hover:text-white/80 lg:block"
           >
-            Get a Free Warranty Audit
+            Get your free claim count
           </button>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -102,53 +84,36 @@ export function Navbar() {
         </div>
       </div>
 
-      {mobileMenuOpen && (
-        <div className="bg-slate-950/95 backdrop-blur-sm border-t border-slate-800/50 lg:hidden">
-          <div className="flex flex-col px-6 py-6 gap-4">
-            <a
-              href="#problem"
-              onClick={(e) => handleScrollClick(e, "#problem")}
-              className="text-white/60 transition-colors hover:text-white py-2"
-            >
-              Problem
-            </a>
-            <a
-              href="#approach"
-              onClick={(e) => handleScrollClick(e, "#approach")}
-              className="text-white/60 transition-colors hover:text-white py-2"
-            >
-              Solution
-            </a>
-            <a
-              href="#features"
-              onClick={(e) => handleScrollClick(e, "#features")}
-              className="text-white/60 transition-colors hover:text-white py-2"
-            >
-              Features
-            </a>
-            <a
-              href="#process"
-              onClick={(e) => handleScrollClick(e, "#process")}
-              className="text-white/60 transition-colors hover:text-white py-2"
-            >
-              Process
-            </a>
-            <a
-              href="#faq"
-              onClick={(e) => handleScrollClick(e, "#faq")}
-              className="text-white/60 transition-colors hover:text-white py-2"
-            >
-              FAQ
-            </a>
-            <button
-              onClick={openForm}
-              className="mt-2 text-white font-medium py-2 border-t border-slate-800/50 text-left"
-            >
-              Get a Free Warranty Audit
-            </button>
-          </div>
-        </div>
-      )}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="bg-slate-950/95 backdrop-blur-sm border-t border-slate-800/50 lg:hidden"
+          >
+            <div className="flex flex-col px-6 py-6 gap-4">
+              {NAV_LINKS.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={(e) => handleScrollClick(e, link.href)}
+                  className="text-white/60 transition-colors hover:text-white py-2"
+                >
+                  {link.label}
+                </a>
+              ))}
+              <button
+                onClick={openForm}
+                className="mt-2 text-white font-medium py-2 border-t border-slate-800/50 text-left"
+              >
+                Get your free claim count
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   )
 }
@@ -157,22 +122,24 @@ export function Hero() {
   return (
     <section className="relative h-screen w-full overflow-hidden">
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/images/space-bg.jpg')" }}
+        className="absolute inset-0 opacity-[0.07]"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle at 50% 40%, #F2F1ED 0%, #9CA3AF 35%, transparent 70%)",
+        }}
       />
-      <div className="absolute inset-0 bg-slate-950/40" />
       <div className="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-transparent to-slate-950" />
 
       <div className="relative z-10 flex h-full flex-col justify-center items-center px-6 pt-14 text-center">
         <div className="flex items-center gap-3 px-4 py-2 border border-slate-800/50 mb-8">
-          <div className="w-2.5 h-2.5 bg-amber-500" />
+          <div className="w-2.5 h-2.5 bg-white/30" />
           <span className="text-sm font-medium text-slate-500 tracking-wide">
             Warranty Claims Automation for HVAC &amp; Plumbing
           </span>
         </div>
 
         <h1 className="max-w-4xl text-balance text-5xl font-normal tracking-tight text-white md:text-6xl lg:text-7xl">
-          {"No FSM platform files a warranty claim. We built the one that does.".split(" ").map((word, i) => (
+          {"The money was never lost. It was just never collected.".split(" ").map((word, i) => (
             <motion.span
               key={`hero-word-${word}-${i}`}
               initial={{ filter: "blur(10px)", opacity: 0 }}
@@ -187,7 +154,9 @@ export function Hero() {
         </h1>
 
         <p className="mt-6 max-w-2xl text-balance text-center text-sm leading-relaxed text-white/50 md:text-base">
-          We find and file the warranty claims your HVAC or plumbing shop is currently missing, and show you the dollar amount before you commit to anything.
+          We go through your open and closed warranty claims — parts, labor, rebates, every manufacturer
+          portal — and find what should&apos;ve been filed and wasn&apos;t. Free to check. If we don&apos;t
+          find anything, you don&apos;t pay anything.
         </p>
 
         <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row">
@@ -196,20 +165,20 @@ export function Hero() {
             className="bg-amber-500 px-6 text-slate-950 hover:bg-amber-400 font-medium"
             onClick={() => window.dispatchEvent(new CustomEvent("open-consultation"))}
           >
-            Get a Free Warranty Audit
+            Get your free claim count
           </Button>
         </div>
 
         <a
-          href="#approach"
+          href="#how-it-works"
           onClick={(e) => {
             e.preventDefault()
-            const el = document.querySelector("#approach")
+            const el = document.querySelector("#how-it-works")
             if (el) el.scrollIntoView({ behavior: "smooth", block: "start" })
           }}
           className="mt-6 text-sm text-slate-500 hover:text-slate-300 transition-colors"
         >
-          See what we check for &darr;
+          See how it works &darr;
         </a>
 
         <p className="mt-12 text-xs text-white/30 tracking-wide uppercase">

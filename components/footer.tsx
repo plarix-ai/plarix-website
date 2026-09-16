@@ -17,15 +17,14 @@ export function Footer() {
                 style={{ height: "76px", width: "auto" }}
               />
             </Link>
-            <p className="text-sm text-slate-500">AI Operations for Home Services</p>
           </div>
 
           <div className="flex flex-wrap items-center gap-6">
             <Link href="/#problem" className="text-sm text-slate-500 transition-colors hover:text-white">Problem</Link>
-            <Link href="/#approach" className="text-sm text-slate-500 transition-colors hover:text-white">Solution</Link>
-            <Link href="/#features" className="text-sm text-slate-500 transition-colors hover:text-white">Features</Link>
-            <Link href="/#process" className="text-sm text-slate-500 transition-colors hover:text-white">Process</Link>
-            <Link href="/#faq" className="text-sm text-slate-500 transition-colors hover:text-white">FAQ</Link>
+            <Link href="/#how-it-works" className="text-sm text-slate-500 transition-colors hover:text-white">How it works</Link>
+            <Link href="/pricing" className="text-sm text-slate-500 transition-colors hover:text-white">Pricing</Link>
+            <Link href="/faq" className="text-sm text-slate-500 transition-colors hover:text-white">FAQ</Link>
+            <Link href="/blog" className="text-sm text-slate-500 transition-colors hover:text-white">Blog</Link>
             <Link href="/privacy" className="text-sm text-slate-500 transition-colors hover:text-white">Privacy</Link>
             <Link href="mailto:hello@plarix.dev" className="text-sm text-slate-500 transition-colors hover:text-white">Contact</Link>
           </div>
