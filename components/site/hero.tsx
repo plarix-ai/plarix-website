@@ -39,16 +39,17 @@ export function Hero() {
       <HeroBackdrop />
 
       {/*
-        The blur veil. No darkening gradient anywhere: the surface keeps its own
-        exposure, graded in the shader, and the type sits on a bed of blur that
-        fades out by mid screen.
+        The bed the copy sits on. This was a fixed full-viewport backdrop-blur, which
+        forces the compositor to re-blur the entire screen on every frame of a live
+        canvas underneath it. The shader already grades its own falloff toward the
+        lower left, so a plain gradient does the same visual work at no cost.
       */}
       <div
-        className="pointer-events-none fixed inset-0 z-[1] backdrop-blur-xl"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-3/5"
         aria-hidden="true"
         style={{
-          WebkitMaskImage: "linear-gradient(to top, black 0%, transparent 45%)",
-          maskImage: "linear-gradient(to top, black 0%, transparent 45%)",
+          background:
+            "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.72) 26%, rgba(0,0,0,0.34) 56%, rgba(0,0,0,0) 100%)",
         }}
       />
 

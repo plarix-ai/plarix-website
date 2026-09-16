@@ -58,6 +58,7 @@ export default function JournalPage() {
               <Reveal as="li" key={post.slug} delay={i * 80}>
                 <Link
                   href={`/journal/${post.slug}`}
+                  prefetch={false}
                   className="group grid gap-3 border-t border-hairline py-9 last:border-b md:grid-cols-[minmax(0,10rem)_1fr] md:gap-12 md:py-12"
                 >
                   <div className="flex items-baseline gap-3 t-caption text-text-tertiary md:block">

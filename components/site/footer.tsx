@@ -33,6 +33,7 @@ export function Footer() {
                     <li key={item.href}>
                       <Link
                         href={item.href}
+                        prefetch={false}
                         className="link-sweep t-body-sm text-text-secondary transition-colors duration-200 hover:text-white"
                       >
                         {item.label}

@@ -68,9 +68,9 @@ export function SiteNav() {
         className="absolute inset-0 border-b transition-[opacity,background-color] duration-500"
         style={{
           opacity: compact ? 1 : 0,
-          background: "rgba(4, 5, 7, 0.88)",
-          backdropFilter: "blur(20px) saturate(140%)",
-          WebkitBackdropFilter: "blur(20px) saturate(140%)",
+          background: "rgba(4, 5, 7, 0.94)",
+          backdropFilter: compact ? "blur(16px) saturate(140%)" : "none",
+          WebkitBackdropFilter: compact ? "blur(16px) saturate(140%)" : "none",
           borderColor: "var(--hairline)",
           transitionTimingFunction: "var(--ease-out)",
         }}
@@ -178,6 +178,7 @@ export function SiteNav() {
                         <li key={c.href}>
                           <Link
                             href={c.href}
+                            prefetch={false}
                             className="block rounded-lg px-3 py-2 t-body-sm text-text-tertiary transition-colors duration-200 hover:bg-white/5 hover:text-white"
                           >
                             {c.label}
