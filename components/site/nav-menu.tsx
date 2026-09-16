@@ -124,6 +124,7 @@ export function NavMenu({
               <li key={item.href}>
                 <Link
                   href={item.href}
+                  prefetch={false}
                   tabIndex={open ? 0 : -1}
                   className="block rounded-xl px-3 py-3 transition-colors duration-150 hover:bg-white/[0.06]"
                 >
@@ -141,6 +142,7 @@ export function NavMenu({
               <Link
                 key={f.href}
                 href={f.href}
+                prefetch={false}
                 tabIndex={open ? 0 : -1}
                 className="group flex items-center justify-between gap-4 px-5 py-3.5 transition-colors duration-150 hover:bg-white/[0.04]"
               >

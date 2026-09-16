@@ -168,14 +168,17 @@
    that catches light along the top and bottom edges.
 ------------------------------------------------------------------ */
 
+/*
+ * The 1.4px gradient stroke is what reads as glass. The 4px backdrop blur this
+ * used to carry is barely perceptible and costs a backdrop re-composite per
+ * element per frame over a moving surface, which on the hero is five of them.
+ * The fill carries it instead.
+ */
 .liquid-glass {
   position: relative;
   overflow: hidden;
   border: none;
-  background: rgba(255, 255, 255, 0.01);
-  background-blend-mode: luminosity;
-  -webkit-backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);
+  background: rgba(255, 255, 255, 0.045);
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
   transition:
     background-color 200ms var(--ease-out),
@@ -210,7 +213,7 @@
 
 @media (hover: hover) and (pointer: fine) {
   .liquid-glass:hover {
-    background-color: rgba(255, 255, 255, 0.06);
+    background-color: rgba(255, 255, 255, 0.1);
   }
 }
 

@@ -25,7 +25,7 @@ precision highp float;
 
 uniform vec2  uRes;
 uniform float uTime;
-uniform float uDpr;
+uniform float uCssScale;
 uniform float uNarrow;
 
 float hash11(float p) {
@@ -59,23 +59,23 @@ float noise2(vec2 p) {
   );
 }
 
-float fbm(vec2 p) {
-  float v = 0.0;
-  float a = 0.5;
-  for (int i = 0; i < 4; i++) {
-    v += a * noise2(p);
-    p *= 2.03;
-    a *= 0.5;
-  }
-  return v;
+/* One octave. The warp only needs to bend a highlight, not describe terrain. */
+float fbm2(vec2 p) {
+  return noise2(p);
 }
 
 /* What the metal reflects: a few soft bars of light on an otherwise dark room. */
+float gauss(float x) {
+  /* pow(x, 2.0) compiles to a transcendental call on some drivers for something
+     that is one multiply. This is called six times per pixel. */
+  return exp(-(x * x));
+}
+
 float env(float r, float t) {
   float v = 0.010;
-  v += 0.46 * exp(-pow((r - (0.22 + 0.26 * sin(t * 0.061))) * 4.6, 2.0));
-  v += 0.15 * exp(-pow((r - (-0.78 + 0.30 * sin(t * 0.047 + 2.1))) * 2.6, 2.0));
-  v += 0.10 * exp(-pow((r - (1.12 + 0.20 * sin(t * 0.038 + 4.0))) * 5.0, 2.0));
+  v += 0.46 * gauss((r - (0.22 + 0.26 * sin(t * 0.061))) * 4.6);
+  v += 0.15 * gauss((r - (-0.78 + 0.30 * sin(t * 0.047 + 2.1))) * 2.6);
+  v += 0.10 * gauss((r - (1.12 + 0.20 * sin(t * 0.038 + 4.0))) * 5.0);
   return v;
 }
 
@@ -84,15 +84,20 @@ void main() {
   vec2 p = (gl_FragCoord.xy - 0.5 * uRes) / uRes.y;
   float t = uTime;
 
-  /* The panel is formed, not flat, so the highlights bend as they travel. */
+  /*
+   * The panel is formed, not flat, so the highlights bend as they travel. Two
+   * octaves of noise carry that, and the brush direction is a constant with one
+   * cheap variation on it. An earlier version ran four separate four-octave fbm
+   * calls per pixel, which is roughly a hundred noise samples for every pixel of
+   * a full-screen quad, every frame. That is what made this unusable.
+   */
   vec2 warp = vec2(
-    fbm(p * 1.05 + vec2(t * 0.013, 0.0)),
-    fbm(p * 1.05 + vec2(5.2, -t * 0.011))
+    fbm2(p * 1.05 + vec2(t * 0.013, 0.0)),
+    fbm2(p * 1.05 + vec2(5.2, -t * 0.011))
   );
   vec2 q = p + (warp - 0.5) * 0.26;
 
-  /* Brush direction: a slow diagonal that drifts a little across the surface. */
-  float ang = 0.30 + (fbm(p * 0.55) - 0.5) * 0.28;
+  float ang = 0.30 + p.y * 0.16 - p.x * 0.05;
   vec2 dir = vec2(cos(ang), sin(ang));
   vec2 perp = vec2(-dir.y, dir.x);
 
@@ -100,17 +105,14 @@ void main() {
   float along = dot(q, dir);
 
   /*
-   * The grain. Kept in CSS pixels rather than device pixels so the brush reads at
-   * the same density on a retina panel as on a standard one, instead of aliasing
-   * into noise.
+   * The grain, in CSS pixels so the brush holds one density on any panel. Pitched
+   * a little coarser than before so it still resolves when the canvas renders
+   * below device resolution, which is what keeps this cheap.
    */
-  float gc = dot(gl_FragCoord.xy, perp) / uDpr;
-  float grain = noise1(gc * 0.62 + along * 40.0) - 0.5;
-  grain += (noise1(gc * 0.17 + 11.0) - 0.5) * 0.75;
-  grain += (noise1(gc * 2.30 + 41.0) - 0.5) * 0.30;
-  /* One octave finer than a CSS pixel, so a retina panel resolves detail a
-     standard one cannot. On a 1x display it averages away harmlessly. */
-  grain += (noise1(dot(gl_FragCoord.xy, perp) * 1.15 + 77.0) - 0.5) * 0.18;
+  float gc = dot(gl_FragCoord.xy, perp) / uCssScale;
+  float grain = noise1(gc * 0.42 + along * 40.0) - 0.5;
+  grain += (noise1(gc * 0.13 + 11.0) - 0.5) * 0.75;
+  grain += (noise1(gc * 1.30 + 41.0) - 0.5) * 0.30;
 
   float r = across * 2.25 + grain * 0.115;
 
@@ -120,7 +122,7 @@ void main() {
   spec += 0.09 * env(r * 1.7 - 0.6, t * 0.8);
 
   /* Broad, very dim ambient so the darkest areas are not perfectly dead. */
-  float amb = 0.022 + 0.022 * fbm(q * 1.6 + vec2(0.0, t * 0.02));
+  float amb = 0.026;
 
   /*
    * Grade the surface instead of laying a scrim over it. Brightness rises toward
@@ -130,7 +132,10 @@ void main() {
    */
   float axis = frag.x * 0.44 + frag.y * 0.80;
   float bed = smoothstep(0.06, 1.02, axis);
-  bed = pow(bed, mix(2.10, 3.70, uNarrow));
+  /* Was pow(bed, 2.1) and pow(bed, 3.7). Squaring twice is the same curve to the eye
+     and is two multiplies instead of a transcendental. */
+  float b2 = bed * bed;
+  bed = mix(b2, b2 * b2, uNarrow);
 
   /*
    * The navigation sits in the top strip and has to stay legible, so the surface
@@ -142,7 +147,9 @@ void main() {
   float lum = (spec * bed + amb * (0.30 + 0.70 * bed)) * navGuard;
 
   /* Corners quieten so the frame holds together. */
-  float vig = 1.0 - 0.42 * pow(length(p * vec2(0.82, 1.18)), 2.4);
+  vec2 vp = p * vec2(0.82, 1.18);
+  float d2 = dot(vp, vp);
+  float vig = 1.0 - 0.42 * d2 * sqrt(d2) * 0.9;
   lum *= clamp(vig, 0.0, 1.0);
 
   /* Monochrome, with the faintest warm bias in the highlight. Never a colour cast. */
@@ -218,27 +225,36 @@ export function HeroBackdrop() {
 
     const uRes = gl.getUniformLocation(prog, "uRes");
     const uTime = gl.getUniformLocation(prog, "uTime");
-    const uDpr = gl.getUniformLocation(prog, "uDpr");
+    const uCssScale = gl.getUniformLocation(prog, "uCssScale");
     const uNarrow = gl.getUniformLocation(prog, "uNarrow");
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     let raf = 0;
     let running = true;
-    let dpr = 1;
+    let scale = 1;
 
     function resize() {
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const w = Math.max(1, Math.floor(canvas!.clientWidth * dpr));
-      const h = Math.max(1, Math.floor(canvas!.clientHeight * dpr));
+      /*
+       * The surface is soft. It does not need device resolution, and asking for it
+       * costs four times the pixels for a difference nobody can point at. Render at
+       * CSS resolution, capped by total pixel count so a very large window does not
+       * quietly become expensive.
+       */
+      const cssW = canvas!.clientWidth;
+      const cssH = canvas!.clientHeight;
+      const MAX_PIXELS = 760_000;
+      scale = Math.min(1, Math.sqrt(MAX_PIXELS / Math.max(1, cssW * cssH)));
+      const w = Math.max(1, Math.floor(cssW * scale));
+      const h = Math.max(1, Math.floor(cssH * scale));
       if (canvas!.width !== w || canvas!.height !== h) {
         canvas!.width = w;
         canvas!.height = h;
       }
       gl!.viewport(0, 0, w, h);
       gl!.uniform2f(uRes, w, h);
-      gl!.uniform1f(uDpr, dpr);
-      gl!.uniform1f(uNarrow, canvas!.clientWidth < 768 ? 1 : 0);
+      gl!.uniform1f(uCssScale, scale);
+      gl!.uniform1f(uNarrow, cssW < 768 ? 1 : 0);
     }
 
     function draw(seconds: number) {
@@ -248,10 +264,19 @@ export function HeroBackdrop() {
 
     const still = 21.5; // one composed frame, highlight mid travel
 
+    /*
+     * Half rate. The highlight travels on a hundred second cycle, so thirty frames a
+     * second is indistinguishable from sixty and costs half as much.
+     */
+    const FRAME_MS = 1000 / 30;
+    let lastFrame = 0;
+
     function loop(ms: number) {
       if (!running) return;
-      draw(ms / 1000 + still);
       raf = requestAnimationFrame(loop);
+      if (ms - lastFrame < FRAME_MS) return;
+      lastFrame = ms;
+      draw(ms / 1000 + still);
     }
 
     const onResize = () => {
@@ -259,13 +284,36 @@ export function HeroBackdrop() {
       if (reduced) draw(still);
     };
 
+    /* Scrolled past the hero, there is nothing to render. Without this the shader
+       keeps running the whole way down the page. */
+    let onScreen = true;
+    const io =
+      typeof IntersectionObserver !== "undefined"
+        ? new IntersectionObserver(
+            ([entry]) => {
+              onScreen = entry.isIntersecting;
+              if (reduced) return;
+              if (!onScreen) {
+                running = false;
+                cancelAnimationFrame(raf);
+              } else if (!running && !document.hidden) {
+                running = true;
+                lastFrame = 0;
+                raf = requestAnimationFrame(loop);
+              }
+            },
+            { rootMargin: "120px" },
+          )
+        : null;
+
     const onVisibility = () => {
       if (reduced) return;
       if (document.hidden) {
         running = false;
         cancelAnimationFrame(raf);
-      } else if (!running) {
+      } else if (!running && onScreen) {
         running = true;
+        lastFrame = 0;
         raf = requestAnimationFrame(loop);
       }
     };
@@ -281,6 +329,7 @@ export function HeroBackdrop() {
     if (reduced) draw(still);
     else raf = requestAnimationFrame(loop);
 
+    io?.observe(canvas);
     window.addEventListener("resize", onResize);
     document.addEventListener("visibilitychange", onVisibility);
     canvas.addEventListener("webglcontextlost", onLost);
@@ -288,6 +337,7 @@ export function HeroBackdrop() {
     return () => {
       running = false;
       cancelAnimationFrame(raf);
+      io?.disconnect();
       window.removeEventListener("resize", onResize);
       document.removeEventListener("visibilitychange", onVisibility);
       canvas.removeEventListener("webglcontextlost", onLost);

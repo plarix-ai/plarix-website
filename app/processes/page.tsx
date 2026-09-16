@@ -50,6 +50,7 @@ export default function ProcessesPage() {
               <Reveal as="li" key={p.slug} delay={i * 70}>
                 <Link
                   href={`/processes/${p.slug}`}
+                  prefetch={false}
                   className="group grid items-start gap-3 border-t border-hairline py-8 last:border-b md:grid-cols-[minmax(0,28rem)_1fr_auto] md:gap-12 md:py-10"
                 >
                   <h2

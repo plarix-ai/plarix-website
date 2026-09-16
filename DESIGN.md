@@ -246,3 +246,53 @@ during the count, and anything that writes is scoped and approved first.
 The journal is six pieces now, each teaching one specific mechanism, with the anchor
 structure and `Article` markup an answer engine needs to quote a section rather than a
 page.
+
+
+## Performance
+
+The first version of this design was unusable and the design notes did not say so,
+because nobody had measured it. Profiled on software rendering, which is the worst case:
+**3fps on desktop and 7fps on a throttled phone**, with a continuous run of 400 to 570ms
+long tasks. Three causes, compounding.
+
+**The shader was doing about a hundred noise samples per pixel.** Four separate
+four-octave fbm calls, plus `pow(x, 2.0)` six times where a multiply would do, on every
+pixel of a full-screen quad at twice device resolution at sixty frames a second. It now
+runs one octave where two was already generous, a constant brush angle with a linear
+tilt on it, `exp(-(x*x))` instead of `exp(-pow(x,2))`, and squaring instead of `pow` in
+the grade curve.
+
+**It rendered at device resolution.** The surface is soft. It does not need retina
+pixels, and asking for them costs four times the work for a difference nobody can point
+at. It renders at CSS resolution now, capped at 760k pixels total so a large window
+cannot quietly become expensive, at thirty frames a second because the highlight travels
+on a hundred second cycle, and it stops completely once the hero scrolls off screen.
+
+**A fixed full-viewport `backdrop-blur-xl` sat over a live canvas.** That forces the
+compositor to re-blur the entire screen every frame. The shader already grades its own
+falloff, so a plain gradient does the same visual work for nothing. `liquid-glass` lost
+its 4px backdrop filter for the same reason: the 1.4px gradient stroke is what reads as
+glass, and five of those over a moving surface is five backdrop composites a frame. The
+nav keeps its blur only once it is opaque, which is exactly when there is content behind
+it to blur.
+
+Two more, smaller: links now prefetch on intent rather than on sight, which took the
+home page from 86 requests to 50 by not fetching sixty route payloads for links inside a
+panel nobody has opened; and the forty reveals on a long page share one
+IntersectionObserver instead of creating forty.
+
+Measured after, same software rendering:
+
+| | Before | After |
+| --- | --- | --- |
+| Desktop, idle on hero | 3fps | 60fps |
+| Desktop, while scrolling | 2fps | 60fps |
+| Desktop long tasks | 24, averaging 470ms | 2, averaging 59ms |
+| Phone at 4x CPU throttle, idle | 7fps | 61fps |
+| Phone, while scrolling | 6fps | 60fps |
+| Phone long tasks | 91, averaging 155ms | 3, averaging 126ms |
+| Every inner page, scrolling | not measured | 60 to 61fps |
+| Home page requests | 86 | 50 |
+
+The look did not pay for it. The one-octave warp makes the streaks straighter, which
+reads as more machined rather than less.

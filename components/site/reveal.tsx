@@ -3,6 +3,40 @@
 import { useEffect, useRef, useState, type ElementType, type ReactNode } from "react";
 
 /**
+ * One IntersectionObserver for the whole page rather than one per element. A long
+ * page carries around forty reveals, and forty observers is forty setup costs on a
+ * phone at hydration for a job a single shared observer does.
+ */
+let shared: IntersectionObserver | null = null;
+const callbacks = new WeakMap<Element, () => void>();
+
+function observe(node: Element, onEnter: () => void) {
+  if (typeof IntersectionObserver === "undefined") {
+    onEnter();
+    return () => {};
+  }
+  if (!shared) {
+    shared = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          callbacks.get(entry.target)?.();
+          callbacks.delete(entry.target);
+          shared?.unobserve(entry.target);
+        }
+      },
+      { rootMargin: "0px 0px -10% 0px", threshold: 0.06 },
+    );
+  }
+  callbacks.set(node, onEnter);
+  shared.observe(node);
+  return () => {
+    callbacks.delete(node);
+    shared?.unobserve(node);
+  };
+}
+
+/**
  * The one calm entrance sections get. The hero owns the page's authored moment;
  * everything below simply arrives once, from an already-visible resting state.
  */
@@ -23,21 +57,7 @@ export function Reveal({
   useEffect(() => {
     const node = ref.current;
     if (!node) return;
-    if (typeof IntersectionObserver === "undefined") {
-      setVisible(true);
-      return;
-    }
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          io.disconnect();
-        }
-      },
-      { rootMargin: "0px 0px -12% 0px", threshold: 0.08 },
-    );
-    io.observe(node);
-    return () => io.disconnect();
+    return observe(node, () => setVisible(true));
   }, []);
 
   return (

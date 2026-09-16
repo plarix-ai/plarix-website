@@ -109,6 +109,7 @@ export default async function ProcessPage({ params }: { params: Promise<{ slug: 
                 <li key={o.slug}>
                   <Link
                     href={`/processes/${o.slug}`}
+                    prefetch={false}
                     className="group flex items-baseline justify-between gap-6 border-b border-hairline py-5"
                   >
                     <span className="t-h4 text-text-secondary transition-colors duration-200 group-hover:text-white">
