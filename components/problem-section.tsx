@@ -41,6 +41,31 @@ export function ProblemSection() {
           </span>
         </motion.div>
       </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
+        className="relative z-10 mx-auto mt-16 grid max-w-6xl grid-cols-1 gap-8 border-t border-slate-800/40 px-6 pt-10 sm:grid-cols-2 md:px-12 lg:px-16"
+      >
+        <div>
+          <span className="text-3xl font-medium tracking-[-0.02em] tabular-nums text-amber-500">
+            $45K&ndash;$110K
+          </span>
+          <p className="mt-1 text-sm text-slate-500">
+            What a full-time warranty coordinator costs, per year (Indeed, ZipRecruiter)
+          </p>
+        </div>
+        <div>
+          <span className="text-3xl font-medium tracking-[-0.02em] tabular-nums text-white">
+            $14.7B
+          </span>
+          <p className="mt-1 text-sm text-slate-500">
+            U.S. HVAC services market, fragmented across 130,000+ contractors (Grand View Research)
+          </p>
+        </div>
+      </motion.div>
     </section>
   );
 }

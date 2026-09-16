@@ -1,15 +1,11 @@
 import { Navbar, Hero } from "@/components/hero";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { ProblemSection } from "@/components/problem-section";
-import { StatsSection } from "@/components/stats-section";
 import { HowItWorksSection } from "@/components/approach-section";
 import { FeaturesSection } from "@/components/features-section";
 import { PricingSection } from "@/components/pricing-section";
-import { DeliverablesSection } from "@/components/deliverables-section";
-import { WhoWeServeSection } from "@/components/who-we-serve-section";
 import { TrustSection } from "@/components/trust-section";
 import { FaqSection } from "@/components/faq-section";
-import { FounderSection } from "@/components/founder-section";
 import { CtaSection } from "@/components/cta-section";
 import { Footer } from "@/components/footer";
 
@@ -34,15 +30,11 @@ export default function Home() {
       <main>
         <Hero />
         <ProblemSection />
-        <StatsSection />
         <HowItWorksSection />
         <FeaturesSection />
         <PricingSection />
-        <DeliverablesSection />
-        <WhoWeServeSection />
         <TrustSection />
         <FaqSection />
-        <FounderSection />
         <CtaSection />
       </main>
 

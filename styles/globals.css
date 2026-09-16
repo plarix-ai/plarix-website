@@ -141,6 +141,27 @@
   }
 }
 
+.hero-stage {
+  --u: calc(100vh / 1058);
+  --uw: calc(100vw / 1487);
+  --h: clamp(var(--u), calc(var(--u) * .65 + var(--uw) * .35), calc(var(--u) * 1.16));
+}
+@supports (height: 100dvh) {
+  .hero-stage {
+    --u: calc(100dvh / 1058);
+  }
+}
+
+@keyframes ambient-drift {
+  0%, 100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); opacity: 0.5; }
+  50% { transform: translate(-50%, -50%) scale(1.06) rotate(3deg); opacity: 0.65; }
+}
+
+@keyframes ambient-drift-slow {
+  0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
 .grain-overlay {
   pointer-events: none;
   position: fixed;
