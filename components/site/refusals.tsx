@@ -16,10 +16,10 @@ export function Refusals() {
               delay={i * 60}
               className="grid gap-2 border-t border-hairline py-7 last:border-b md:grid-cols-[minmax(0,26rem)_1fr] md:gap-12 md:py-9"
             >
-              <p className="text-xl text-white md:text-[27px]" style={{ letterSpacing: "-0.02em" }}>
+              <p className="t-h3 text-white">
                 {item.never}
               </p>
-              <p className="max-w-[58ch] text-base leading-relaxed text-text-secondary md:pt-1.5 md:text-[17px]">
+              <p className="max-w-[58ch] t-body text-text-secondary md:pt-1.5">
                 {item.because}
               </p>
             </Reveal>

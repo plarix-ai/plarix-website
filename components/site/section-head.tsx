@@ -16,13 +16,13 @@ export function SectionHead({
 }) {
   return (
     <div className="grid gap-7 lg:grid-cols-[1.05fr_0.95fr] lg:items-end lg:gap-20">
-      <Reveal as="h2" className="display max-w-[15ch] text-[clamp(2rem,5.2vw,3.5rem)]">
+      <Reveal as="h2" className="t-h2 max-w-[15ch]">
         {heading}
       </Reveal>
       <Reveal
         as="p"
         delay={90}
-        className="max-w-[46ch] text-lg leading-relaxed text-text-secondary md:text-xl lg:pb-2"
+        className="max-w-[46ch] t-body-lg text-text-secondary lg:pb-2"
       >
         {children}
       </Reveal>

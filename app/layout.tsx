@@ -1,6 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+
+import { SiteNav } from "@/components/site/site-nav";
+import { Footer } from "@/components/site/footer";
+import { SITE_URL, answerBlock } from "@/content/site";
 import "./globals.css";
 
 const inter = Inter({
@@ -11,15 +15,19 @@ const inter = Inter({
 });
 
 const DESCRIPTION =
-  "Plarix builds operational AI for home services companies. We take over the back office work every job leaves behind, inside the systems you already run. No migration, no new screen, no contract.";
+  "Plarix builds operational AI for home services companies. We run the back office processes every job leaves behind, inside the systems you already use. No migration, no new screen, no contract.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://plarix.dev"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Plarix | Everything after the call",
     template: "%s | Plarix",
   },
   description: DESCRIPTION,
+  applicationName: "Plarix",
+  authors: [{ name: "Plarix", url: SITE_URL }],
+  creator: "Plarix",
+  publisher: "Plarix",
   keywords: [
     "operational AI",
     "agentic process automation",
@@ -30,24 +38,6 @@ export const metadata: Metadata = {
     "warranty claim automation",
     "field service operations AI",
   ],
-  alternates: { canonical: "https://plarix.dev" },
-  openGraph: {
-    title: "Plarix | Everything after the call",
-    description: DESCRIPTION,
-    url: "https://plarix.dev",
-    siteName: "Plarix",
-    type: "website",
-    locale: "en_US",
-    images: [{ url: "/brand/og.png", width: 2400, height: 1260, alt: "Plarix. Everything after the call." }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Plarix | Everything after the call",
-    description: DESCRIPTION,
-    site: "@theplarix",
-    creator: "@theplarix",
-    images: ["/brand/og.png"],
-  },
   robots: {
     index: true,
     follow: true,
@@ -65,27 +55,59 @@ export const viewport: Viewport = {
   colorScheme: "dark",
 };
 
-const organizationJsonLd = {
+const organizationLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
+  "@id": `${SITE_URL}/#organization`,
   name: "Plarix",
-  description:
-    "Plarix builds operational AI for home services companies, running the back office processes every job leaves behind.",
-  url: "https://plarix.dev",
-  logo: "https://plarix.dev/brand/plarix-lockup.png",
-  contactPoint: { "@type": "ContactPoint", email: "hello@plarix.dev", contactType: "sales" },
+  legalName: "Plarix",
+  description: DESCRIPTION,
+  url: SITE_URL,
+  logo: { "@type": "ImageObject", url: `${SITE_URL}/brand/plarix-lockup.png`, width: 1352, height: 333 },
+  image: `${SITE_URL}/brand/og.png`,
+  email: "hello@plarix.dev",
+  areaServed: { "@type": "Country", name: "United States" },
+  knowsAbout: [
+    "Manufacturer warranty claim recovery",
+    "Rebate and dealer tier credit recovery",
+    "Invoice and job reconciliation",
+    "Purchasing and vendor credit reconciliation",
+    "Permit filing and trade compliance",
+    "Technician commission and spiff reconciliation",
+    "Service agreement retention",
+  ],
   sameAs: ["https://www.linkedin.com/company/plarix", "https://x.com/theplarix"],
 };
 
-const serviceJsonLd = {
+const websiteLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${SITE_URL}/#website`,
+  name: "Plarix",
+  url: SITE_URL,
+  publisher: { "@id": `${SITE_URL}/#organization` },
+  inLanguage: "en-US",
+};
+
+const serviceLd = {
   "@context": "https://schema.org",
   "@type": "Service",
-  serviceType: "Operational AI and process automation for home services",
-  provider: { "@type": "Organization", name: "Plarix" },
-  areaServed: "US",
+  name: "Operational AI for home services",
+  serviceType: "Agentic process automation for home services back office operations",
+  provider: { "@id": `${SITE_URL}/#organization` },
+  areaServed: { "@type": "Country", name: "United States" },
+  description: answerBlock.answer,
   audience: {
     "@type": "Audience",
-    audienceType: "HVAC, plumbing and home services contractors",
+    audienceType: "HVAC, plumbing, electrical and home services contractors",
+  },
+  offers: {
+    "@type": "Offer",
+    name: "The count",
+    price: "0",
+    priceCurrency: "USD",
+    description:
+      "A free written count of what is sitting unclaimed, unreconciled or unfiled in a contractor's own data.",
   },
 };
 
@@ -93,16 +115,26 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={inter.variable}>
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
-        />
+        {[organizationLd, websiteLd, serviceLd].map((ld, i) => (
+          <script
+            key={i}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }}
+          />
+        ))}
       </head>
-      <body className="font-sans antialiased">{children}<Analytics /></body>
+      <body className="font-sans antialiased">
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-white focus:px-5 focus:py-2.5 focus:text-[15px] focus:font-medium focus:text-black"
+        >
+          Skip to content
+        </a>
+        <SiteNav />
+        {children}
+        <Footer />
+        <Analytics />
+      </body>
     </html>
   );
 }

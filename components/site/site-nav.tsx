@@ -1,23 +1,36 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 
 import { Logo } from "./logo";
 import { nav } from "@/content/site";
 
-export function SiteNav({ overlay = false }: { overlay?: boolean }) {
+export function SiteNav() {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [compact, setCompact] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
-    if (overlay) return;
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    // Hysteresis: collapse at 40px, expand again at 8px, so a logo sitting
+    // exactly on the threshold cannot flicker between the two states.
+    let state = false;
+    const onScroll = () => {
+      const y = window.scrollY;
+      const next = state ? y > 8 : y > 40;
+      if (next !== state) {
+        state = next;
+        setCompact(next);
+      }
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, [overlay]);
+  }, []);
+
+  useEffect(() => setOpen(false), [pathname]);
 
   useEffect(() => {
     if (!open) return;
@@ -26,33 +39,46 @@ export function SiteNav({ overlay = false }: { overlay?: boolean }) {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
-  return (
-    <header
-      className={
-        overlay
-          ? "relative z-50"
-          : `sticky top-0 z-50 transition-colors duration-300 ${
-              scrolled ? "bg-black/80 backdrop-blur-xl" : "bg-transparent"
-            }`
-      }
-    >
-      <div className="shell flex items-center justify-between py-4 md:py-6">
-        <div
-          className={overlay ? "animate-blur-fade-up" : undefined}
-          style={overlay ? { animationDelay: "0ms" } : undefined}
-        >
-          <Logo />
-        </div>
+  const isCurrent = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
 
-        <nav className="hidden items-center gap-9 lg:flex" aria-label="Primary">
-          {nav.map((item, i) => (
+  return (
+    <header className="sticky top-0 z-50">
+      {/*
+        The bar's own surface, faded in rather than switched on, so the nav
+        separates from the page only once there is a page behind it.
+      */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 border-b transition-[opacity,background-color] duration-500"
+        style={{
+          opacity: compact ? 1 : 0,
+          background: "rgba(4, 5, 7, 0.72)",
+          backdropFilter: "blur(20px) saturate(140%)",
+          WebkitBackdropFilter: "blur(20px) saturate(140%)",
+          borderColor: "var(--hairline)",
+          transitionTimingFunction: "var(--ease-out)",
+        }}
+      />
+
+      <div
+        className="shell relative flex items-center justify-between transition-[height] duration-500"
+        style={{
+          height: compact ? "var(--nav-h-compact)" : "var(--nav-h)",
+          transitionTimingFunction: "var(--ease-out)",
+        }}
+      >
+        <Logo collapsed={compact} />
+
+        <nav className="hidden items-center gap-8 lg:flex" aria-label="Primary">
+          {nav.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className={`text-[15px] text-text-secondary transition-colors duration-200 hover:text-white ${
-                overlay ? "animate-blur-fade-up" : ""
+              aria-current={isCurrent(item.href) ? "page" : undefined}
+              className={`link-sweep t-body-sm transition-colors duration-200 ${
+                isCurrent(item.href) ? "text-white" : "text-text-secondary hover:text-white"
               }`}
-              style={overlay ? { animationDelay: `${100 + i * 50}ms` } : undefined}
             >
               {item.label}
             </Link>
@@ -61,11 +87,8 @@ export function SiteNav({ overlay = false }: { overlay?: boolean }) {
 
         <div className="flex items-center gap-2.5">
           <Link
-            href="/#count"
-            className={`liquid-glass hidden rounded-full px-5 py-2.5 text-[15px] font-medium text-white sm:inline-flex md:px-6 ${
-              overlay ? "animate-blur-fade-up" : ""
-            }`}
-            style={overlay ? { animationDelay: "350ms" } : undefined}
+            href="/count"
+            className="liquid-glass hidden rounded-full px-5 py-2.5 t-body-sm font-medium text-white sm:inline-flex md:px-6"
           >
             Get your count
           </Link>
@@ -76,26 +99,17 @@ export function SiteNav({ overlay = false }: { overlay?: boolean }) {
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? "Close menu" : "Open menu"}
-            className={`liquid-glass relative flex h-11 w-11 items-center justify-center rounded-full text-white lg:hidden ${
-              overlay ? "animate-blur-fade-up" : ""
-            }`}
-            style={overlay ? { animationDelay: "400ms" } : undefined}
+            className="liquid-glass relative flex h-11 w-11 items-center justify-center rounded-full text-white lg:hidden"
           >
             <Menu
               size={18}
               className="absolute transition-all duration-300 ease-out"
-              style={{
-                opacity: open ? 0 : 1,
-                transform: open ? "rotate(180deg) scale(0.5)" : "none",
-              }}
+              style={{ opacity: open ? 0 : 1, transform: open ? "rotate(180deg) scale(0.5)" : "none" }}
             />
             <X
               size={18}
               className="absolute transition-all duration-300 ease-out"
-              style={{
-                opacity: open ? 1 : 0,
-                transform: open ? "none" : "rotate(-180deg) scale(0.5)",
-              }}
+              style={{ opacity: open ? 1 : 0, transform: open ? "none" : "rotate(-180deg) scale(0.5)" }}
             />
           </button>
         </div>
@@ -114,8 +128,10 @@ export function SiteNav({ overlay = false }: { overlay?: boolean }) {
               <Link
                 key={item.href}
                 href={item.href}
-                onClick={() => setOpen(false)}
-                className="rounded-xl px-4 py-3.5 text-base text-text-secondary transition-all duration-200 hover:bg-white/5 hover:text-white"
+                aria-current={isCurrent(item.href) ? "page" : undefined}
+                className={`rounded-xl px-4 py-3.5 text-base transition-all duration-200 hover:bg-white/5 hover:text-white ${
+                  isCurrent(item.href) ? "text-white" : "text-text-secondary"
+                }`}
                 style={{
                   transform: open ? "none" : "translateX(-8px)",
                   opacity: open ? 1 : 0,
@@ -126,8 +142,7 @@ export function SiteNav({ overlay = false }: { overlay?: boolean }) {
               </Link>
             ))}
             <Link
-              href="/#count"
-              onClick={() => setOpen(false)}
+              href="/count"
               className="solid-btn mt-2 rounded-xl bg-white px-4 py-3.5 text-center text-base font-medium text-black hover:bg-white/90 sm:hidden"
             >
               Get your count

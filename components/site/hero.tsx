@@ -5,11 +5,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowRight, ChevronLeft, ChevronRight, Layers, Timer, Unlink } from "lucide-react";
 
 import { HeroBackdrop } from "./hero-backdrop";
-import { SiteNav } from "./site-nav";
 import { hero, processes } from "@/content/site";
 
 const factIcons = [Layers, Timer, Unlink];
-const ROTATE_MS = 5200;
+const ROTATE_MS = 5600;
 
 export function Hero() {
   const [index, setIndex] = useState(0);
@@ -22,10 +21,7 @@ export function Hero() {
 
   useEffect(() => {
     if (paused) return;
-    const reduced =
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     timer.current = setInterval(() => setIndex((i) => (i + 1) % processes.length), ROTATE_MS);
     return () => {
@@ -36,7 +32,10 @@ export function Hero() {
   const current = processes[index];
 
   return (
-    <section className="relative flex min-h-[100svh] flex-col">
+    <section
+      className="relative flex flex-col"
+      style={{ minHeight: "calc(100svh - var(--nav-h))" }}
+    >
       <HeroBackdrop />
 
       {/*
@@ -53,14 +52,11 @@ export function Hero() {
         }}
       />
 
-      <SiteNav overlay />
-
-      <div className="shell relative z-10 flex flex-1 flex-col justify-end pb-10 pt-24 md:pb-16">
+      <div className="shell relative z-10 flex flex-1 flex-col justify-end pb-10 pt-16 md:pb-16">
         <div className="flex flex-col items-start gap-10 md:flex-row md:items-end md:gap-12">
-          {/* Left: the statement */}
           <div className="flex-1">
             <ul
-              className="animate-blur-fade-up mb-7 flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px] text-white/80 sm:gap-x-7 sm:text-sm md:mb-9"
+              className="animate-blur-fade-up mb-7 flex flex-wrap items-center gap-x-5 gap-y-2 t-caption text-white/80 sm:gap-x-7 md:mb-9"
               style={{ animationDelay: "300ms" }}
             >
               {hero.facts.map((fact, i) => {
@@ -75,7 +71,7 @@ export function Hero() {
             </ul>
 
             <h1
-              className="animate-blur-fade-up display mb-5 max-w-[15ch] text-[clamp(2.75rem,9vw,6rem)] text-white md:mb-7"
+              className="animate-blur-fade-up t-display mb-5 max-w-[15ch] text-white md:mb-7"
               style={{ animationDelay: "400ms" }}
             >
               {hero.headline}
@@ -91,7 +87,7 @@ export function Hero() {
             <div className="flex flex-wrap items-center gap-3 sm:gap-4">
               <Link
                 href={hero.primaryCta.href}
-                className="solid-btn animate-blur-fade-up group inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-[15px] font-medium text-black hover:bg-white/90 sm:px-8 sm:text-base"
+                className="solid-btn animate-blur-fade-up group inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 t-body-sm font-medium text-black hover:bg-white/90 sm:px-8 sm:text-base"
                 style={{ animationDelay: "600ms" }}
               >
                 {hero.primaryCta.label}
@@ -103,7 +99,7 @@ export function Hero() {
               </Link>
               <Link
                 href={hero.secondaryCta.href}
-                className="liquid-glass animate-blur-fade-up inline-flex items-center rounded-full px-6 py-3 text-[15px] font-medium text-white sm:px-8 sm:text-base"
+                className="liquid-glass animate-blur-fade-up inline-flex items-center rounded-full px-6 py-3 t-body-sm font-medium text-white sm:px-8"
                 style={{ animationDelay: "700ms" }}
               >
                 {hero.secondaryCta.label}
@@ -112,42 +108,41 @@ export function Hero() {
           </div>
 
           {/*
-            Right: the rotator. The arrows from the reference template, given an
-            actual job: proving in the first viewport that warranty is one process
-            of several rather than the whole company.
+            The rotator. The arrows from the reference template, given an actual
+            job: proving in the first viewport that warranty is one process of
+            several rather than the whole company. The counter carries position,
+            so there are no progress bars underneath it saying the same thing.
           */}
           <div
-            className="animate-blur-fade-up w-full md:w-[23rem] md:shrink-0"
+            className="animate-blur-fade-up w-full md:w-[22rem] md:shrink-0"
             style={{ animationDelay: "800ms" }}
             onMouseEnter={() => setPaused(true)}
             onMouseLeave={() => setPaused(false)}
             onFocusCapture={() => setPaused(true)}
             onBlurCapture={() => setPaused(false)}
           >
-            <div className="mb-3 flex items-center justify-between">
-              <span className="text-[11px] uppercase tracking-[0.18em] text-white/60">
+            <div className="mb-4 flex items-center justify-between border-b border-white/15 pb-3">
+              <span className="t-label text-white/60">
                 {hero.rotatorLabel}
               </span>
-              <span className="text-[11px] tabular-nums text-white/60">
+              <span className="t-caption tabular-nums text-white/60">
                 {String(index + 1).padStart(2, "0")} / {String(processes.length).padStart(2, "0")}
               </span>
             </div>
 
-            <div
-              className="liquid-glass flex items-center rounded-2xl p-5"
-              aria-live="polite"
-              style={{ minHeight: "8.5rem" }}
-            >
-              {/* Blur bridges the two states so the swap reads as one object changing. */}
+            <div aria-live="polite" className="flex items-start" style={{ minHeight: "6.5rem" }}>
               <div key={current.id} className="animate-swap w-full">
-                <p className="mb-2 text-[15px] font-medium leading-snug text-white">
+                <Link
+                  href={`/processes/${current.slug}`}
+                  className="link-sweep t-h4 font-medium text-white"
+                >
                   {current.name}
-                </p>
-                <p className="text-[13.5px] leading-relaxed text-white/70">{current.short}</p>
+                </Link>
+                <p className="mt-2 t-body-sm text-white/70">{current.short}</p>
               </div>
             </div>
 
-            <div className="mt-3 flex items-center gap-2">
+            <div className="mt-2 flex items-center gap-2">
               <button
                 type="button"
                 onClick={() => go(-1)}
@@ -164,17 +159,12 @@ export function Hero() {
               >
                 <ChevronRight size={17} strokeWidth={2} />
               </button>
-              <div className="ml-1 flex flex-1 gap-1.5" aria-hidden="true">
-                {processes.map((p, i) => (
-                  <span
-                    key={p.id}
-                    className="h-px flex-1 transition-colors duration-300"
-                    style={{
-                      background: i === index ? "rgba(255,255,255,0.75)" : "rgba(255,255,255,0.18)",
-                    }}
-                  />
-                ))}
-              </div>
+              <Link
+                href="/processes"
+                className="link-sweep ml-3 t-caption text-white/70 transition-colors duration-200 hover:text-white"
+              >
+                See all six
+              </Link>
             </div>
           </div>
         </div>
