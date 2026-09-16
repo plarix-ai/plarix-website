@@ -22,6 +22,8 @@
   --text-primary: #f2f3f5;
   --text-secondary: #a8aeb8;
   --text-tertiary: #7d848f;
+  /* Long-form reading sits a step brighter than UI secondary text. */
+  --text-prose: #c3c9d2;
 
   --gold: #e3b04b;
 
@@ -33,11 +35,24 @@
 
   --shell: 1440px;
   --gutter: 1.25rem;
+
+  /* The logo is composed from two exact crops, so the nav can collapse the
+     wordmark into the mark without either one shifting a pixel. */
+  --logo-h: 26px;
+  --logo-mark-ratio: 0.991;
+  --logo-word-ratio: 2.874;
+  --logo-gap-ratio: 0.195;
+
+  --nav-h: 4rem;
+  --nav-h-compact: 3.375rem;
 }
 
 @media (min-width: 768px) {
   :root {
     --gutter: 3rem;
+    --logo-h: 32px;
+    --nav-h: 4.75rem;
+    --nav-h-compact: 3.75rem;
   }
 }
 
@@ -57,6 +72,7 @@
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
   --color-text-tertiary: var(--text-tertiary);
+  --color-text-prose: var(--text-prose);
 
   --color-gold: var(--gold);
 
@@ -234,6 +250,30 @@
   animation: blurFadeUp 1s var(--ease-out) forwards;
 }
 
+/*
+ * The swap used when a rotator or a detail pane changes its contents. Short and
+ * light on purpose: the hero entrance plays once, this plays every few seconds,
+ * and anything heavier reads as the panel breaking rather than changing.
+ */
+@keyframes swapIn {
+  from {
+    /* Never reaches zero. A panel that blanks, even for a quarter second,
+       reads as broken rather than as changing. */
+    opacity: 0.25;
+    filter: blur(7px);
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+.animate-swap {
+  animation: swapIn 260ms var(--ease-out) both;
+}
+
 /* the calm section reveal: one per section, never a second entrance */
 .reveal {
   opacity: 0;
@@ -259,6 +299,18 @@
     transform: none;
     transition: none;
   }
+  .animate-swap,
+  .page-in {
+    animation: none;
+  }
+  .reveal-stagger > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .link-sweep::after {
+    transition: none;
+  }
   .liquid-glass:active,
   .solid-btn:active {
     transform: none;
@@ -280,8 +332,153 @@
   border-top: 1px solid var(--hairline);
 }
 
-.display {
-  letter-spacing: -0.03em;
+/*
+ * Underline that wipes in from the left rather than switching on. clip-path
+ * keeps it on the compositor and lets the rule sit exactly on the baseline.
+ */
+.link-sweep {
+  position: relative;
+}
+.link-sweep::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 1px;
+  background: currentColor;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 260ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .link-sweep:hover::after {
+    clip-path: inset(0 0 0 0);
+  }
+}
+.link-sweep:focus-visible::after {
+  clip-path: inset(0 0 0 0);
+}
+
+/* Route change: a short settle, never a slide. */
+@keyframes pageIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.page-in {
+  animation: pageIn 320ms var(--ease-out) both;
+}
+
+/* Children of a revealed group, arriving just behind their parent. */
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 600ms var(--ease-out),
+    transform 600ms var(--ease-out);
+}
+.reveal[data-visible='true'].reveal-stagger > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ------------------------------------------------------------------
+   Type scale
+
+   One scale, six display and four text steps, each with its own tracking
+   and leading. Display type tightens as it grows, which is the only way
+   large Inter reads as drawn rather than as set. Body loosens as it
+   shrinks. Nothing on the site sets a size outside this.
+------------------------------------------------------------------ */
+
+.t-display {
+  font-size: clamp(2.25rem, 6.9vw, 4.8rem);
+  line-height: 1.0;
+  letter-spacing: -0.034em;
   font-weight: 400;
-  line-height: 1.02;
+}
+
+.t-h1 {
+  font-size: clamp(2rem, 5.1vw, 3.6rem);
+  line-height: 1.05;
+  letter-spacing: -0.032em;
+  font-weight: 400;
+}
+
+.t-h2 {
+  font-size: clamp(1.625rem, 3.9vw, 2.6rem);
+  line-height: 1.1;
+  letter-spacing: -0.029em;
+  font-weight: 400;
+}
+
+.t-h3 {
+  font-size: clamp(1.25rem, 2.25vw, 1.6rem);
+  line-height: 1.2;
+  letter-spacing: -0.024em;
+  font-weight: 400;
+}
+
+.t-h4 {
+  font-size: clamp(1.0625rem, 1.5vw, 1.25rem);
+  line-height: 1.32;
+  letter-spacing: -0.018em;
+  font-weight: 500;
+}
+
+/* The one that carries a claim: large, but set as a sentence, not a heading. */
+.t-lead {
+  font-size: clamp(1.125rem, 1.85vw, 1.5rem);
+  line-height: 1.38;
+  letter-spacing: -0.016em;
+  font-weight: 400;
+}
+
+.t-body-lg {
+  font-size: clamp(1rem, 1.1vw, 1.125rem);
+  line-height: 1.6;
+  letter-spacing: -0.003em;
+}
+
+.t-body {
+  font-size: 1rem;
+  line-height: 1.68;
+  letter-spacing: -0.001em;
+}
+
+.t-body-sm {
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.t-caption {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+/* Structural label. Never a kicker over a heading, only a column or field name. */
+.t-label {
+  font-size: 0.75rem;
+  line-height: 1.4;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* Long-form reading measure, used by the journal and the policy pages. */
+.t-prose {
+  font-size: clamp(1rem, 1.15vw, 1.0625rem);
+  line-height: 1.76;
+  letter-spacing: -0.002em;
+}
+
+.measure {
+  max-width: 68ch;
+}
+.measure-tight {
+  max-width: 46ch;
 }

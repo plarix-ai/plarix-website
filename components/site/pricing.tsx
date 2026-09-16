@@ -17,31 +17,31 @@ export function Pricing() {
             <Reveal
               key={tier.name}
               delay={i * 90}
-              className={`flex flex-col rounded-2xl p-7 md:p-8 ${
+              className={`flex flex-col rounded-2xl p-7 md:p-8 ring-1 ${
                 tier.featured
-                  ? "bg-ink-600 shadow-[0_32px_70px_-30px_rgba(0,0,0,1)]"
-                  : "bg-ink-700"
+                  ? "bg-ink-600 ring-hairline-strong"
+                  : "bg-ink-800 ring-hairline"
               }`}
             >
-              <h3 className="text-[13px] uppercase tracking-[0.16em] text-text-tertiary">
+              <h3 className="t-label text-text-tertiary">
                 {tier.name}
               </h3>
               <p
-                className="mt-5 text-2xl text-white md:text-[28px]"
-                style={{ letterSpacing: "-0.02em" }}
+                className="mt-5 t-h3 text-white"
+               
               >
                 {tier.price}
               </p>
-              <p className="mt-5 flex-1 text-[15px] leading-relaxed text-text-secondary md:text-base">
+              <p className="mt-5 flex-1 t-body-sm text-text-secondary">
                 {tier.body}
               </p>
-              <p className="mt-6 text-[14px] leading-relaxed text-white/75">{tier.note}</p>
+              <p className="mt-6 t-body-sm text-white/75">{tier.note}</p>
             </Reveal>
           ))}
         </div>
 
         <Reveal delay={280} className="mt-10">
-          <p className="max-w-[62ch] text-[15px] leading-relaxed text-text-tertiary">
+          <p className="max-w-[62ch] t-body-sm text-text-tertiary">
             For reference, the platform most shops already run on publishes nothing. The going rate
             in this category is $245 to $500 per technician per month, $5,000 to $50,000 to
             implement, on a 12 to 36 month contract. We publish ours because you should be able to

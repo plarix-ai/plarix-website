@@ -23,12 +23,12 @@ export function Method() {
                 />
                 <div className="md:pt-12">
                   <div className="mb-4 flex items-baseline gap-3">
-                    <h3 className="text-2xl text-white md:text-3xl" style={{ letterSpacing: "-0.02em" }}>
+                    <h3 className="t-h3 text-white">
                       {step.verb}
                     </h3>
-                    <span className="text-[13px] text-text-tertiary">{step.time}</span>
+                    <span className="t-caption text-text-tertiary">{step.time}</span>
                   </div>
-                  <p className="max-w-[44ch] text-base leading-relaxed text-text-secondary md:text-[17px]">
+                  <p className="max-w-[44ch] t-body text-text-secondary">
                     {step.body}
                   </p>
                 </div>

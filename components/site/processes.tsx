@@ -54,8 +54,8 @@ export function Processes() {
           </ul>
 
           <div className="relative lg:pt-4">
-            <div key={current.id} className="animate-[blurFadeUp_600ms_var(--ease-out)_forwards]">
-              <p className="text-xl leading-snug text-white md:text-2xl">{current.short}</p>
+            <div key={current.id} className="animate-swap">
+              <p className="t-lead text-white">{current.short}</p>
               <p className="mt-6 max-w-[58ch] text-base leading-relaxed text-text-secondary md:text-lg">
                 {current.detail}
               </p>
@@ -78,8 +78,8 @@ export function Processes() {
                   className="mt-2 h-px w-4 shrink-0 bg-white/40 transition-transform duration-200 group-open:rotate-90"
                 />
               </summary>
-              <p className="mt-4 text-[15px] leading-relaxed text-white/85">{p.short}</p>
-              <p className="mt-3 text-[15px] leading-relaxed text-text-secondary">{p.detail}</p>
+              <p className="mt-4 t-body-sm text-white/85">{p.short}</p>
+              <p className="mt-3 t-body-sm text-text-secondary">{p.detail}</p>
             </details>
           ))}
         </div>

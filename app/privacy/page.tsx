@@ -1,15 +1,22 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 
-import { SiteNav } from "@/components/site/site-nav";
-import { Footer } from "@/components/site/footer";
+import { PageFrame } from "@/components/site/page-frame";
+import { PageHeader } from "@/components/site/page-header";
+import { Reveal } from "@/components/site/reveal";
+import { JsonLd, breadcrumbLd, pageMeta } from "@/lib/seo";
 import { CONTACT_EMAIL } from "@/content/site";
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: "Privacy",
-  description: "How Plarix collects, uses and protects information submitted through plarix.dev.",
-  alternates: { canonical: "https://plarix.dev/privacy" },
-};
+  description:
+    "What Plarix collects through plarix.dev, what happens to it, how long it is kept, and how to have it deleted. We collect the minimum necessary and we do not sell data.",
+  path: "/privacy",
+});
+
+const crumbs = [
+  { label: "Plarix", href: "/" },
+  { label: "Privacy", href: "/privacy" },
+];
 
 const sections = [
   {
@@ -59,53 +66,48 @@ const sections = [
 
 export default function PrivacyPage() {
   return (
-    <>
-      <SiteNav />
+    <PageFrame>
+      <JsonLd data={breadcrumbLd(crumbs)} />
 
-      <main className="shell pb-24 pt-16 md:pb-32 md:pt-24">
-        <p className="text-[13px] text-text-tertiary">Effective August 19, 2026</p>
-        <h1 className="display mt-4 text-[clamp(2.25rem,6vw,3.75rem)]">Privacy</h1>
-        <p className="mt-7 max-w-[62ch] text-lg leading-relaxed text-text-secondary">
-          We collect the minimum necessary. We do not sell data. We do not run third party
-          advertising. This page explains exactly what happens to anything you send us through
-          plarix.dev.
-        </p>
-
-        <div className="mt-16 max-w-[68ch] space-y-12">
-          {sections.map((s) => (
-            <section key={s.h}>
-              <h2 className="text-xl text-white md:text-2xl" style={{ letterSpacing: "-0.02em" }}>
-                {s.h}
-              </h2>
-              {s.p.map((p, i) => (
-                <p key={i} className="mt-4 text-base leading-relaxed text-text-secondary md:text-[17px]">
-                  {p}
-                </p>
-              ))}
-            </section>
-          ))}
-
-          <section>
-            <h2 className="text-xl text-white md:text-2xl" style={{ letterSpacing: "-0.02em" }}>
-              Contact
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-text-secondary md:text-[17px]">
-              <a href={`mailto:${CONTACT_EMAIL}`} className="text-white underline">
-                {CONTACT_EMAIL}
-              </a>
-            </p>
-          </section>
-        </div>
-
-        <Link
-          href="/"
-          className="mt-16 inline-flex text-[15px] text-text-secondary transition-colors duration-200 hover:text-white"
+      <div id="main">
+        <PageHeader
+          eyebrowCrumbs={crumbs}
+          title="Privacy"
+          lede="We collect the minimum necessary. We do not sell data. We do not run third party advertising. This page explains exactly what happens to anything you send us."
         >
-          Back to the site
-        </Link>
-      </main>
+          <p className="t-caption text-text-tertiary">Effective August 19, 2026</p>
+        </PageHeader>
 
-      <Footer />
-    </>
+        <section className="shell pb-28 md:pb-40">
+          <div className="measure space-y-12">
+            {sections.map((s) => (
+              <Reveal key={s.h} as="section">
+                <h2 className="t-h4 text-white">{s.h}</h2>
+                {s.p.map((p, i) => (
+                  <p key={i} className="mt-4 t-body text-text-secondary">
+                    {p}
+                  </p>
+                ))}
+              </Reveal>
+            ))}
+
+            <Reveal as="section">
+              <h2 className="t-h4 text-white">Contact</h2>
+              <p className="mt-4 t-body text-text-secondary">
+                <a href={`mailto:${CONTACT_EMAIL}`} className="link-sweep text-white">
+                  {CONTACT_EMAIL}
+                </a>
+              </p>
+            </Reveal>
+          </div>
+
+          <Reveal delay={120} className="mt-16">
+            <Link href="/" className="link-sweep t-body-sm text-text-secondary transition-colors duration-200 hover:text-white">
+              Back to the site
+            </Link>
+          </Reveal>
+        </section>
+      </div>
+    </PageFrame>
   );
 }

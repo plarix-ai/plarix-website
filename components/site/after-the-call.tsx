@@ -12,7 +12,7 @@ export function AfterTheCall() {
     <section className="shell py-28 md:py-40">
       <div className="grid gap-16 lg:grid-cols-[1.15fr_0.85fr] lg:gap-24">
         <div>
-          <Reveal as="h2" className="display max-w-[18ch] text-[clamp(2rem,5.2vw,3.5rem)]">
+          <Reveal as="h2" className="t-h2 max-w-[18ch]">
             {afterTheCall.heading}
           </Reveal>
 
@@ -36,7 +36,7 @@ export function AfterTheCall() {
           own. The last two steps are what a shop pays a person to remember.
         */}
         <Reveal delay={160} className="lg:pt-4">
-          <p className="mb-7 text-[11px] uppercase tracking-[0.18em] text-text-tertiary">
+          <p className="mb-7 t-label text-text-tertiary">
             One job, after the truck leaves
           </p>
           <ol className="relative">

@@ -1,29 +1,36 @@
 import Link from "next/link";
 
-import { SiteNav } from "@/components/site/site-nav";
-import { Footer } from "@/components/site/footer";
+import { PageFrame } from "@/components/site/page-frame";
+import { nav } from "@/content/site";
 
 export default function NotFound() {
   return (
-    <>
-      <SiteNav />
-      <main className="shell flex min-h-[60svh] flex-col justify-center py-24">
-        <p className="text-[13px] text-text-tertiary">404</p>
-        <h1 className="display mt-4 max-w-[16ch] text-[clamp(2.25rem,6vw,3.75rem)]">
-          This one is not here.
-        </h1>
-        <p className="mt-6 max-w-[48ch] text-lg leading-relaxed text-text-secondary">
-          The page you were after has moved or never existed. Everything we do is on the
-          front page.
+    <PageFrame>
+      <div id="main" className="shell flex min-h-[62svh] flex-col justify-center py-24">
+        <p className="t-label text-text-tertiary">404</p>
+        <h1 className="t-h1 mt-5 max-w-[16ch]">This one is not here.</h1>
+        <p className="mt-7 measure-tight t-body-lg text-text-secondary">
+          The page you were after has moved or never existed. Everything we do is one of these.
         </p>
+        <ul className="mt-10 flex flex-wrap gap-x-8 gap-y-3">
+          {[{ label: "Home", href: "/" }, ...nav].map((item) => (
+            <li key={item.href}>
+              <Link
+                href={item.href}
+                className="link-sweep t-body text-text-secondary transition-colors duration-200 hover:text-white"
+              >
+                {item.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
         <Link
-          href="/"
-          className="solid-btn mt-9 inline-flex w-fit rounded-full bg-white px-7 py-3 text-[15px] font-medium text-black hover:bg-white/90"
+          href="/count"
+          className="solid-btn mt-12 inline-flex w-fit rounded-full bg-white px-7 py-3 t-body-sm font-medium text-black hover:bg-white/90"
         >
-          Back to the site
+          Get your count
         </Link>
-      </main>
-      <Footer />
-    </>
+      </div>
+    </PageFrame>
   );
 }

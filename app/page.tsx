@@ -1,77 +1,53 @@
-import fs from "node:fs";
-import path from "node:path";
-
 import { Hero } from "@/components/site/hero";
 import { AfterTheCall } from "@/components/site/after-the-call";
 import { Processes } from "@/components/site/processes";
 import { Method } from "@/components/site/method";
+import { Report } from "@/components/site/report";
 import { Start } from "@/components/site/start";
 import { Refusals } from "@/components/site/refusals";
 import { Pricing } from "@/components/site/pricing";
 import { Faq } from "@/components/site/faq";
 import { Closing } from "@/components/site/closing";
-import { Footer } from "@/components/site/footer";
-import { faqs } from "@/content/site";
+import { ColumnRules } from "@/components/site/column-rules";
+import { JsonLd, faqLd, itemListLd } from "@/lib/seo";
+import { faqs, processes } from "@/content/site";
 
-/**
- * The cinematic loop is optional. Drop it at public/video/hero.mp4 (plus an
- * optional first frame at public/video/hero-poster.jpg) and it takes over the
- * hero on the next build. Until then the canvas scene behind it carries the page.
- */
-function heroMedia() {
-  const dir = path.join(process.cwd(), "public", "video");
-  const has = (file: string) => {
-    try {
-      return fs.existsSync(path.join(dir, file));
-    } catch {
-      return false;
-    }
-  };
-  const video = ["hero.mp4", "hero.webm"].find(has);
-  const poster = ["hero-poster.jpg", "hero-poster.png", "hero-poster.webp"].find(has);
-  return {
-    videoSrc: video ? `/video/${video}` : undefined,
-    posterSrc: poster ? `/video/${poster}` : undefined,
-  };
-}
-
-const faqJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faqs.map((f) => ({
-    "@type": "Question",
-    name: f.q,
-    acceptedAnswer: { "@type": "Answer", text: f.a },
-  })),
+export const metadata = {
+  alternates: { canonical: "/" },
 };
 
 export default function Home() {
-  const { videoSrc, posterSrc } = heroMedia();
-
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      <JsonLd
+        data={[
+          faqLd(faqs.slice(0, 8)),
+          itemListLd(
+            "Processes Plarix runs for home services companies",
+            processes.map((p) => ({
+              name: p.name,
+              href: `/processes/${p.slug}`,
+              description: p.short,
+            })),
+          ),
+        ]}
       />
 
-      <Hero videoSrc={videoSrc} posterSrc={posterSrc} />
+      <Hero />
 
-      {/* Everything below scrolls up over the fixed hero footage. */}
-      <main className="relative z-20 bg-background">
+      {/* Everything below scrolls up over the fixed hero surface. */}
+      <main id="main" className="relative z-20 bg-background">
+        <ColumnRules />
         <AfterTheCall />
         <Processes />
         <Method />
+        <Report />
         <Start />
         <Refusals />
         <Pricing />
         <Faq />
         <Closing />
       </main>
-
-      <div className="relative z-20 bg-background">
-        <Footer />
-      </div>
     </>
   );
 }
