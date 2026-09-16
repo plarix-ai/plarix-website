@@ -1,16 +1,17 @@
 import { PageFrame } from "@/components/site/page-frame";
 import { PageHeader } from "@/components/site/page-header";
 import { Reveal } from "@/components/site/reveal";
+import { AnswerBlock } from "@/components/site/answer-block";
 import { Report } from "@/components/site/report";
 import { Refusals } from "@/components/site/refusals";
 import { Closing } from "@/components/site/closing";
 import { JsonLd, breadcrumbLd, pageMeta } from "@/lib/seo";
-import { SITE_URL, method } from "@/content/site";
+import { SITE_URL, answers, method } from "@/content/site";
 
 export const metadata = pageMeta({
   title: "How it works",
   description:
-    "Count, build, prove. Plarix reads a contractor's real data first and reports what is sitting there, builds the narrow process that handles it, then proves the result in dollars every month.",
+    "Count, build, prove. Plarix reads your real data first, builds the narrow process that handles what it found, then proves it in dollars monthly.",
   path: "/how-it-works",
 });
 
@@ -51,6 +52,11 @@ export default function HowItWorksPage() {
         />
 
         <section className="shell pb-8">
+          <AnswerBlock
+            question={answers.howLong.q}
+            answer={answers.howLong.a}
+            className="mb-4"
+          />
           {method.steps.map((step, i) => (
             <Reveal
               key={step.verb}

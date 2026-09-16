@@ -3,13 +3,15 @@ import { PageHeader } from "@/components/site/page-header";
 import { Reveal } from "@/components/site/reveal";
 import { Closing } from "@/components/site/closing";
 import { JsonLd, breadcrumbLd, pageMeta } from "@/lib/seo";
-import { SITE_URL, glossary } from "@/content/site";
+import Link from "next/link";
+
+import { SITE_URL, glossary, processes } from "@/content/site";
 import { tocId } from "@/lib/slug";
 
 export const metadata = pageMeta({
   title: "Glossary",
   description:
-    "Warranty labor reimbursement, filing windows, RA numbers, dealer tiers, spiffs, co-op funds, core charges and the rest of the home services back office vocabulary, defined plainly.",
+    "Warranty labor reimbursement, filing windows, RA numbers, dealer tiers, spiffs and core charges, defined plainly for home services owners.",
   path: "/glossary",
 });
 
@@ -58,7 +60,18 @@ export default function GlossaryPage() {
                 <dt id={tocId(t.term)} className="t-h4 scroll-mt-28 text-white">
                   {t.term}
                 </dt>
-                <dd className="max-w-[62ch] t-body text-text-secondary">{t.def}</dd>
+                <dd className="max-w-[62ch]">
+                  <span className="block t-body text-text-secondary">{t.def}</span>
+                  {"process" in t && t.process ? (
+                    <Link
+                      href={`/processes/${t.process}`}
+                      prefetch={false}
+                      className="link-sweep mt-2 inline-block t-caption text-text-tertiary transition-colors duration-200 hover:text-white"
+                    >
+                      {processes.find((p) => p.slug === t.process)?.name}
+                    </Link>
+                  ) : null}
+                </dd>
               </Reveal>
             ))}
           </dl>

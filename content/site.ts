@@ -39,6 +39,7 @@ export const nav = [
       source: "links" as const,
       footerLinks: [{ label: "Read the journal", href: "/journal" }],
       extra: [
+        { label: "Guides", href: "/guides", description: "The long explanations, for someone deciding something." },
         { label: "Journal", href: "/journal", description: "Where the money goes, one mechanism at a time." },
         { label: "Glossary", href: "/glossary", description: "The back office vocabulary, defined plainly." },
         { label: "Questions", href: "/faq", description: "What we get asked, answered directly." },
@@ -57,14 +58,66 @@ export const footerNav = {
     { label: "Get your count", href: "/count" },
   ],
   Resources: [
+    { label: "Guides", href: "/guides" },
     { label: "Journal", href: "/journal" },
     { label: "Glossary", href: "/glossary" },
     { label: "Questions", href: "/faq" },
   ],
   Company: [
+    { label: "About Plarix", href: "/about" },
     { label: "What we believe", href: "/company" },
     { label: "Privacy", href: "/privacy" },
   ],
+} as const;
+
+
+/**
+ * Entity facts. These exist to tell a search engine that Plarix is a distinct
+ * company, which matters more than usual here: a much older and much larger
+ * games company called Playrix owns almost every signal for the near-identical
+ * string, so every page has to carry unambiguous identity rather than rely on
+ * the name alone.
+ */
+export const entity = {
+  legalName: "Plarix",
+  alternateNames: ["Plarix AI", "Plarix.dev"],
+  slogan: "Everything after the call.",
+  foundingDate: "2026",
+  disambiguating:
+    "Plarix is an American AI integration company building operational AI and agentic process automation for home services contractors. It is not affiliated with Playrix, the mobile games developer, or with any similarly named company in another industry.",
+  /*
+   * NAICS 541511, custom computer programming services. Published because an
+   * industry classification is a hard signal that separates one entity from
+   * another far better than a description does.
+   */
+  naics: "541511",
+  /* Only profiles that actually exist belong here. An unclaimed URL is a broken
+     signal, not a stronger one. */
+  sameAs: ["https://www.linkedin.com/company/plarix", "https://x.com/theplarix"],
+} as const;
+
+/**
+ * Short answers written to be lifted whole. Each one leads with the answer and
+ * then supports it, which is the shape an answer engine can quote without
+ * having to summarise first.
+ */
+export const answers = {
+  whatIsPlarix: {
+    q: "What is Plarix?",
+    a: "Plarix is an AI integration company that builds operational AI for home services contractors in the United States. It runs the back office processes a job leaves behind, warranty and rebate recovery, invoice reconciliation, vendor credits, permits, technician pay and membership renewals, inside the field service software a company already uses. There is no data migration, no new software for the team to learn and no long contract, and every engagement starts with a free count of what is sitting unclaimed in the company's own data.",
+  },
+  howMuch: {
+    q: "How much does Plarix cost?",
+    a: "The count is free. The build is a one time fee scoped to what the count found rather than a rate card. Running it is a flat monthly fee that can be cancelled at any time, plus a share of recovered money for a limited period. The intended comparison is a warranty coordinator hire at $45,000 to $110,000 a year fully loaded, not a software subscription.",
+  },
+  howLong: {
+    q: "How long does it take to go live?",
+    a: "The count takes about a week and needs roughly twenty minutes of the owner's time plus read access to the last ninety days. The first process is usually running within six weeks of the count. Nothing is installed and no data is migrated.",
+  },
+  whoFor: {
+    q: "Who is Plarix for?",
+    a: "Owner operated home services companies in the United States, most often HVAC and plumbing, typically between twenty and a hundred employees. Electrical, roofing and adjacent trades have the same back office shape and the count works the same way for them.",
+  },
 } as const;
 
 export const hero = {
@@ -92,9 +145,9 @@ export const processes = [
     short: "Reads your closed jobs, finds every claim you are still owed, files it, tracks it to paid.",
     detail:
       "Labor reimbursement on parts you already replaced. Manufacturer rebates with deadlines nobody wrote down. Dealer tier credits that lapse quietly. It checks eligibility against each manufacturer's rules, prepares the claim, files it through the right channel, and chases it until the money lands or someone tells you why it will not.",
-    metaTitle: "Warranty and rebate recovery for HVAC and plumbing contractors",
+    metaTitle: "Warranty and rebate recovery for contractors",
     metaDescription:
-      "Plarix finds every manufacturer warranty claim, parts credit and rebate a home services company is still owed, files it, and tracks it to paid. Free count first. No contract.",
+      "Plarix finds every manufacturer claim, credit and rebate a home services company is still owed, files it, and tracks it to paid. Free count first.",
     reads: [
       "Closed work orders and the parts consumed on each one",
       "Serial numbers, install dates and registration status",
@@ -122,9 +175,9 @@ export const processes = [
     short: "Matches parts, labor and invoices against what actually happened on the job.",
     detail:
       "Every job produces a paper version and a real version, and they drift. This one reads both, flags the gap, and either corrects it or puts it in front of the one person who should decide. Underbilled jobs stop shipping. Overbilled ones stop coming back as disputes.",
-    metaTitle: "Invoice and job reconciliation for home services contractors",
+    metaTitle: "Invoice and job reconciliation",
     metaDescription:
-      "Plarix matches every invoice against the parts, labor and time a job actually consumed, flags the gap, and stops underbilled work from shipping. Inside your existing software.",
+      "Plarix matches every invoice against the parts, labor and time a job actually consumed, and stops underbilled work from shipping in the first place.",
     reads: [
       "The work order, the parts pulled and the labor logged against it",
       "The invoice that went out, line by line",
@@ -150,7 +203,7 @@ export const processes = [
     short: "Catches pricing errors, open returns and unused credits before they age out.",
     detail:
       "Supply house pricing moves, returns sit on the counter, and credits expire on a schedule nobody tracks. It reconciles what you were quoted against what you were charged, keeps a live list of what is owed back to you, and files the return before the window closes.",
-    metaTitle: "Purchasing reconciliation and vendor credit recovery for contractors",
+    metaTitle: "Purchasing and vendor credit recovery",
     metaDescription:
       "Plarix reconciles supply house invoices against quoted pricing, tracks open returns and unused vendor credits, and files before the window closes.",
     reads: [
@@ -178,9 +231,9 @@ export const processes = [
     short: "Files the paperwork that stops jobs, and renews it before it lapses.",
     detail:
       "Permit applications, inspection scheduling, certificate of insurance requests, license and registration renewals across every jurisdiction you work in. It knows what each one needs and when, and it files early rather than on the day a crew is standing in a driveway.",
-    metaTitle: "Permit filing and compliance automation for home services companies",
+    metaTitle: "Permit filing and compliance automation",
     metaDescription:
-      "Plarix files permits, schedules inspections, handles certificate of insurance requests and renews licenses across every jurisdiction a contractor works in, before anything lapses.",
+      "Plarix files permits, books inspections, sends certificates of insurance and renews licenses across every jurisdiction you work in, before they lapse.",
     reads: [
       "Scheduled and sold jobs, and the jurisdiction each one falls in",
       "Which permit type that scope of work requires in that jurisdiction",
@@ -206,9 +259,9 @@ export const processes = [
     short: "Reconciles spiffs, commissions and bonuses against the jobs that earned them.",
     detail:
       "Manufacturer spiffs that never get matched to the tech who earned them. Commission math done by hand at the end of a long week. It calculates from the job record, shows the work, and flags anything that does not add up before payroll runs, not after a tech notices.",
-    metaTitle: "Technician commission and spiff reconciliation for contractors",
+    metaTitle: "Technician commission and spiff reconciliation",
     metaDescription:
-      "Plarix calculates technician commissions, spiffs and bonuses from the job record, shows the working, and flags discrepancies before payroll runs rather than after.",
+      "Plarix calculates technician commissions, spiffs and bonuses from the job record, shows the working, and flags discrepancies before payroll runs.",
     reads: [
       "Jobs closed by each technician and what was sold on them",
       "Your commission and bonus structure, including its exceptions",
@@ -234,9 +287,9 @@ export const processes = [
     short: "Keeps recurring revenue from quietly falling off the books.",
     detail:
       "Agreements that lapse without anyone noticing. Visits owed and never scheduled. Cards that expired three months ago. It tracks every agreement against what has actually been delivered and what has actually been collected, and surfaces the ones about to go.",
-    metaTitle: "Service agreement and membership retention automation for home services",
+    metaTitle: "Service agreement and membership retention",
     metaDescription:
-      "Plarix tracks every service agreement against visits delivered and payments collected, catches failed cards and lapsing renewals, and surfaces what is about to churn.",
+      "Plarix tracks every service agreement against visits delivered and payments collected, and surfaces what is about to lapse while it can still be saved.",
     reads: [
       "Every active agreement, its terms, and what it entitles the customer to",
       "Visits delivered against visits owed",
@@ -495,22 +548,22 @@ export const glossary = {
   heading: "The vocabulary.",
   lede: "The words that show up in a warranty rejection, a supplier statement or a payroll dispute, defined the way an owner would explain them. No pitch attached.",
   terms: [
-    { term: "Warranty labor reimbursement", def: "What a manufacturer pays a contractor for the labor of replacing a part that failed under warranty. The part is covered separately. Labor is claimed, and it is the piece most often left unfiled." },
-    { term: "Filing window", def: "The period a manufacturer allows between the service date and the claim being submitted. It is measured from when the work happened, not from when anyone got to the paperwork, and it varies by manufacturer and program." },
-    { term: "RA number", def: "Return Authorization number. The reference a manufacturer issues so a failed part can be sent back and matched to a claim. Without it the part is usually just a part, and the claim usually fails." },
-    { term: "Equipment registration", def: "Recording a unit's serial number and install date with the manufacturer, normally within a set window of installation. Unregistered equipment often carries a shorter warranty term, which is discovered at the worst possible moment." },
-    { term: "Dealer tier", def: "A status level a manufacturer assigns based on volume or training, carrying pricing, rebate and support benefits. Tiers are reassessed on a schedule, and a tier can lapse without anyone in the shop being told." },
-    { term: "Spiff", def: "A one time payment from a manufacturer to the technician or the company for selling specific equipment. Usually claimed separately from the sale, often on a different deadline, and frequently never matched to the technician who earned it." },
-    { term: "Co-op funds", def: "Marketing money a manufacturer sets aside for a dealer, usually accrued as a percentage of purchases and claimable against approved advertising. Unclaimed co-op typically expires at the end of a program year." },
-    { term: "Credit memo", def: "A supplier's record that money is owed back to you, from a return, a pricing correction or an overcharge. It is not cash. It is a credit against future purchases, and most carry an expiry." },
-    { term: "Core charge", def: "A deposit added to the price of a part that is refunded when the old unit is returned. A core that never goes back is a charge that never comes off." },
-    { term: "Underbilling", def: "Invoicing less than the job actually consumed in parts, labor or time. It produces no complaint and no dispute, which is exactly why it is rarely caught." },
-    { term: "Job costing", def: "Assigning the real cost of a job, including labor burden, truck and overhead, against what it billed. Without it, a company can grow revenue and lose margin at the same time and not know which jobs did it." },
-    { term: "Callback", def: "A return visit to a job already completed and billed, at the company's cost. Callbacks are the clearest signal in the data of where the real cost of a job is hiding." },
-    { term: "Service agreement", def: "A recurring contract for scheduled maintenance, often called a membership or a maintenance plan. It is usually a home services company's most valuable asset and its easiest one to lose by forgetting to deliver a visit." },
-    { term: "Truck stock", def: "Parts carried on a vehicle rather than held at a branch. Consumed on a job and logged later, if at all, which is where the gap between the work order and the invoice usually opens." },
-    { term: "Certificate of insurance", def: "Proof of coverage a general contractor, property manager or municipality requires before work starts. Routinely requested at short notice and routinely the reason a crew waits." },
-    { term: "Permit and inspection", def: "Municipal authorisation to perform work and the sign off that closes it out. Requirements vary by jurisdiction and by scope, and an unclosed permit can sit open long after the customer has paid." },
+    { term: "Warranty labor reimbursement", process: "warranty-and-rebate-recovery", def: "What a manufacturer pays a contractor for the labor of replacing a part that failed under warranty. The part is covered separately. Labor is claimed, and it is the piece most often left unfiled." },
+    { term: "Filing window", process: "warranty-and-rebate-recovery", def: "The period a manufacturer allows between the service date and the claim being submitted. It is measured from when the work happened, not from when anyone got to the paperwork, and it varies by manufacturer and program." },
+    { term: "RA number", process: "warranty-and-rebate-recovery", def: "Return Authorization number. The reference a manufacturer issues so a failed part can be sent back and matched to a claim. Without it the part is usually just a part, and the claim usually fails." },
+    { term: "Equipment registration", process: "warranty-and-rebate-recovery", def: "Recording a unit's serial number and install date with the manufacturer, normally within a set window of installation. Unregistered equipment often carries a shorter warranty term, which is discovered at the worst possible moment." },
+    { term: "Dealer tier", process: "warranty-and-rebate-recovery", def: "A status level a manufacturer assigns based on volume or training, carrying pricing, rebate and support benefits. Tiers are reassessed on a schedule, and a tier can lapse without anyone in the shop being told." },
+    { term: "Spiff", process: "technician-pay-and-commissions", def: "A one time payment from a manufacturer to the technician or the company for selling specific equipment. Usually claimed separately from the sale, often on a different deadline, and frequently never matched to the technician who earned it." },
+    { term: "Co-op funds", process: "purchasing-and-vendor-credits", def: "Marketing money a manufacturer sets aside for a dealer, usually accrued as a percentage of purchases and claimable against approved advertising. Unclaimed co-op typically expires at the end of a program year." },
+    { term: "Credit memo", process: "purchasing-and-vendor-credits", def: "A supplier's record that money is owed back to you, from a return, a pricing correction or an overcharge. It is not cash. It is a credit against future purchases, and most carry an expiry." },
+    { term: "Core charge", process: "purchasing-and-vendor-credits", def: "A deposit added to the price of a part that is refunded when the old unit is returned. A core that never goes back is a charge that never comes off." },
+    { term: "Underbilling", process: "invoice-and-job-reconciliation", def: "Invoicing less than the job actually consumed in parts, labor or time. It produces no complaint and no dispute, which is exactly why it is rarely caught." },
+    { term: "Job costing", process: "invoice-and-job-reconciliation", def: "Assigning the real cost of a job, including labor burden, truck and overhead, against what it billed. Without it, a company can grow revenue and lose margin at the same time and not know which jobs did it." },
+    { term: "Callback", process: "invoice-and-job-reconciliation", def: "A return visit to a job already completed and billed, at the company's cost. Callbacks are the clearest signal in the data of where the real cost of a job is hiding." },
+    { term: "Service agreement", process: "memberships-and-service-agreements", def: "A recurring contract for scheduled maintenance, often called a membership or a maintenance plan. It is usually a home services company's most valuable asset and its easiest one to lose by forgetting to deliver a visit." },
+    { term: "Truck stock", process: "invoice-and-job-reconciliation", def: "Parts carried on a vehicle rather than held at a branch. Consumed on a job and logged later, if at all, which is where the gap between the work order and the invoice usually opens." },
+    { term: "Certificate of insurance", process: "permits-licensing-and-compliance", def: "Proof of coverage a general contractor, property manager or municipality requires before work starts. Routinely requested at short notice and routinely the reason a crew waits." },
+    { term: "Permit and inspection", process: "permits-licensing-and-compliance", def: "Municipal authorisation to perform work and the sign off that closes it out. Requirements vary by jurisdiction and by scope, and an unclosed permit can sit open long after the customer has paid." },
     { term: "Field service management platform", def: "The software a home services company runs on: scheduling, dispatch, invoicing and customer records. ServiceTitan, Jobber, FieldEdge and their peers. It runs the business; it does not chase what the business is owed." },
     { term: "Back office", def: "Everything that happens after the truck leaves. Claims, reconciliation, purchasing, compliance, payroll and renewals. It produces no revenue by itself and it is where revenue quietly leaks." },
   ],
@@ -573,11 +626,183 @@ export const faqs = [
   },
 ] as const;
 
+
+/**
+ * Evergreen guides. Longer than a journal piece, structured for someone searching a
+ * question rather than reading a publication, and written so a section can be quoted
+ * on its own. Each carries its own questions, which is the form an answer engine
+ * actually reaches for.
+ */
+export const guides = [
+  {
+    slug: "warranty-claim-recovery",
+    title: "Warranty claim recovery for HVAC and plumbing contractors",
+    shortTitle: "HVAC warranty claim recovery guide",
+    dek: "What you are owed, why it goes unclaimed, and how to find out how much is sitting there without buying anything.",
+    updated: "2026-10-28",
+    readingMinutes: 9,
+    metaDescription:
+      "How warranty claim recovery works for HVAC and plumbing contractors: what is claimable, why claims fail, the filing window, and how to audit your own.",
+    intro:
+      "A contractor who replaces a part under warranty is owed labor reimbursement by the manufacturer. That obligation is real, it is routine, and a meaningful share of it is never collected, because collecting it takes paperwork filed correctly inside a window that starts on the day of service. This is how that process actually works.",
+    body: [
+      {
+        h: "What is actually claimable",
+        p: [
+          "Four things, and most shops only think about the first. Labor reimbursement, which is what a manufacturer pays for the work of replacing a part that failed under warranty. Parts credit, where the failed component itself is covered. Manufacturer rebates, which are program based and usually deadline bound. And dealer tier or co-op credits, which accrue on volume or training and expire on a program schedule.",
+          "The part is usually handled, because somebody had to order the replacement and that creates a record. The labor is the piece most often left unfiled, because nothing in the shop generates a record that it is owed.",
+        ],
+      },
+      {
+        h: "Why claims go unfiled",
+        p: [
+          "Not carelessness. Structure. A work order closes when the job is done, and closing it is the last event in that job's life inside the system. There is no subsequent step, no queue, and nothing anywhere that turns red.",
+          "An unfiled claim also generates no complaint. No customer calls about it, no technician raises it, and it never appears as a line on a report. Every other problem in a home services business announces itself. This one is silent by construction, which is exactly why it persists in well run companies.",
+          "The people who would catch it are the same people covering dispatch, answering the phone and closing the books. When the schedule is full, the work with no deadline attached to a human being is the work that waits.",
+        ],
+      },
+      {
+        h: "The filing window, and why it is shorter than it looks",
+        p: [
+          "Manufacturers set a window between the service date and claim submission. The number varies by manufacturer, by program and sometimes by dealer tier, which is the first reason it cannot be held in anyone's head.",
+          "The window is rarely the only condition. A claim typically also needs the equipment registered, the serial number matched, the failure coded correctly, and the failed part either returned against an RA number or documented. Miss one and the claim is rejected, and a rejection does not restart the clock.",
+          "So the real deadline is the filing deadline minus however long it takes to assemble four things from three different systems. Shops that measure this usually find the effective window is a fraction of the stated one.",
+        ],
+      },
+      {
+        h: "Why claims get rejected",
+        p: [
+          "Unregistered equipment, which shortens or voids the term and is discovered only when the claim is refused. A serial number that does not match what the manufacturer has on file. A failure code that does not correspond to a covered failure mode. A missing RA number on a part that needed returning. And submission after the window, which is the one nobody can appeal.",
+          "Almost every rejection reason is knowable before submission. That is the useful thing about this process: it is bureaucratic rather than uncertain. The rules are published, they just are not convenient.",
+        ],
+      },
+      {
+        h: "How to audit your own last ninety days",
+        p: [
+          "You do not need software or a vendor to find out how big this is, and it is worth knowing either way.",
+          "Pull every closed work order from the last ninety days. Filter to jobs where a part was replaced under warranty. That is your eligible set. Now pull every warranty claim you actually submitted in the same period and match them against each other.",
+          "The unmatched jobs are the number. Then check how many of them still fall inside their filing window, because that splits the figure into what is recoverable now and what is already gone.",
+          "Most owners who run this for the first time are surprised twice: once by the size of the unmatched set, and again by how much of it is still inside the window and therefore still collectable.",
+        ],
+      },
+      {
+        h: "The three ways to handle it",
+        p: [
+          "Absorb it, which is what most shops do by default, usually without having measured what is being absorbed.",
+          "Hire for it. There are 250 to 500 open warranty coordinator and claims administrator roles in the United States at any given time, paying $45,000 to $110,000 a year fully loaded. That is a real market rate for a real job, which tells you the work has value; it also tells you what the work costs when a person does it.",
+          "Automate it. The work is rule bound, high volume and low variance, which is the profile automation handles well. The honest caveat is that the exceptions are where the money and the risk concentrate, so anything doing this should put a person in front of a rejection or a judgement call rather than guess.",
+        ],
+      },
+      {
+        h: "What good looks like",
+        p: [
+          "Every closed job with an eligible claim is flagged the day it closes, not at month end. Claims are assembled with the documentation that specific manufacturer requires rather than a generic packet. Filing happens inside the window with margin, not on the last day. Status is tracked to paid rather than to submitted. And every rejection returns a reason in language somebody can act on.",
+          "Measured, it is four numbers: claims filed, approved, still open, and rejected with reason. If a process cannot produce those four, it is not being run, it is being hoped for.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "How long do you have to file an HVAC warranty claim?",
+        a: "It varies by manufacturer, by program and sometimes by dealer tier, and the window is measured from the service date rather than from when the paperwork was started. Because a claim also needs registration, a matching serial, a correct failure code and often a returned part, the effective deadline is earlier than the stated one.",
+      },
+      {
+        q: "What is warranty labor reimbursement?",
+        a: "What a manufacturer pays a contractor for the labor of replacing a part that failed under warranty. The part itself is covered separately. Labor has to be claimed, and it is the piece most often left unfiled because nothing in a shop's system generates a record that it is owed.",
+      },
+      {
+        q: "Why do warranty claims get rejected?",
+        a: "Most commonly: the equipment was never registered, the serial number does not match the manufacturer's record, the failure code does not map to a covered failure, a returned part has no RA number, or the claim was submitted after the filing window closed. Every one of those except the last is knowable before submission.",
+      },
+      {
+        q: "How do I find out how much my company is owed?",
+        a: "Pull your closed work orders for the last ninety days, filter to jobs where a part was replaced under warranty, and match that list against the claims you actually submitted. The unmatched jobs are your number. Then check which of them are still inside their filing window to see how much is still collectable.",
+      },
+    ],
+    related: ["warranty-and-rebate-recovery", "purchasing-and-vendor-credits"],
+  },
+  {
+    slug: "hire-a-warranty-coordinator",
+    title: "Should you hire a warranty coordinator?",
+    shortTitle: "Should you hire a warranty coordinator?",
+    dek: "What the role actually does, what it costs fully loaded, and how to work out whether the work justifies a salary at your size.",
+    updated: "2026-11-11",
+    readingMinutes: 7,
+    metaDescription:
+      "What a warranty coordinator does, what the role costs fully loaded, when the volume justifies a hire, and how to decide it with your own numbers.",
+    intro:
+      "There are 250 to 500 open warranty coordinator and claims administrator roles in the United States at any given time, paying $45,000 to $110,000 a year fully loaded. That range tells you the work is real. Whether it justifies a salary at your company is a different question, and it comes down to volume, timing and what else that person would end up doing.",
+    body: [
+      {
+        h: "What the role actually does",
+        p: [
+          "Underneath the title it is one job repeated: getting the right paperwork filed correctly, on time, over and over.",
+          "In practice that means identifying eligible claims from closed work, registering equipment, matching serial numbers, coding failures, requesting RA numbers, submitting through each manufacturer's channel, tracking status, working rejections, and keeping a calendar of rebate and tier deadlines that nobody else in the building is watching.",
+          "Most job postings also quietly include purchasing reconciliation and supplier credits, because the same person is already living in those portals.",
+        ],
+      },
+      {
+        h: "What it costs, honestly",
+        p: [
+          "Fully loaded is the number that matters, not base salary. Published ranges for the role run $45,000 to $110,000 a year fully loaded, which spans a junior administrator in a low cost market and an experienced coordinator running claims for a large multi location operation.",
+          "On top of that: recruiting time, a desk, software seats, the months before they are good at it, and the risk that they leave. The last one is the underrated cost, because the knowledge of how each manufacturer's process works usually leaves with them.",
+        ],
+      },
+      {
+        h: "When a hire is clearly right",
+        p: [
+          "When claim volume is high enough to fill a week and the exceptions are frequent enough to need judgement. A company running several hundred warranty jobs a month, across many manufacturers, with commercial work and its own contract terms, has enough genuinely ambiguous work to occupy a person properly.",
+          "It is also right when the role is broader than claims. If the same hire absorbs purchasing reconciliation, permit coordination and vendor credits, the maths changes, because you are not comparing a salary to one process.",
+        ],
+      },
+      {
+        h: "When it is not",
+        p: [
+          "When the volume is real but the work is not full time. Then you are paying a salary for a part time job and filling the rest with whatever is nearest, which is how a coordinator becomes a dispatcher and the claims start slipping again.",
+          "And when the problem is timing rather than capacity. If claims are being missed because nobody noticed a job was eligible, a person does not fix that by existing. They fix it by remembering, which is the thing that fails on a busy week.",
+        ],
+      },
+      {
+        h: "How to decide with your own numbers",
+        p: [
+          "Count eligible jobs per month from your closed work orders. Estimate the time per claim honestly, including chasing rejections, and multiply. If that lands under roughly twenty hours a week, a dedicated hire is hard to justify on claims alone.",
+          "Then measure what is currently being missed, by matching eligible jobs against claims actually filed over the last ninety days. That figure is what the role would recover, and it is the only fair thing to hold a salary against.",
+          "If the recovery number is smaller than the fully loaded cost, hiring for it loses money no matter how real the work feels.",
+        ],
+      },
+      {
+        h: "The third option",
+        p: [
+          "The reason this decision used to be binary is that there was no third answer. Either a person did it or nobody did.",
+          "Automating the rule bound part of it changes the shape of the question: the volume no longer needs to justify a salary, and the exceptions still reach a person. That is the case Plarix makes, and the honest way to test it is the same audit above. If the count comes back small, the right answer was to absorb it and neither hiring nor automating was worth doing.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "What does a warranty coordinator do?",
+        a: "Identifies eligible claims from closed work, registers equipment, matches serial numbers, codes failures, requests RA numbers, files claims through each manufacturer's channel, tracks them to paid, works rejections, and keeps a calendar of rebate and dealer tier deadlines. Many postings also include purchasing reconciliation and supplier credits.",
+      },
+      {
+        q: "What does a warranty coordinator cost?",
+        a: "Published ranges run $45,000 to $110,000 a year fully loaded, depending on market and scope. The fully loaded figure is the one to plan against, plus recruiting time, a desk, software seats and the ramp before they are effective.",
+      },
+      {
+        q: "How do I know whether the volume justifies a hire?",
+        a: "Count eligible warranty jobs per month from your closed work orders and multiply by an honest time per claim including rejections. Under roughly twenty hours a week, a dedicated hire is hard to justify on claims alone. Then compare what is currently being missed against the fully loaded salary.",
+      },
+    ],
+    related: ["warranty-and-rebate-recovery", "technician-pay-and-commissions"],
+  },
+] as const;
+
+export type Guide = (typeof guides)[number];
+
 export const journal = [
   {
     slug: "what-a-dealer-tier-actually-costs-you",
     title: "What a dealer tier actually costs you",
-    dek: "A status level you were told about once, reassessed on a schedule nobody in your office tracks.",
+    dek: "A status level you were told about once, reassessed on a schedule nobody in your office tracks, governing pricing, rebates and warranty terms at the same time.",
     date: "2026-09-16",
     readingMinutes: 4,
     body: [
@@ -615,7 +840,7 @@ export const journal = [
   {
     slug: "the-permit-is-not-the-problem",
     title: "The permit is not the problem. The calendar is.",
-    dek: "Nobody loses a day to a permit application. They lose it to when the application was started.",
+    dek: "Nobody loses a day to a permit application. They lose it to when the application was started, and the fix is a trigger at sale rather than a reminder.",
     date: "2026-09-29",
     readingMinutes: 3,
     body: [
@@ -652,7 +877,7 @@ export const journal = [
   {
     slug: "your-best-month-can-be-your-worst-margin",
     title: "Your best month can be your worst margin",
-    dek: "Revenue and profit come from the same jobs and move in opposite directions more often than anyone expects.",
+    dek: "Revenue and profit come from the same jobs and move in opposite directions more often than anyone expects. Here is what a peak month is actually made of.",
     date: "2026-10-14",
     readingMinutes: 4,
     body: [
@@ -689,7 +914,7 @@ export const journal = [
   {
     slug: "the-clock-on-a-warranty-claim",
     title: "The clock on a warranty claim",
-    dek: "Every claim has a filing window, and the window starts before anyone in your office knows the job exists.",
+    dek: "Every claim has a filing window, it starts on the service date, and it is shorter than it looks once you count what has to be assembled first.",
     date: "2026-08-04",
     readingMinutes: 4,
     body: [
@@ -727,7 +952,7 @@ export const journal = [
   {
     slug: "the-invoice-and-the-job-are-not-the-same-document",
     title: "The invoice and the job are not the same document",
-    dek: "Every job produces a paper version and a real version. The gap between them is where margin goes.",
+    dek: "Every job produces a paper version and a real version. The gap between them is where margin goes, and it never shows up as a complaint.",
     date: "2026-08-19",
     readingMinutes: 4,
     body: [
@@ -766,7 +991,7 @@ export const journal = [
   {
     slug: "we-almost-never-say-the-word-ai",
     title: "We almost never say the word AI",
-    dek: "Not because we are not one. Because the word has stopped carrying information for the person we are talking to.",
+    dek: "Not because we are not one. Because the word has stopped carrying information for the contractor we are actually talking to, and it carries baggage.",
     date: "2026-09-02",
     readingMinutes: 3,
     body: [

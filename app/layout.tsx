@@ -4,7 +4,7 @@ import { Analytics } from "@vercel/analytics/next";
 
 import { SiteNav } from "@/components/site/site-nav";
 import { Footer } from "@/components/site/footer";
-import { SITE_URL, answerBlock } from "@/content/site";
+import { SITE_URL, answerBlock, entity } from "@/content/site";
 import "./globals.css";
 
 const inter = Inter({
@@ -15,7 +15,7 @@ const inter = Inter({
 });
 
 const DESCRIPTION =
-  "Plarix builds operational AI for home services companies. We run the back office processes every job leaves behind, inside the systems you already use. No migration, no new screen, no contract.";
+  "Plarix builds operational AI for home services companies. We run the back office work every job leaves behind, inside the systems you already use.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -38,6 +38,11 @@ export const metadata: Metadata = {
     "warranty claim automation",
     "field service operations AI",
   ],
+  alternates: {
+    canonical: SITE_URL,
+    languages: { "en-US": SITE_URL, "x-default": SITE_URL },
+    types: { "application/rss+xml": `${SITE_URL}/feed.xml` },
+  },
   robots: {
     index: true,
     follow: true,
@@ -48,6 +53,7 @@ export const metadata: Metadata = {
     shortcut: "/favicon.png",
     apple: "/apple-icon.png",
   },
+  manifest: "/manifest.webmanifest",
 };
 
 export const viewport: Viewport = {
@@ -60,8 +66,15 @@ const organizationLd = {
   "@type": "Organization",
   "@id": `${SITE_URL}/#organization`,
   name: "Plarix",
-  legalName: "Plarix",
+  legalName: entity.legalName,
+  alternateName: [...entity.alternateNames],
+  slogan: entity.slogan,
+  foundingDate: entity.foundingDate,
+  naics: entity.naics,
   description: DESCRIPTION,
+  /* Says plainly what this company is not, because the near-identical string
+     belongs to a much larger company in an unrelated industry. */
+  disambiguatingDescription: entity.disambiguating,
   url: SITE_URL,
   logo: { "@type": "ImageObject", url: `${SITE_URL}/brand/plarix-lockup.png`, width: 1352, height: 333 },
   image: `${SITE_URL}/brand/og.png`,
@@ -76,7 +89,7 @@ const organizationLd = {
     "Technician commission and spiff reconciliation",
     "Service agreement retention",
   ],
-  sameAs: ["https://www.linkedin.com/company/plarix", "https://x.com/theplarix"],
+  sameAs: [...entity.sameAs],
 };
 
 const websiteLd = {

@@ -8,7 +8,7 @@ import { integrations } from "@/content/site";
 export const metadata = pageMeta({
   title: "Works with what you already run",
   description:
-    "Plarix reads ServiceTitan, Jobber, FieldEdge, Housecall Pro, Service Fusion and ServiceTrade, plus accounting, supplier and manufacturer portals. Read access only, no migration, no new software for your team.",
+    "Plarix reads ServiceTitan, Jobber, FieldEdge, Housecall Pro and Service Fusion, plus accounting and supplier portals. Read access, no migration.",
   path: "/integrations",
 });
 

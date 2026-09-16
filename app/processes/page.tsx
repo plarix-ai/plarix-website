@@ -11,7 +11,7 @@ import { processes } from "@/content/site";
 export const metadata = pageMeta({
   title: "What we run",
   description:
-    "The six back office processes Plarix runs for home services companies: warranty and rebate recovery, invoice reconciliation, vendor credits, permits and compliance, technician pay, and service agreements.",
+    "The six back office processes Plarix runs for home services companies, from warranty recovery to permits, technician pay and agreements.",
   path: "/processes",
 });
 

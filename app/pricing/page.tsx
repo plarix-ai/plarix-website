@@ -1,18 +1,19 @@
 import { PageFrame } from "@/components/site/page-frame";
 import { PageHeader } from "@/components/site/page-header";
 import { Reveal } from "@/components/site/reveal";
+import { AnswerBlock } from "@/components/site/answer-block";
 import { Comparison } from "@/components/site/comparison";
 import { Closing } from "@/components/site/closing";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 import { JsonLd, breadcrumbLd, pageMeta } from "@/lib/seo";
-import { faqs, pricing } from "@/content/site";
+import { answers, faqs, pricing } from "@/content/site";
 
 export const metadata = pageMeta({
   title: "Pricing",
   description:
-    "The count is free. The build is scoped to what the count found. Running it is a flat monthly fee you can cancel any time. Compare it to a hire at $45,000 to $110,000 a year, not to a software subscription.",
+    "The count is free. The build is scoped to what it found. Running it is monthly, cancel anytime. Compare it to a hire, not a subscription.",
   path: "/pricing",
 });
 
@@ -44,6 +45,11 @@ export default function PricingPage() {
         />
 
         <section className="shell pb-16 md:pb-24">
+          <AnswerBlock
+            question={answers.howMuch.q}
+            answer={answers.howMuch.a}
+            className="mb-12 md:mb-16"
+          />
           <div className="grid gap-5 md:grid-cols-3">
             {pricing.tiers.map((tier, i) => (
               <Reveal

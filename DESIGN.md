@@ -296,3 +296,62 @@ Measured after, same software rendering:
 
 The look did not pay for it. The one-octave warp makes the streaks straighter, which
 reads as more machined rather than less.
+
+
+## Search and answer engines
+
+The hard problem here is not ranking, it is identity. A much larger and much older
+company called Playrix owns almost every signal for the near-identical string, so the
+site has to establish that Plarix is a separate entity before any page can rank for its
+own name.
+
+**Entity signals.** The Organization graph now carries `legalName`, `alternateName`,
+`slogan`, `foundingDate`, a NAICS code and a `disambiguatingDescription` that says in
+plain words what this company is and is not. `/about` is a dedicated entity page with
+`AboutPage` markup pointing at that same `@id`, an at-a-glance fact table, and a section
+that names the confusion directly rather than hoping a reader works it out. An industry
+classification separates two entities far better than a description does.
+
+`sameAs` lists only profiles that actually exist. An unclaimed URL is a broken signal,
+not a stronger one, so the rest of that list is the owner's to fill in.
+
+**Answer blocks.** The home page, pricing, how it works and about each open with a
+question and an answer written to be lifted whole. An answer engine quotes a passage,
+not a page, and a passage that leads with the answer is the one it can use.
+
+**Content with a reason to exist.** Two guides, each targeting a real question rather
+than a keyword: how warranty claim recovery actually works, and whether hiring a
+coordinator is worth it. Both end with an audit the reader can run themselves without
+buying anything, which is the test of whether a page deserved to be written. Both carry
+`Article` plus `FAQPage`, a `speakable` selector naming the passage to read first, and
+their own question set. The glossary links each term to the process that handles it,
+which is what turns eighteen definitions into a cluster rather than a list.
+
+**Per-route social cards** are generated at build from one drawn layout, so a link to
+any page carries that page's own title instead of a shared image.
+
+**Feeds and discovery.** An RSS feed at `/feed.xml` generated from the same array the
+journal renders from, a web manifest, `x-default` hreflang, and an `llms.txt` that leads
+with direct answers, states the Playrix distinction explicitly, and names the one figure
+an assistant should not cite.
+
+Measured on the shipped build, all seventeen indexable routes:
+
+| | Before | After |
+| --- | --- | --- |
+| Metadata defects | 14 | 0 |
+| Titles over 62 characters | 2 | 0 |
+| Descriptions outside 110 to 170 | 13 | 0 |
+| Duplicate titles or descriptions | 0 | 0 |
+| Routes without a social card | 1 | 0 |
+| Schema types present | 8 | 10 |
+| axe violations | 0 | 0 |
+
+Ten schema types now resolve across the site: Organization, WebSite, Service, AboutPage,
+Article, BreadcrumbList, DefinedTermSet, FAQPage, HowTo and ItemList.
+
+**What the site cannot do for itself.** Ranking for the brand name depends mostly on
+signals that live off this domain: Search Console and Bing Webmaster verification, a
+Google Business Profile, claimed and consistent profiles on LinkedIn, X, Crunchbase and
+GitHub, a Wikidata entry, and citations from trade publications. The code makes the
+entity legible. It cannot make it known.
