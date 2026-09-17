@@ -3,6 +3,8 @@ import Link from "next/link";
 import { PageFrame } from "@/components/site/page-frame";
 import { PageHeader } from "@/components/site/page-header";
 import { Reveal } from "@/components/site/reveal";
+import { ScrubList } from "@/components/site/scroll-motion";
+import { at } from "@/lib/scrub";
 import { JsonLd, breadcrumbLd, pageMeta } from "@/lib/seo";
 import { CONTACT_EMAIL } from "@/content/site";
 
@@ -79,10 +81,12 @@ export default function PrivacyPage() {
         </PageHeader>
 
         <section className="shell pb-16 md:pb-24">
-          <div className="measure space-y-12">
-            {sections.map((s) => (
-              <Reveal key={s.h} as="section">
-                <h2 className="t-h4 text-white">{s.h}</h2>
+          <ScrubList as="div" count={sections.length} className="measure space-y-12" to={0.8}>
+            {sections.map((s, i) => (
+              <Reveal key={s.h} as="section" className="scrub-item" style={at(i, sections.length)}>
+                <Reveal as="h2" clip className="t-h4 text-white">
+                  {s.h}
+                </Reveal>
                 {s.p.map((p, i) => (
                   <p key={i} className="mt-4 t-body text-text-secondary">
                     {p}
@@ -92,17 +96,19 @@ export default function PrivacyPage() {
             ))}
 
             <Reveal as="section">
-              <h2 className="t-h4 text-white">Contact</h2>
+              <Reveal as="h2" clip className="t-h4 text-white">
+                Contact
+              </Reveal>
               <p className="mt-4 t-body text-text-secondary">
-                <a href={`mailto:${CONTACT_EMAIL}`} className="link-sweep text-white">
+                <a href={`mailto:${CONTACT_EMAIL}`} className="link-sweep press-sm text-white">
                   {CONTACT_EMAIL}
                 </a>
               </p>
             </Reveal>
-          </div>
+          </ScrubList>
 
           <Reveal delay={120} className="mt-16">
-            <Link href="/" className="link-sweep t-body-sm text-text-secondary transition-colors duration-200 hover:text-white">
+            <Link href="/" className="link-sweep press-sm t-body-sm text-text-secondary transition-colors duration-200 hover:text-white">
               Back to the site
             </Link>
           </Reveal>

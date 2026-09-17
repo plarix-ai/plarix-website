@@ -3,6 +3,8 @@ import Link from "next/link";
 import { PageFrame } from "@/components/site/page-frame";
 import { PageHeader } from "@/components/site/page-header";
 import { Reveal } from "@/components/site/reveal";
+import { ScrubList } from "@/components/site/scroll-motion";
+import { at } from "@/lib/scrub";
 import { JsonLd, breadcrumbLd, itemListLd, pageMeta } from "@/lib/seo";
 import { journal } from "@/content/site";
 
@@ -53,23 +55,27 @@ export default function JournalPage() {
         />
 
         <section className="shell pb-16 md:pb-24">
+          <ScrubList as="div" count={posts.length} to={0.72}>
           <ol>
             {posts.map((post, i) => (
-              <Reveal as="li" key={post.slug} delay={i * 80}>
+              <Reveal
+                as="li"
+                key={post.slug}
+                delay={i * 80}
+                className="scrub-item"
+                style={at(i, posts.length)}
+              >
                 <Link
                   href={`/journal/${post.slug}`}
                   prefetch={false}
-                  className="group grid gap-3 border-t border-hairline py-9 last:border-b md:grid-cols-[minmax(0,10rem)_1fr] md:gap-12 md:py-12"
+                  className="press group grid gap-3 border-t border-hairline py-9 last:border-b md:grid-cols-[minmax(0,10rem)_1fr] md:gap-12 md:py-12"
                 >
                   <div className="flex items-baseline gap-3 t-caption text-text-tertiary md:block">
                     <time dateTime={post.date}>{fmt(post.date)}</time>
                     <span className="md:mt-1.5 md:block">{post.readingMinutes} min read</span>
                   </div>
                   <div className="max-w-[58ch]">
-                    <h2
-                      className="t-h3 text-white"
-                     
-                    >
+                    <h2 className="t-h3 text-white">
                       <span className="link-sweep">{post.title}</span>
                     </h2>
                     <p className="mt-3 t-body text-text-secondary">
@@ -80,6 +86,7 @@ export default function JournalPage() {
               </Reveal>
             ))}
           </ol>
+          </ScrubList>
         </section>
       </div>
     </PageFrame>

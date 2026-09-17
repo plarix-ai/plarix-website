@@ -7,6 +7,8 @@ import { PageHeader } from "@/components/site/page-header";
 import { Reveal } from "@/components/site/reveal";
 import { Closing } from "@/components/site/closing";
 import { JsonLd, breadcrumbLd, pageMeta } from "@/lib/seo";
+import { Parallax, ScrubList, SectionRule } from "@/components/site/scroll-motion";
+import { at } from "@/lib/scrub";
 import { SITE_URL, processes } from "@/content/site";
 
 export function generateStaticParams() {
@@ -71,12 +73,22 @@ export default async function ProcessPage({ params }: { params: Promise<{ slug: 
             </p>
           </Reveal>
 
-          <div className="mt-16 grid gap-12 md:mt-24 md:grid-cols-3 md:gap-10">
+          <ScrubList
+            count={lists.length}
+            className="mt-16 grid gap-12 md:mt-24 md:grid-cols-3 md:gap-10"
+            to={0.6}
+          >
             {lists.map((list, i) => (
-              <Reveal key={list.key} delay={i * 110} className="reveal-stagger">
-                <h2 className="mb-6 border-t border-hairline pt-5 t-label text-text-tertiary">
+              <Reveal
+                key={list.key}
+                delay={i * 110}
+                className="scrub-item reveal-stagger relative"
+                style={at(i, lists.length)}
+              >
+                <SectionRule tone="rgba(255,255,255,0.3)" />
+                <Reveal as="h2" clip className="mb-6 border-t border-hairline pt-5 t-label text-text-tertiary">
                   {list.heading}
-                </h2>
+                </Reveal>
                 <ul className="space-y-4">
                   {process[list.key].map((item) => (
                     <li
@@ -89,10 +101,19 @@ export default async function ProcessPage({ params }: { params: Promise<{ slug: 
                 </ul>
               </Reveal>
             ))}
-          </div>
+          </ScrubList>
 
-          <Reveal delay={220} className="mt-10 md:mt-14">
-            <div className="rounded-2xl bg-ink-800 p-8 ring-1 ring-hairline md:p-10">
+          <Parallax distance={18} className="mt-10 md:mt-14">
+          <Reveal delay={220}>
+            <div className="zoom-frame relative rounded-2xl bg-ink-800 p-8 ring-1 ring-hairline md:p-10">
+              <span
+                className="zoom-surface"
+                aria-hidden="true"
+                style={{
+                  background:
+                    "radial-gradient(70% 52% at 74% 0%, rgba(227,176,75,0.10) 0%, rgba(227,176,75,0.03) 44%, rgba(0,0,0,0) 76%)",
+                }}
+              />
               <h2 className="t-label text-text-tertiary">
                 Why this one
               </h2>
@@ -101,16 +122,21 @@ export default async function ProcessPage({ params }: { params: Promise<{ slug: 
               </p>
             </div>
           </Reveal>
+          </Parallax>
 
-          <Reveal delay={260} className="mt-16 border-t border-hairline pt-12 md:mt-24">
-            <h2 className="t-label mb-8 text-text-tertiary">The other five</h2>
+          <ScrubList as="div" count={others.length} className="mt-16 md:mt-24" to={0.7}>
+          <Reveal delay={260} className="relative border-t border-hairline pt-12">
+            <SectionRule />
+            <Reveal as="h2" clip className="t-label mb-8 text-text-tertiary">
+              The other five
+            </Reveal>
             <ul className="grid gap-x-12 gap-y-1 md:grid-cols-2">
-              {others.map((o) => (
-                <li key={o.slug}>
+              {others.map((o, oi) => (
+                <li key={o.slug} className="scrub-item" style={at(oi, others.length)}>
                   <Link
                     href={`/processes/${o.slug}`}
                     prefetch={false}
-                    className="group flex items-baseline justify-between gap-6 border-b border-hairline py-5"
+                    className="press group flex items-baseline justify-between gap-6 border-b border-hairline py-5"
                   >
                     <span className="t-h4 text-text-secondary transition-colors duration-200 group-hover:text-white">
                       {o.name}
@@ -126,6 +152,7 @@ export default async function ProcessPage({ params }: { params: Promise<{ slug: 
               ))}
             </ul>
           </Reveal>
+          </ScrubList>
 
         </section>
 

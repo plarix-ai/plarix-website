@@ -1,6 +1,8 @@
 import { PageFrame } from "@/components/site/page-frame";
 import { PageHeader } from "@/components/site/page-header";
 import { Reveal } from "@/components/site/reveal";
+import { ScrubList, SectionRule } from "@/components/site/scroll-motion";
+import { at } from "@/lib/scrub";
 import { Refusals } from "@/components/site/refusals";
 import { Closing } from "@/components/site/closing";
 import { JsonLd, breadcrumbLd, pageMeta } from "@/lib/seo";
@@ -26,16 +28,17 @@ export default function CompanyPage() {
       <div id="main">
         <PageHeader eyebrowCrumbs={crumbs} title={company.heading} lede={company.lede} />
 
-        <section className="shell pb-16 md:pb-24">
+        <ScrubList as="section" count={company.sections.length} className="shell pb-16 md:pb-24" to={0.76}>
           {company.sections.map((s, i) => (
             <Reveal
               key={s.h}
               delay={i * 80}
-              className="grid gap-6 border-t border-hairline py-12 md:grid-cols-[minmax(0,20rem)_1fr] md:gap-12 md:py-12"
+              className="scrub-item grid gap-6 border-t border-hairline py-12 md:grid-cols-[minmax(0,20rem)_1fr] md:gap-12 md:py-12"
+              style={at(i, company.sections.length)}
             >
-              <h2 className="t-h3 text-white">
+              <Reveal as="h2" clip className="t-h3 text-white">
                 {s.h}
-              </h2>
+              </Reveal>
               <div className="max-w-[64ch] space-y-5">
                 {s.p.map((p, j) => (
                   <p key={j} className="t-body text-text-secondary">
@@ -45,25 +48,33 @@ export default function CompanyPage() {
               </div>
             </Reveal>
           ))}
-        </section>
+        </ScrubList>
 
-        <section className="border-t border-hairline bg-ink-900">
+        <section className="relative border-t border-hairline bg-ink-900">
+          <SectionRule />
           <div className="shell py-16 md:py-24">
-            <Reveal as="h2" className="t-h2 max-w-[14ch]">
+            <Reveal as="h2" clip className="t-h2 max-w-[14ch]">
               What we believe.
             </Reveal>
-            <ul className="mt-12 max-w-[72ch] space-y-8 md:mt-16">
-              {company.beliefs.map((b, i) => (
-                <Reveal
-                  as="li"
-                  key={b}
-                  delay={i * 60}
-                  className="t-lead text-white"
-                >
-                  <span>{b}</span>
-                </Reveal>
-              ))}
-            </ul>
+            {/*
+              Six beliefs, brought up one at a time as the reader passes them.
+              This is the page's argument, so the page makes him walk it.
+            */}
+            <ScrubList as="div" count={company.beliefs.length} className="mt-12 md:mt-16" to={0.72}>
+              <ul className="max-w-[72ch] space-y-8">
+                {company.beliefs.map((b, i) => (
+                  <Reveal
+                    as="li"
+                    key={b}
+                    delay={i * 60}
+                    className="scrub-item t-lead text-white"
+                    style={at(i, company.beliefs.length)}
+                  >
+                    <span>{b}</span>
+                  </Reveal>
+                ))}
+              </ul>
+            </ScrubList>
           </div>
         </section>
 

@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 
 import { Logo } from "./logo";
+import { Magnetic } from "./magnetic";
 import { NavMenu, type PanelItem } from "./nav-menu";
 import { nav, processes } from "@/content/site";
 
@@ -83,7 +84,7 @@ export function SiteNav() {
           transitionTimingFunction: "var(--ease-out)",
         }}
       >
-        <Logo collapsed={compact} />
+        <Logo collapsed={compact} reserve />
 
         <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary">
           {nav.map((item) =>
@@ -102,7 +103,7 @@ export function SiteNav() {
                 key={item.href}
                 href={item.href}
                 aria-current={isCurrent(item.href) ? "page" : undefined}
-                className={`link-sweep t-body-sm transition-colors duration-200 ${
+                className={`link-sweep press-sm t-body-sm transition-colors duration-200 ${
                   isCurrent(item.href) ? "text-white" : "text-text-secondary hover:text-white"
                 }`}
               >
@@ -113,12 +114,14 @@ export function SiteNav() {
         </nav>
 
         <div className="flex items-center gap-2.5">
-          <Link
-            href="/count"
-            className="liquid-glass hidden rounded-full px-5 py-2.5 t-body-sm font-medium text-white sm:inline-flex md:px-6"
-          >
-            Get your count
-          </Link>
+          <Magnetic className="hidden sm:inline-flex" max={4}>
+            <Link
+              href="/count"
+              className="liquid-glass inline-flex rounded-full px-5 py-2.5 t-body-sm font-medium text-white md:px-6"
+            >
+              Get your count
+            </Link>
+          </Magnetic>
 
           <button
             type="button"
@@ -126,7 +129,7 @@ export function SiteNav() {
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? "Close menu" : "Open menu"}
-            className="liquid-glass relative flex h-11 w-11 items-center justify-center rounded-full text-white lg:hidden"
+            className="liquid-glass press-sm relative flex h-11 w-11 items-center justify-center rounded-full text-white lg:hidden"
           >
             <Menu
               size={18}
@@ -166,7 +169,7 @@ export function SiteNav() {
                   <Link
                     href={item.href}
                     aria-current={isCurrent(item.href) ? "page" : undefined}
-                    className={`block rounded-xl px-4 py-3 text-base transition-colors duration-200 hover:bg-white/5 hover:text-white ${
+                    className={`press block rounded-xl px-4 py-3 text-base transition-colors duration-200 hover:bg-white/5 hover:text-white ${
                       isCurrent(item.href) ? "text-white" : "text-text-secondary"
                     }`}
                   >
@@ -179,7 +182,7 @@ export function SiteNav() {
                           <Link
                             href={c.href}
                             prefetch={false}
-                            className="block rounded-lg px-3 py-2 t-body-sm text-text-tertiary transition-colors duration-200 hover:bg-white/5 hover:text-white"
+                            className="press block rounded-lg px-3 py-2 t-body-sm text-text-tertiary transition-colors duration-200 hover:bg-white/5 hover:text-white"
                           >
                             {c.label}
                           </Link>

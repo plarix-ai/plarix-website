@@ -12,10 +12,12 @@ export default function manifest(): MetadataRoute.Manifest {
     background_color: "#000000",
     theme_color: "#000000",
     categories: ["business", "productivity"],
+    /* Versioned for the same reason as the link tags in the root layout: an
+       installed icon is cached per origin and will not be replaced otherwise. */
     icons: [
-      { src: "/icon-192.png", sizes: "192x192", type: "image/png", purpose: "any" },
-      { src: "/favicon.png", sizes: "512x512", type: "image/png", purpose: "any" },
-      { src: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+      { src: "/icon-192.png?v=3", sizes: "192x192", type: "image/png", purpose: "any" },
+      { src: "/favicon.png?v=3", sizes: "512x512", type: "image/png", purpose: "any" },
+      { src: "/apple-icon.png?v=3", sizes: "180x180", type: "image/png" },
     ],
   };
 }

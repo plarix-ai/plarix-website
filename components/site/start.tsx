@@ -1,13 +1,15 @@
 import { Reveal } from "./reveal";
+import { Parallax, SectionRule } from "./scroll-motion";
 import { start } from "@/content/site";
 
 export function Start() {
   return (
-    <section id="start" className="scroll-mt-24 border-t border-hairline bg-ink-900">
+    <section id="start" className="relative scroll-mt-24 border-t border-hairline bg-ink-900">
+      <SectionRule />
       <div className="shell py-16 md:py-24">
         <div className="grid gap-14 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16">
           <div>
-            <Reveal as="h2" className="t-h2 max-w-[16ch]">
+            <Reveal as="h2" clip className="t-h2 max-w-[16ch]">
               {start.heading}
             </Reveal>
             <div className="mt-8 max-w-[60ch] space-y-5 text-lg leading-relaxed text-text-secondary md:mt-10 md:text-xl">
@@ -19,7 +21,8 @@ export function Start() {
             </div>
           </div>
 
-          <Reveal delay={180} className="lg:pt-3">
+          <Parallax distance={24} className="lg:pt-3">
+          <Reveal delay={180}>
             <div className="zoom-frame relative rounded-2xl bg-ink-800 p-7 ring-1 ring-hairline md:p-9">
               <span
                 className="zoom-surface"
@@ -43,6 +46,7 @@ export function Start() {
               </p>
             </div>
           </Reveal>
+          </Parallax>
         </div>
       </div>
     </section>

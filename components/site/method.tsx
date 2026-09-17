@@ -1,11 +1,12 @@
 import { Reveal } from "./reveal";
-import { Scrub } from "./scroll-motion";
+import { Scrub, SectionRule } from "./scroll-motion";
 import { SectionHead } from "./section-head";
 import { method } from "@/content/site";
 
 export function Method() {
   return (
-    <section id="method" className="scroll-mt-24 border-t border-hairline">
+    <section id="method" className="relative scroll-mt-24 border-t border-hairline">
+      <SectionRule />
       <div className="shell py-16 md:py-24">
         <SectionHead heading={method.heading}>{method.intro}</SectionHead>
 

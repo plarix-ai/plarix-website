@@ -1,4 +1,5 @@
 import { Reveal } from "./reveal";
+import { SectionRule } from "./scroll-motion";
 
 /**
  * A question and its answer, placed high on the page and written so the whole thing
@@ -18,9 +19,14 @@ export function AnswerBlock({
   className?: string;
 }) {
   return (
-    <Reveal className={`border-t border-hairline-strong pt-7 ${className}`}>
-      <h2 className="t-h4 text-white">{question}</h2>
-      <p className="mt-3 max-w-[70ch] t-body-lg text-text-secondary">{answer}</p>
+    <Reveal className={`relative border-t border-hairline-strong pt-7 ${className}`}>
+      <SectionRule tone="rgba(255,255,255,0.5)" />
+      <Reveal as="h2" clip className="t-h4 text-white">
+        {question}
+      </Reveal>
+      <Reveal as="p" delay={90} className="mt-3 max-w-[70ch] t-body-lg text-text-secondary">
+        {answer}
+      </Reveal>
     </Reveal>
   );
 }

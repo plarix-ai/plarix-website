@@ -4,6 +4,8 @@ import { ArrowRight } from "lucide-react";
 import { PageFrame } from "@/components/site/page-frame";
 import { PageHeader } from "@/components/site/page-header";
 import { Reveal } from "@/components/site/reveal";
+import { ScrubList } from "@/components/site/scroll-motion";
+import { at } from "@/lib/scrub";
 import { Closing } from "@/components/site/closing";
 import { JsonLd, breadcrumbLd, itemListLd, pageMeta } from "@/lib/seo";
 import { guides } from "@/content/site";
@@ -41,13 +43,20 @@ export default function GuidesPage() {
         />
 
         <section className="shell pb-20 md:pb-28">
+          <ScrubList as="div" count={guides.length} to={0.72}>
           <ol>
             {guides.map((g, i) => (
-              <Reveal as="li" key={g.slug} delay={i * 80}>
+              <Reveal
+                as="li"
+                key={g.slug}
+                delay={i * 80}
+                className="scrub-item"
+                style={at(i, guides.length)}
+              >
                 <Link
                   href={`/guides/${g.slug}`}
                   prefetch={false}
-                  className="group grid gap-3 border-t border-hairline py-9 last:border-b md:grid-cols-[minmax(0,9rem)_1fr_auto] md:gap-12 md:py-11"
+                  className="press group grid gap-3 border-t border-hairline py-9 last:border-b md:grid-cols-[minmax(0,9rem)_1fr_auto] md:gap-12 md:py-11"
                 >
                   <span className="t-caption text-text-tertiary">{g.readingMinutes} min read</span>
                   <span className="max-w-[58ch]">
@@ -66,6 +75,7 @@ export default function GuidesPage() {
               </Reveal>
             ))}
           </ol>
+          </ScrubList>
         </section>
 
         <Closing />

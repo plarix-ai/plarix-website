@@ -18,8 +18,13 @@ type Status = "idle" | "sending" | "sent" | "done" | "error";
 /** How long the confirmed control is held before the panel replaces it. */
 const SENT_HOLD_MS = 900;
 
+/*
+ * A field answers a press like every other surface here, and its focus ring is
+ * drawn rather than switched on, so moving through the form with a keyboard
+ * reads as the same material as clicking through it with a mouse.
+ */
 const field =
-  "w-full rounded-xl bg-white/[0.05] px-4 py-3.5 t-body-sm text-white placeholder:text-[#9aa1ac] transition-colors duration-200 hover:bg-white/[0.08] focus:bg-white/[0.09] focus:outline-none";
+  "press w-full rounded-xl bg-white/[0.05] px-4 py-3.5 t-body-sm text-white placeholder:text-[#9aa1ac] transition-[background-color,box-shadow] duration-200 hover:bg-white/[0.08] focus:bg-white/[0.09] focus:shadow-[inset_0_0_0_1.4px_rgba(255,255,255,0.28)] focus:outline-none";
 
 export function CountForm() {
   const [status, setStatus] = useState<Status>("idle");

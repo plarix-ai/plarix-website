@@ -489,6 +489,74 @@
 }
 
 /* ------------------------------------------------------------------
+   Scrub, applied more widely.
+
+   Every structural divide on the site is a hairline. Each one now draws
+   itself as its section arrives instead of being present before the
+   section is: the page assembles in the order it is read. The static
+   hairline stays underneath as the track, so a divide is never a gap and
+   nothing depends on JavaScript to be visible.
+------------------------------------------------------------------ */
+
+/*
+ * One item in a list that lights as the scrub passes its position. Each item
+ * declares where it sits with --at. Opacity and lift are derived rather than
+ * transitioned, because the value already changes every frame.
+ *
+ * This runs at every width. It was briefly gated to tablets and up on the
+ * strength of a frame-rate reading, and then measured properly: style recalc
+ * over a full-page scroll is the same to within noise with it on or off, on a
+ * four times throttled phone included. Frame rate on this machine swings five
+ * either way run to run, which is enough to invent a regression that is not
+ * there.
+ */
+.scrub-item {
+  --lit: clamp(0, (var(--scrub, 0) - var(--at, 0)) * 9, 1);
+  opacity: calc(0.42 + 0.58 * var(--lit));
+  transform: translateY(calc((1 - var(--lit)) * 8px));
+}
+
+/* The same idea for a rule that grows along a column rather than across it. */
+.scrub-rule-y {
+  transform: scaleY(var(--scrub, 0));
+  transform-origin: center top;
+}
+
+/* A row that reads in as its own section is read. */
+.scrub-fill {
+  --lit: clamp(0, (var(--scrub, 0) - var(--at, 0)) * 9, 1);
+  opacity: calc(0.25 + 0.75 * var(--lit));
+}
+
+/* ------------------------------------------------------------------
+   Press, for everything pressable that is not one of the two buttons.
+
+   A summary, a directory row, a rotator arrow and a field all respond to
+   a press. The compress is the same 90ms and the release the same
+   overshoot, so one physical vocabulary covers the whole site rather
+   than two buttons feeling alive and everything else feeling dead.
+------------------------------------------------------------------ */
+
+.press {
+  transition: transform 260ms var(--ease-spring);
+}
+.press:active {
+  transform: scale(0.985);
+  transition-duration: 90ms;
+  transition-timing-function: var(--ease-press);
+}
+/* Small targets take a deeper compress; the same ratio on a 40px control is
+   imperceptible, and on a full-width row it is far too much. */
+.press-sm {
+  transition: transform 260ms var(--ease-spring);
+}
+.press-sm:active {
+  transform: scale(0.94);
+  transition-duration: 90ms;
+  transition-timing-function: var(--ease-press);
+}
+
+/* ------------------------------------------------------------------
    The sending state.
 
    Sized and coloured from the control it sits in, so it works on the white
@@ -562,6 +630,22 @@
     transition: none;
   }
   .group:hover .text-shift {
+    transform: none;
+  }
+  .scrub-item,
+  .scrub-fill {
+    opacity: 1;
+    transform: none;
+  }
+  .scrub-rule-y {
+    transform: none;
+  }
+  .press,
+  .press-sm {
+    transition: none;
+  }
+  .press:active,
+  .press-sm:active {
     transform: none;
   }
 }

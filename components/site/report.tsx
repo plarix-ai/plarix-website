@@ -1,6 +1,7 @@
 import { Counted } from "./counted";
 import { Reveal } from "./reveal";
-import { Parallax } from "./scroll-motion";
+import { Parallax, Scrub, SectionRule } from "./scroll-motion";
+import { at } from "@/lib/scrub";
 import { report } from "@/content/site";
 
 /**
@@ -10,11 +11,12 @@ import { report } from "@/content/site";
  */
 export function Report() {
   return (
-    <section className="border-t border-hairline">
+    <section className="relative border-t border-hairline">
+      <SectionRule />
       <div className="shell py-16 md:py-24">
         <div className="grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-16">
           <div>
-            <Reveal as="h2" className="t-h2 max-w-[14ch]">
+            <Reveal as="h2" clip className="t-h2 max-w-[14ch]">
               {report.heading}
             </Reveal>
             <Reveal
@@ -61,18 +63,22 @@ export function Report() {
                   <Counted value={report.headline.value} className="t-h1 mt-2 block tabular-nums text-gold" />
                 </div>
 
-                <Reveal as="dl" delay={200} className="reveal-stagger">
-                  {report.rows.map((row, i) => (
-                    <div
-                      key={row.label}
-                      className="flex items-baseline justify-between border-b border-hairline py-4 last:border-b-0"
-                      style={{ transitionDelay: `${240 + i * 70}ms` }}
-                    >
-                      <dt className="t-body-sm text-text-secondary">{row.label}</dt>
-                      <dd className="t-body tabular-nums text-white">{row.value}</dd>
-                    </div>
-                  ))}
-                </Reveal>
+                {/* The rows read in as the report is read, in the order a
+                    person reads them, rather than all arriving together. */}
+                <Scrub as="div" from={0.2} to={0.72}>
+                  <Reveal as="dl" delay={200} className="reveal-stagger">
+                    {report.rows.map((row, i) => (
+                      <div
+                        key={row.label}
+                        className="scrub-fill flex items-baseline justify-between border-b border-hairline py-4 last:border-b-0"
+                        style={{ ...at(i, report.rows.length), transitionDelay: `${240 + i * 70}ms` }}
+                      >
+                        <dt className="t-body-sm text-text-secondary">{row.label}</dt>
+                        <dd className="t-body tabular-nums text-white">{row.value}</dd>
+                      </div>
+                    ))}
+                  </Reveal>
+                </Scrub>
               </figure>
             </Parallax>
           </Reveal>

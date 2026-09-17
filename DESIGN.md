@@ -444,3 +444,74 @@ Search console ownership is read from `GOOGLE_SITE_VERIFICATION` and
 `BING_SITE_VERIFICATION` so no token sits in the repository, and an unset variable drops
 the tag rather than shipping an empty one, which is the usual reason a property quietly
 fails to verify.
+
+
+## The interaction layer, applied everywhere
+
+The eleven techniques are no longer one demonstration each. Every section on every
+route carries the ones that suit it, through a small set of shared pieces rather than
+per page code: `SectionRule` draws a section's hairline as the section arrives,
+`ScrubList` plus `at()` light a list's rows in the order they are read, `Parallax`
+puts a column on its own plane, `Magnetic` pulls a control toward the cursor, and
+`.press` / `.press-sm` give every pressable surface the same compress and spring that
+the two buttons already had. Section heads and page titles uncover through `Reveal`'s
+`clip` prop; panels light a wash on hover inside a frame that holds its box.
+
+Coverage runs from the nav's call to action through the hero's two depth planes, the
+paper trail, the process directory, the method rail, the report rows, the refusals, the
+pricing surfaces, the comparison table, the questions, the form, the article headings
+and table of contents, the glossary, the footer columns, and the 404.
+
+### The nav no longer moves when the logo collapses
+
+The bar is `justify-between`, so a logo that narrows hands its width back to the row and
+everything to its right slides over to take it. The lockup now reserves its full width
+whether or not the wordmark is showing, so the collapse is a change to the logo alone.
+Measured at 1024, 1440 and 1920: the four nav items and the call to action move 0.0px
+between the two states, where they previously moved about ninety.
+
+### Three bugs found by measuring
+
+**An element in the last tenth of the page can never reveal itself.** The shared
+observer shrinks the root's bottom by 10% so things arrive just after they enter. For
+anything inside that last 10% the margin is unsatisfiable, because the page cannot
+scroll further, so it sits at opacity 0 for good. Adding reveals to the footer put the
+copyright row exactly there, on every page. The document bottom now flushes whatever is
+still pending.
+
+**Read, write, read, write is what makes a scroll effect expensive.** The engine
+measured and applied in one loop, so each write invalidated layout and the next
+`getBoundingClientRect` flushed it again. Reads are now batched ahead of writes, a
+subscriber whose value has not moved past its own epsilon is skipped, and the scrub is
+quantised to three decimals and written only when the printed value changes, since a
+custom property write restyles everything beneath it.
+
+**A frame-rate reading is not a measurement here.** Frame rate on this machine swings
+about five either way run to run, which was enough to invent a regression and to justify
+gating two techniques to tablets and up. Measured properly against the protocol's own
+counters, both gates changed script and style-recalc cost by nothing outside noise, so
+both were removed and the techniques run at every width. Over a three second full-page
+scroll: 0.07s script, 0.02s layout and 0.15s style recalc on desktop, and 0.25 / 0.08 /
+0.55 on a four times throttled phone.
+
+Fifteen routes at 390, 768, 1440 and 1920: no horizontal overflow, one h1 each, no
+console errors, every reveal and clip resolved, and every table of contents anchor still
+resolving to a real id.
+
+
+## Icons
+
+One set, generated from `brand/plarix-mark.png` at 512, 192, 180, 32 and 16, each padded
+for its size rather than scaled from one file: the 16 and 32 take almost no padding,
+because at tab sizes every pixel of margin is a pixel the shape does not get, and the
+mark's right half is a near-white gradient with little contrast to spare on a white tile.
+
+Every icon URL carries a version suffix. A favicon is cached per origin rather than per
+page, so replacing the file alone leaves the old mark in tabs, history, bookmarks and
+link previews for as long as that cache lives; changing the URL is the only thing that
+reliably retires it. Bump the number when the artwork changes.
+
+The old brand's leftovers are gone: `public/images` (a starfield and three logo files
+from the previous design, all unreferenced but all still publicly served), the unused
+`assets/` copies of the same, and a miscropped 32px icon nothing pointed at. About
+2.3MB, and four URLs a crawler could still have been holding.

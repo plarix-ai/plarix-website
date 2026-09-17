@@ -48,10 +48,23 @@ export const metadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
   },
+  /*
+   * The version suffix is the point of this block, not decoration. A favicon is
+   * one of the most aggressively cached things a browser holds, and it is kept
+   * per origin rather than per page, so replacing the file alone leaves the old
+   * mark in tabs, history entries, bookmarks and link previews for as long as
+   * that cache survives. Changing the URL is the only thing that reliably
+   * retires it. Bump the number whenever the artwork changes.
+   */
   icons: {
-    icon: [{ url: "/favicon.png", type: "image/png" }],
-    shortcut: "/favicon.png",
-    apple: "/apple-icon.png",
+    icon: [
+      { url: "/icon-16.png?v=3", type: "image/png", sizes: "16x16" },
+      { url: "/icon-32.png?v=3", type: "image/png", sizes: "32x32" },
+      { url: "/icon-192.png?v=3", type: "image/png", sizes: "192x192" },
+      { url: "/favicon.png?v=3", type: "image/png", sizes: "512x512" },
+    ],
+    shortcut: "/icon-32.png?v=3",
+    apple: [{ url: "/apple-icon.png?v=3", sizes: "180x180" }],
   },
   manifest: "/manifest.webmanifest",
   /*
