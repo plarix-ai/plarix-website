@@ -355,3 +355,92 @@ signals that live off this domain: Search Console and Bing Webmaster verificatio
 Google Business Profile, claimed and consistent profiles on LinkedIn, X, Crunchbase and
 GitHub, a Wikidata entry, and citations from trade publications. The code makes the
 entity legible. It cannot make it known.
+
+
+## The interaction layer
+
+Four families of technique, eleven in total, layered onto the existing composition
+rather than rebuilt around. Nothing here changed a layout: every one of them is either
+a wrapper that carries a transform, a class on an element that already existed, or a
+state the form already had and did not show.
+
+**Scroll.** One engine drives all of it: a single `requestAnimationFrame` loop and a
+single `IntersectionObserver` in `components/site/scroll-motion.tsx`, with subscribers
+skipped entirely while off screen. One listener per element is how the first build of
+this page reached 3fps, and this is the same lesson applied to a second system.
+
+- *Parallax* moves the inner-page header material and the recovery report against the
+  columns beside them. Travel is capped at 44px and 30px: past roughly forty pixels the
+  effect stops reading as depth and starts reading as a sticky element that came loose.
+- *Scrub* publishes progress as a `--scrub` custom property that CSS consumes, so the
+  motion stays on the compositor and a section can change what it scrubs without
+  touching any JavaScript. The method rail draws itself across the section as the
+  section is read, and each of the three markers lands as the line reaches it rather
+  than on a timer. The reading-progress hairline on articles is the same idea.
+- *Pin and transform* holds the process detail pane while the six names travel past it.
+  One `position: sticky`, no restructuring: the reader moves down the list and the
+  answer stays where their eye already is.
+
+**Reveal.** Fade and lift, and stagger, already existed. Clip reveal is new: section
+headings and page titles uncover from the leading edge instead of fading, so display
+weight is correct from the first frame rather than arriving through a grey.
+
+**Hover.** Magnetic pull on the two hero controls and the form's submit, capped at 6px
+so the target never moves out from under the click it is inviting. Image zoom applied
+to the material this site actually has, which is not photographs: the wash behind a
+panel lights and scales inside a frame that holds its exact box, so no type is
+re-rasterised at a fractional scale and nothing around a hovered panel can reflow. Text
+shift on the arrows was already there and stayed.
+
+**Click.** Press compresses in 90ms on a linear-ish curve, because a compress that eases
+reads as lag rather than as force, and releases on a curve that overshoots once and
+settles. The count form now passes through all four states it always had internally:
+idle, sending with a spinner, sent with a check held for 900ms, then the confirmation
+panel. That hold exists because a request that succeeds in 200ms would otherwise replace
+the form before the reader registers that their click did anything, and a form that
+vanishes reads as an error.
+
+### Two bugs this pass found, both measured rather than reasoned about
+
+**`clip-path` hides an element from `IntersectionObserver`.** Chrome reports a clipped
+element at intersection ratio 0. A heading that clipped itself could therefore never
+trigger the reveal that would uncover it: it would have shipped permanently invisible on
+the home page and on every inner page title. Proved with a two-element probe, identical
+but for the clip: ratio 0.000 against ratio 1.000. The clip now lives on an inner
+wrapper and the observed element is never clipped.
+
+**A filled CSS animation owns `transform` for good.** An animated property outranks an
+inline style, so a control that played its own `animate-blur-fade-up` entrance could
+never afterwards be moved by hover or press. This had already been silently disabling
+the `:active` press scale on both hero buttons before any of this work. Entrances now sit
+on a wrapper; the control keeps its own transform. `Magnetic` uses three layers for the
+same reason: entrance outside, magnetic offset in the middle, press on the control.
+
+Reduced motion resolves every technique to its finished state, never its starting one,
+and those overrides are placed after the rules they undo, because equal specificity
+means source order decides and a reset written earlier loses silently.
+
+### Measured on the shipped build
+
+51fps on desktop and 56fps on a 4x-throttled phone while scrolling the entire page, zero
+long tasks on desktop and one of 60ms on mobile. Fifteen routes at 390, 768, 1440 and
+1920: no horizontal overflow, exactly one h1 each, no console errors, and every reveal
+and clip resolved. All eleven techniques verified by reading computed style out of a real
+browser rather than by inspection.
+
+
+## Both hosts, one canonical
+
+`www.plarix.dev` and `plarix.dev` both resolve, and www redirects permanently to the apex
+with the path preserved. A redirect that collapses the path to the home page throws away
+whatever the link was for and is treated as a soft 404.
+
+Apex is the canonical because every signal already published names it: the canonical tag
+on all nineteen routes, the sitemap's 27 URLs, the RSS feed, `llms.txt` and the
+Organization markup. Choosing www would have meant rewriting all of them to point away
+from the host being redirected to.
+
+Search console ownership is read from `GOOGLE_SITE_VERIFICATION` and
+`BING_SITE_VERIFICATION` so no token sits in the repository, and an unset variable drops
+the tag rather than shipping an empty one, which is the usual reason a property quietly
+fails to verify.

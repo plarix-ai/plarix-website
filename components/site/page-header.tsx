@@ -52,7 +52,7 @@ export function PageHeader({
       ) : null}
 
       <div className="grid gap-7 lg:grid-cols-[1.05fr_0.95fr] lg:items-end lg:gap-14">
-        <Reveal as="h1" className="t-h1 max-w-[15ch]">
+        <Reveal as="h1" clip className="t-h1 max-w-[15ch]">
           {title}
         </Reveal>
 

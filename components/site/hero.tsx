@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowRight, ChevronLeft, ChevronRight, Layers, Timer, Unlink } from "lucide-react";
 
+import { Magnetic } from "./magnetic";
+
 import { HeroBackdrop } from "./hero-backdrop";
 import { hero, processes } from "@/content/site";
 
@@ -85,26 +87,29 @@ export function Hero() {
               {hero.subhead}
             </p>
 
+            {/*
+              The page's two most important controls lean toward the cursor as
+              it comes in. Pull is capped well inside the button, so the target
+              never moves out from under the click it is inviting.
+            */}
             <div className="flex flex-wrap items-center gap-3 sm:gap-4">
-              <Link
-                href={hero.primaryCta.href}
-                className="solid-btn animate-blur-fade-up group inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 t-body-sm font-medium text-black hover:bg-white/90 sm:px-8 sm:text-base"
-                style={{ animationDelay: "600ms" }}
-              >
-                {hero.primaryCta.label}
-                <ArrowRight
-                  size={17}
-                  strokeWidth={2}
-                  className="transition-transform duration-200 ease-out group-hover:translate-x-0.5"
-                />
-              </Link>
-              <Link
-                href={hero.secondaryCta.href}
-                className="liquid-glass animate-blur-fade-up inline-flex items-center rounded-full px-6 py-3 t-body-sm font-medium text-white sm:px-8"
-                style={{ animationDelay: "700ms" }}
-              >
-                {hero.secondaryCta.label}
-              </Link>
+              <Magnetic className="animate-blur-fade-up" style={{ animationDelay: "600ms" }}>
+                <Link
+                  href={hero.primaryCta.href}
+                  className="solid-btn group inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 t-body-sm font-medium text-black hover:bg-white/90 sm:px-8 sm:text-base"
+                >
+                  {hero.primaryCta.label}
+                  <ArrowRight size={17} strokeWidth={2} className="text-shift" />
+                </Link>
+              </Magnetic>
+              <Magnetic className="animate-blur-fade-up" style={{ animationDelay: "700ms" }}>
+                <Link
+                  href={hero.secondaryCta.href}
+                  className="liquid-glass inline-flex items-center rounded-full px-6 py-3 t-body-sm font-medium text-white sm:px-8"
+                >
+                  {hero.secondaryCta.label}
+                </Link>
+              </Magnetic>
             </div>
           </div>
 

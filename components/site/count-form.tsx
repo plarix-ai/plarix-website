@@ -1,11 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Check, ChevronDown } from "lucide-react";
 
+import { Magnetic } from "./magnetic";
 import { CONTACT_EMAIL, closing, processes } from "@/content/site";
 
-type Status = "idle" | "sending" | "done" | "error";
+/*
+ * Every click gets a response, and the response is the state of the thing it
+ * acted on. The control passes through all four: idle, sending, sent, then the
+ * confirmation panel. "sent" exists because a request that succeeds in 200ms
+ * would otherwise replace the form before the reader registers that the button
+ * they pressed did anything, and a form that vanishes reads as a page error.
+ */
+type Status = "idle" | "sending" | "sent" | "done" | "error";
+
+/** How long the confirmed control is held before the panel replaces it. */
+const SENT_HOLD_MS = 900;
 
 const field =
   "w-full rounded-xl bg-white/[0.05] px-4 py-3.5 t-body-sm text-white placeholder:text-[#9aa1ac] transition-colors duration-200 hover:bg-white/[0.08] focus:bg-white/[0.09] focus:outline-none";
@@ -13,10 +24,18 @@ const field =
 export function CountForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState("");
+  const holdTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(
+    () => () => {
+      if (holdTimer.current) clearTimeout(holdTimer.current);
+    },
+    [],
+  );
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (status === "sending") return;
+    if (status === "sending" || status === "sent") return;
 
     const data = new FormData(e.currentTarget);
     setStatus("sending");
@@ -39,7 +58,8 @@ export function CountForm() {
         const body = await res.json().catch(() => ({}));
         throw new Error(body.error || "That did not go through.");
       }
-      setStatus("done");
+      setStatus("sent");
+      holdTimer.current = setTimeout(() => setStatus("done"), SENT_HOLD_MS);
     } catch (err) {
       setStatus("error");
       setMessage(
@@ -56,7 +76,7 @@ export function CountForm() {
         <span className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-black">
           <Check size={20} strokeWidth={2.4} />
         </span>
-        <p className="mt-6 text-xl text-white">
+        <p role="status" className="mt-6 text-xl text-white">
           Got it. We will be in touch within one business day.
         </p>
         <p className="mt-3 max-w-[48ch] text-base leading-relaxed text-text-secondary">
@@ -139,20 +159,37 @@ export function CountForm() {
         </div>
       </div>
 
-      <button
-        type="submit"
-        disabled={status === "sending"}
-        className="solid-btn group mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 t-body-sm font-medium text-black hover:bg-white/90 disabled:cursor-not-allowed disabled:bg-white/60 sm:w-auto"
-      >
-        {status === "sending" ? "Sending" : "Request the count"}
-        {status === "sending" ? null : (
-          <ArrowRight
-            size={17}
-            strokeWidth={2}
-            className="transition-transform duration-200 ease-out group-hover:translate-x-0.5"
-          />
-        )}
-      </button>
+      <Magnetic className="mt-5 w-full sm:w-auto">
+        <button
+          type="submit"
+          disabled={status === "sending" || status === "sent"}
+          className="solid-btn group inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 t-body-sm font-medium text-black hover:bg-white/90 disabled:cursor-not-allowed disabled:bg-white/70 sm:w-auto"
+        >
+          {status === "sending" ? "Sending" : status === "sent" ? "Sent" : "Request the count"}
+          {status === "sending" ? (
+            <span className="spin-ring" aria-hidden="true" />
+          ) : status === "sent" ? (
+            <Check size={17} strokeWidth={2.4} className="animate-swap" aria-hidden="true" />
+          ) : (
+            <ArrowRight
+              size={17}
+              strokeWidth={2}
+              className="text-shift"
+              aria-hidden="true"
+            />
+          )}
+        </button>
+      </Magnetic>
+
+      {/* The same states, said once, for anyone not watching the button. The
+          confirmation panel that follows carries its own announcement. */}
+      <p className="sr-only" role="status" aria-live="polite">
+        {status === "sending"
+          ? "Sending your request."
+          : status === "sent"
+            ? "Sent."
+            : ""}
+      </p>
 
       {status === "error" ? (
         <p role="alert" className="mt-4 t-body-sm text-gold">
