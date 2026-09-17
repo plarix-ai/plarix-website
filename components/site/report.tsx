@@ -1,5 +1,6 @@
 import { Counted } from "./counted";
 import { Reveal } from "./reveal";
+import { Parallax } from "./scroll-motion";
 import { report } from "@/content/site";
 
 /**
@@ -28,33 +29,52 @@ export function Report() {
             </Reveal>
           </div>
 
+          {/*
+            The report drifts against the column beside it as the section
+            passes, which is the only thing on the page that says these are two
+            layers rather than one flat band. Travel is small on purpose: past
+            roughly forty pixels parallax stops reading as depth and starts
+            reading as a sticky element that has come loose.
+          */}
           <Reveal delay={160}>
-            <figure className="rounded-2xl bg-ink-800 p-7 ring-1 ring-hairline md:p-10">
-              <figcaption className="flex items-baseline justify-between border-b border-hairline pb-5">
-                <span className="t-label text-text-tertiary">
-                  Recovery report
-                </span>
-                <span className="t-caption text-text-tertiary">{report.period}</span>
-              </figcaption>
+            <Parallax distance={30}>
+              <figure className="zoom-frame relative rounded-2xl bg-ink-800 p-7 ring-1 ring-hairline md:p-10">
+                {/* The wash that lights on hover. Decoration only, and the words
+                    above it never move. */}
+                <span
+                  className="zoom-surface"
+                  aria-hidden="true"
+                  style={{
+                    background:
+                      "radial-gradient(70% 50% at 72% 0%, rgba(227,176,75,0.10) 0%, rgba(227,176,75,0.03) 42%, rgba(0,0,0,0) 74%)",
+                  }}
+                />
+                <figcaption className="flex items-baseline justify-between border-b border-hairline pb-5">
+                  <span className="t-label text-text-tertiary">
+                    Recovery report
+                  </span>
+                  <span className="t-caption text-text-tertiary">{report.period}</span>
+                </figcaption>
 
-              <div className="border-b border-hairline py-8">
-                <p className="t-caption text-text-secondary">{report.headline.label}</p>
-                <Counted value={report.headline.value} className="t-h1 mt-2 block tabular-nums text-gold" />
-              </div>
+                <div className="border-b border-hairline py-8">
+                  <p className="t-caption text-text-secondary">{report.headline.label}</p>
+                  <Counted value={report.headline.value} className="t-h1 mt-2 block tabular-nums text-gold" />
+                </div>
 
-              <Reveal as="dl" delay={200} className="reveal-stagger">
-                {report.rows.map((row, i) => (
-                  <div
-                    key={row.label}
-                    className="flex items-baseline justify-between border-b border-hairline py-4 last:border-b-0"
-                    style={{ transitionDelay: `${240 + i * 70}ms` }}
-                  >
-                    <dt className="t-body-sm text-text-secondary">{row.label}</dt>
-                    <dd className="t-body tabular-nums text-white">{row.value}</dd>
-                  </div>
-                ))}
-              </Reveal>
-            </figure>
+                <Reveal as="dl" delay={200} className="reveal-stagger">
+                  {report.rows.map((row, i) => (
+                    <div
+                      key={row.label}
+                      className="flex items-baseline justify-between border-b border-hairline py-4 last:border-b-0"
+                      style={{ transitionDelay: `${240 + i * 70}ms` }}
+                    >
+                      <dt className="t-body-sm text-text-secondary">{row.label}</dt>
+                      <dd className="t-body tabular-nums text-white">{row.value}</dd>
+                    </div>
+                  ))}
+                </Reveal>
+              </figure>
+            </Parallax>
           </Reveal>
         </div>
       </div>

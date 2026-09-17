@@ -32,6 +32,12 @@
 
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  /* Press goes down fast and linear, because a compress that eases reads as
+     lag rather than as force. */
+  --ease-press: cubic-bezier(0.3, 0, 0.6, 1);
+  /* Release overshoots once and settles. The overshoot is what separates a
+     button that springs back from one that simply stops. */
+  --ease-spring: cubic-bezier(0.22, 1.4, 0.36, 1);
 
   --shell: 1200px;
   --gutter: 1.25rem;
@@ -182,7 +188,7 @@
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
   transition:
     background-color 200ms var(--ease-out),
-    transform 160ms var(--ease-out);
+    transform 260ms var(--ease-spring);
 }
 
 .liquid-glass::before {
@@ -219,16 +225,20 @@
 
 .liquid-glass:active {
   transform: scale(0.97);
+  transition-duration: 90ms;
+  transition-timing-function: var(--ease-press);
 }
 
 /* solid counterpart for the one primary action */
 .solid-btn {
   transition:
     background-color 200ms var(--ease-out),
-    transform 160ms var(--ease-out);
+    transform 260ms var(--ease-spring);
 }
 .solid-btn:active {
   transform: scale(0.97);
+  transition-duration: 90ms;
+  transition-timing-function: var(--ease-press);
 }
 
 /* ------------------------------------------------------------------
@@ -375,6 +385,185 @@
 }
 .page-in {
   animation: pageIn 320ms var(--ease-out) both;
+}
+
+/* ------------------------------------------------------------------
+   Clip reveal: content gets uncovered.
+
+   A heading that wipes open from its leading edge rather than fading in.
+   clip-path stays on the compositor and, unlike opacity, never lightens the
+   type mid-transition, so the weight of a display line is right from the
+   first frame it is visible at all.
+
+   Paired with a small translate so it reads as the line arriving, not as a
+   mask sliding over a line that was already there.
+------------------------------------------------------------------ */
+
+/*
+ * The clip lives on an inner wrapper, never on the element the
+ * IntersectionObserver watches. Chrome reports a clipped element at
+ * intersection ratio 0, so an observed element that clips itself can never
+ * trigger the reveal that would uncover it and simply stays invisible.
+ */
+.reveal-clip {
+  /* The wrapper supplies the entrance, so the host must not also fade. Two
+     entrances on one element is the thing this design rules out. */
+  opacity: 1;
+  transform: none;
+}
+
+.clip-reveal-inner {
+  display: block;
+  /* Bottom inset is negative so descenders are never shaved. */
+  clip-path: inset(0 100% -0.35em 0);
+  transform: translateY(6px);
+  transition:
+    clip-path 820ms var(--ease-out),
+    transform 820ms var(--ease-out);
+  transition-delay: inherit;
+}
+.reveal[data-visible='true'] .clip-reveal-inner {
+  clip-path: inset(0 0 -0.35em 0);
+  transform: translateY(0);
+}
+
+/* ------------------------------------------------------------------
+   Scrub: motion follows scroll progress.
+
+   `--scrub` is published by the Scrub component, 0 to 1. Everything that
+   consumes it does so through a transform, so scroll never costs layout.
+------------------------------------------------------------------ */
+
+/* A rule that draws itself along the section as the section is read. */
+.scrub-rule {
+  transform: scaleX(var(--scrub, 0));
+  transform-origin: left center;
+}
+
+/* A marker that lands once the rule has reached it. Each step declares its own
+   position on the rail with --at, and fills when the scrub passes it. */
+.scrub-mark {
+  opacity: calc((var(--scrub, 0) - var(--at, 0)) * 14);
+  transform: scale(calc(0.4 + 0.6 * clamp(0, (var(--scrub, 0) - var(--at, 0)) * 14, 1)));
+  transition: none;
+}
+
+/* ------------------------------------------------------------------
+   Zoom frame: the image moves, not the layout.
+
+   This site has no photographs by design, so the technique is applied to
+   the material it does have: the light wash on a panel. The frame keeps
+   its exact box and clips, and only the wash behind the words scales, so
+   nothing around a hovered panel can reflow and no type is re-rasterised
+   at a fractional scale, which is what makes a zoomed text panel look
+   soft. The panel is lit from the cursor's side rather than enlarged.
+------------------------------------------------------------------ */
+
+.zoom-frame {
+  overflow: hidden;
+  isolation: isolate;
+}
+.zoom-frame > .zoom-surface {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(1.04);
+  transform-origin: 70% 0%;
+  transition:
+    transform 620ms var(--ease-out),
+    opacity 420ms var(--ease-out);
+}
+/* Everything that is not the wash sits above it. */
+.zoom-frame > *:not(.zoom-surface) {
+  position: relative;
+  z-index: 1;
+}
+@media (hover: hover) and (pointer: fine) {
+  .zoom-frame:hover > .zoom-surface,
+  .zoom-frame:focus-within > .zoom-surface {
+    opacity: 1;
+    transform: scale(1.14);
+  }
+}
+
+/* ------------------------------------------------------------------
+   The sending state.
+
+   Sized and coloured from the control it sits in, so it works on the white
+   button without a second rule. Rotation only, which the compositor owns.
+------------------------------------------------------------------ */
+
+@keyframes spinRing {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.spin-ring {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border-radius: 9999px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  opacity: 0.65;
+  animation: spinRing 620ms linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .spin-ring {
+    animation-duration: 1800ms;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Text shift: the label reacts, not just the colour.
+------------------------------------------------------------------ */
+
+.text-shift {
+  transition: transform 200ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .group:hover .text-shift {
+    transform: translateX(3px);
+  }
+}
+
+/*
+ * Reduced motion for everything above. This block has to come after the rules
+ * it overrides, not before them: these selectors carry the same specificity as
+ * the ones they are undoing, so source order is what decides, and a reset
+ * placed earlier silently loses. Each technique resolves to its finished
+ * state rather than its starting one, because a clip reveal parked at its
+ * start is a heading nobody can read.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .clip-reveal-inner {
+    clip-path: none;
+    transform: none;
+    transition: none;
+  }
+  .scrub-rule {
+    transform: none;
+  }
+  .scrub-mark {
+    opacity: 1;
+    transform: none;
+  }
+  .zoom-frame > .zoom-surface {
+    transition: none;
+  }
+  .zoom-frame:hover > .zoom-surface,
+  .zoom-frame:focus-within > .zoom-surface {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+  .text-shift {
+    transition: none;
+  }
+  .group:hover .text-shift {
+    transform: none;
+  }
 }
 
 /* Children of a revealed group, arriving just behind their parent. */

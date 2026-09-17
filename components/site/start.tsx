@@ -20,7 +20,15 @@ export function Start() {
           </div>
 
           <Reveal delay={180} className="lg:pt-3">
-            <div className="rounded-2xl bg-ink-800 p-7 ring-1 ring-hairline md:p-9">
+            <div className="zoom-frame relative rounded-2xl bg-ink-800 p-7 ring-1 ring-hairline md:p-9">
+              <span
+                className="zoom-surface"
+                aria-hidden="true"
+                style={{
+                  background:
+                    "radial-gradient(70% 52% at 74% 0%, rgba(227,176,75,0.10) 0%, rgba(227,176,75,0.03) 44%, rgba(0,0,0,0) 76%)",
+                }}
+              />
               <h3 className="t-label text-text-tertiary">
                 {start.aside.heading}
               </h3>

@@ -54,6 +54,21 @@ export const metadata: Metadata = {
     apple: "/apple-icon.png",
   },
   manifest: "/manifest.webmanifest",
+  /*
+   * Search console ownership. Both tokens come from the environment so a
+   * verification string never sits in the repository, and an unset variable
+   * drops the tag entirely rather than shipping an empty one, which is what
+   * makes a property fail to verify. Set GOOGLE_SITE_VERIFICATION and
+   * BING_SITE_VERIFICATION in the host, redeploy, then verify.
+   */
+  verification: {
+    ...(process.env.GOOGLE_SITE_VERIFICATION
+      ? { google: process.env.GOOGLE_SITE_VERIFICATION }
+      : {}),
+    ...(process.env.BING_SITE_VERIFICATION
+      ? { other: { "msvalidate.01": process.env.BING_SITE_VERIFICATION } }
+      : {}),
+  },
 };
 
 export const viewport: Viewport = {

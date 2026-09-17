@@ -53,7 +53,14 @@ export function Processes() {
             })}
           </ul>
 
-          <div className="relative lg:pt-4">
+          {/*
+            Pin and transform. The pane holds its place while the six names
+            travel past it, so the section stays put and only its contents
+            change. That is what the directory is actually for: the reader
+            moves down the list and the answer stays where their eye already
+            is, rather than being chased down the page.
+          */}
+          <div className="relative lg:sticky lg:top-28 lg:self-start lg:pt-4">
             <div key={current.id} className="animate-swap">
               <p className="t-lead text-white">{current.short}</p>
               <p className="mt-6 max-w-[58ch] text-base leading-relaxed text-text-secondary md:text-lg">

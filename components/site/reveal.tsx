@@ -45,11 +45,22 @@ export function Reveal({
   as: Tag = "div",
   delay = 0,
   className = "",
+  clip = false,
 }: {
   children: ReactNode;
   as?: ElementType;
   delay?: number;
   className?: string;
+  /**
+   * Uncover the contents from the leading edge instead of fading them in.
+   *
+   * The clip goes on an inner wrapper, never on the observed element, and that
+   * is not a style preference. Chrome reports an element with a `clip-path` to
+   * IntersectionObserver at ratio 0, so a clipped element can never trigger the
+   * reveal that would unclip it: it stays invisible for good. Measured, not
+   * assumed, with the same observer options this file uses.
+   */
+  clip?: boolean;
 }) {
   const ref = useRef<HTMLElement | null>(null);
   const [visible, setVisible] = useState(false);
@@ -65,9 +76,9 @@ export function Reveal({
       ref={ref}
       data-visible={visible ? "true" : "false"}
       style={delay ? { transitionDelay: `${delay}ms` } : undefined}
-      className={`reveal ${className}`}
+      className={`reveal ${clip ? "reveal-clip " : ""}${className}`}
     >
-      {children}
+      {clip ? <span className="clip-reveal-inner">{children}</span> : children}
     </Tag>
   );
 }
