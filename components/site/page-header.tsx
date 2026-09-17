@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 
 import { Reveal } from "./reveal";
+import { Parallax } from "./scroll-motion";
 
 export type Crumb = { label: string; href: string };
 
@@ -57,7 +58,7 @@ export function PageHeader({
         </Reveal>
 
         {lede || children ? (
-          <div className="lg:pb-2">
+          <Parallax distance={14} className="lg:pb-2">
             {lede ? (
               <Reveal as="p" delay={90} className="max-w-[46ch] t-body-lg text-text-secondary">
                 {lede}
@@ -68,7 +69,7 @@ export function PageHeader({
                 {children}
               </Reveal>
             ) : null}
-          </div>
+          </Parallax>
         ) : null}
       </div>
     </header>

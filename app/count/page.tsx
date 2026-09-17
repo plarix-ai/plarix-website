@@ -1,6 +1,8 @@
 import { PageFrame } from "@/components/site/page-frame";
 import { PageHeader } from "@/components/site/page-header";
 import { Reveal } from "@/components/site/reveal";
+import { Parallax, Scrub } from "@/components/site/scroll-motion";
+import { at } from "@/lib/scrub";
 import { CountForm } from "@/components/site/count-form";
 import { JsonLd, breadcrumbLd, pageMeta } from "@/lib/seo";
 import { closing } from "@/content/site";
@@ -46,20 +48,27 @@ export default function CountPage() {
 
         <section className="shell pb-16 md:pb-24">
           <div className="grid gap-14 lg:grid-cols-[0.95fr_1.05fr] lg:items-start lg:gap-14">
+            <Scrub as="div" from={0.08} to={0.6}>
             <Reveal className="reveal-stagger">
-              <h2 className="mb-8 t-label text-text-tertiary">
+              <Reveal as="h2" clip className="mb-8 t-label text-text-tertiary">
                 What happens next
-              </h2>
+              </Reveal>
               <ol className="relative">
                 <span
                   className="absolute left-[5px] top-3 bottom-4 w-px bg-white/10"
                   aria-hidden="true"
                 />
+                {/* The line grows as the three steps are read, so the sequence
+                    is drawn by the reader rather than presented finished. */}
+                <span
+                  className="scrub-rule-y absolute left-[5px] top-3 bottom-4 w-px bg-white/32"
+                  aria-hidden="true"
+                />
                 {steps.map((s, i) => (
                   <li
                     key={s.h}
-                    className="relative flex gap-6 pb-9 last:pb-0"
-                    style={{ transitionDelay: `${120 + i * 90}ms` }}
+                    className="scrub-item relative flex gap-6 pb-9 last:pb-0"
+                    style={{ ...at(i, steps.length), transitionDelay: `${120 + i * 90}ms` }}
                   >
                     <span
                       aria-hidden="true"
@@ -77,10 +86,13 @@ export default function CountPage() {
                 ))}
               </ol>
             </Reveal>
+            </Scrub>
 
-            <Reveal delay={140}>
-              <CountForm />
-            </Reveal>
+            <Parallax distance={20}>
+              <Reveal delay={140}>
+                <CountForm />
+              </Reveal>
+            </Parallax>
           </div>
         </section>
       </div>

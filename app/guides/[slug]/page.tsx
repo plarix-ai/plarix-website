@@ -5,6 +5,8 @@ import { ArrowRight } from "lucide-react";
 import { PageFrame } from "@/components/site/page-frame";
 import { PageHeader } from "@/components/site/page-header";
 import { Reveal } from "@/components/site/reveal";
+import { Parallax, ScrubList, SectionRule } from "@/components/site/scroll-motion";
+import { at } from "@/lib/scrub";
 import { Toc } from "@/components/site/toc";
 import { ReadingProgress } from "@/components/site/reading-progress";
 import { Closing } from "@/components/site/closing";
@@ -107,9 +109,14 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
 
             {guide.body.map((block, i) => (
               <Reveal key={i} delay={Math.min(i, 5) * 45} className="mt-14">
-                <h2 id={tocId(block.h)} className="mb-5 t-h3 scroll-mt-32 text-white">
+                <Reveal
+                  as="h2"
+                  clip
+                  id={tocId(block.h)}
+                  className="mb-5 t-h3 scroll-mt-32 text-white"
+                >
                   {block.h}
-                </h2>
+                </Reveal>
                 <div className="space-y-5">
                   {block.p.map((p, j) => (
                     <p key={j} className="t-prose text-text-prose">
@@ -120,30 +127,39 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
               </Reveal>
             ))}
 
-            <Reveal className="mt-16 border-t border-hairline pt-12">
-              <h2 id="questions" className="mb-8 t-h3 scroll-mt-32 text-white">
+            <ScrubList as="div" count={guide.faqs.length} className="mt-16" to={0.74}>
+            <Reveal className="relative border-t border-hairline pt-12">
+              <SectionRule />
+              <Reveal as="h2" clip id="questions" className="mb-8 t-h3 scroll-mt-32 text-white">
                 Questions
-              </h2>
+              </Reveal>
               <dl>
-                {guide.faqs.map((f) => (
-                  <div key={f.q} className="border-t border-hairline py-6 last:border-b">
+                {guide.faqs.map((f, fi) => (
+                  <div
+                    key={f.q}
+                    className="scrub-item border-t border-hairline py-6 last:border-b"
+                    style={at(fi, guide.faqs.length)}
+                  >
                     <dt className="t-h4 text-white">{f.q}</dt>
                     <dd className="mt-3 t-body text-text-secondary">{f.a}</dd>
                   </div>
                 ))}
               </dl>
             </Reveal>
+            </ScrubList>
 
             {related.length ? (
               <Reveal className="mt-14">
-                <h2 className="t-label mb-6 text-text-tertiary">What we run for this</h2>
+                <Reveal as="h2" clip className="t-label mb-6 text-text-tertiary">
+                  What we run for this
+                </Reveal>
                 <ul>
                   {related.map((r) => (
                     <li key={r.slug}>
                       <Link
                         href={`/processes/${r.slug}`}
                         prefetch={false}
-                        className="group flex items-baseline justify-between gap-6 border-b border-hairline py-4"
+                        className="press group flex items-baseline justify-between gap-6 border-b border-hairline py-4"
                       >
                         <span className="t-h4 text-text-secondary transition-colors duration-200 group-hover:text-white">
                           {r.name}
@@ -162,9 +178,9 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
             ) : null}
           </article>
 
-          <aside className="hidden lg:block">
+          <Parallax as="aside" distance={16} className="hidden lg:block">
             <Toc headings={[...headings, "Questions"]} />
-          </aside>
+          </Parallax>
         </div>
 
         <Closing />

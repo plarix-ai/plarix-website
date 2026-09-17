@@ -1,6 +1,8 @@
 import { PageFrame } from "@/components/site/page-frame";
 import { PageHeader } from "@/components/site/page-header";
 import { Reveal } from "@/components/site/reveal";
+import { ScrubList } from "@/components/site/scroll-motion";
+import { at } from "@/lib/scrub";
 import { Closing } from "@/components/site/closing";
 import { JsonLd, breadcrumbLd, pageMeta } from "@/lib/seo";
 import Link from "next/link";
@@ -50,12 +52,14 @@ export default function GlossaryPage() {
         <PageHeader eyebrowCrumbs={crumbs} title={glossary.heading} lede={glossary.lede} />
 
         <section className="shell pb-20 md:pb-28">
+          <ScrubList as="div" count={glossary.terms.length} to={0.82}>
           <dl>
             {glossary.terms.map((t, i) => (
               <Reveal
                 key={t.term}
                 delay={Math.min(i, 8) * 35}
-                className="grid gap-2 border-t border-hairline py-6 last:border-b md:grid-cols-[minmax(0,20rem)_1fr] md:gap-12 md:py-7"
+                className="scrub-item grid gap-2 border-t border-hairline py-6 last:border-b md:grid-cols-[minmax(0,20rem)_1fr] md:gap-12 md:py-7"
+                style={at(i, glossary.terms.length)}
               >
                 <dt id={tocId(t.term)} className="t-h4 scroll-mt-28 text-white">
                   {t.term}
@@ -66,7 +70,7 @@ export default function GlossaryPage() {
                     <Link
                       href={`/processes/${t.process}`}
                       prefetch={false}
-                      className="link-sweep mt-2 inline-block t-caption text-text-tertiary transition-colors duration-200 hover:text-white"
+                      className="link-sweep press-sm mt-2 inline-block t-caption text-text-tertiary transition-colors duration-200 hover:text-white"
                     >
                       {processes.find((p) => p.slug === t.process)?.name}
                     </Link>
@@ -75,6 +79,7 @@ export default function GlossaryPage() {
               </Reveal>
             ))}
           </dl>
+          </ScrubList>
         </section>
 
         <Closing />

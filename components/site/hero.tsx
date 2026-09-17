@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowRight, ChevronLeft, ChevronRight, Layers, Timer, Unlink } from "lucide-react";
 
 import { Magnetic } from "./magnetic";
+import { Parallax } from "./scroll-motion";
 
 import { HeroBackdrop } from "./hero-backdrop";
 import { hero, processes } from "@/content/site";
@@ -56,8 +57,14 @@ export function Hero() {
       />
 
       <div className="shell relative z-10 flex flex-1 flex-col justify-end pb-10 pt-16 md:pb-16">
+        {/*
+          The two halves of the first viewport sit on different planes, so
+          scrolling off the hero separates them instead of sliding one flat
+          card away. The headline column holds back and the rotator leads,
+          which is the same depth order as the shader behind both of them.
+        */}
         <div className="flex flex-col items-start gap-10 md:flex-row md:items-end md:gap-12">
-          <div className="flex-1">
+          <Parallax distance={26} className="w-full flex-1">
             <ul
               className="animate-blur-fade-up mb-7 flex flex-wrap items-center gap-x-5 gap-y-2 t-caption text-white/80 sm:gap-x-7 md:mb-9"
               style={{ animationDelay: "300ms" }}
@@ -111,7 +118,7 @@ export function Hero() {
                 </Link>
               </Magnetic>
             </div>
-          </div>
+          </Parallax>
 
           {/*
             The rotator. The arrows from the reference template, given an actual
@@ -119,8 +126,9 @@ export function Hero() {
             several rather than the whole company. The counter carries position,
             so there are no progress bars underneath it saying the same thing.
           */}
+          <Parallax distance={54} className="w-full md:w-[22rem] md:shrink-0">
           <div
-            className="animate-blur-fade-up w-full md:w-[22rem] md:shrink-0"
+            className="animate-blur-fade-up w-full"
             style={{ animationDelay: "800ms" }}
             onMouseEnter={() => setPaused(true)}
             onMouseLeave={() => setPaused(false)}
@@ -140,7 +148,7 @@ export function Hero() {
               <div key={current.id} className="animate-swap w-full">
                 <Link
                   href={`/processes/${current.slug}`}
-                  className="link-sweep t-h4 font-medium text-white"
+                  className="link-sweep press-sm t-h4 font-medium text-white"
                 >
                   {current.name}
                 </Link>
@@ -149,30 +157,35 @@ export function Hero() {
             </div>
 
             <div className="mt-2 flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => go(-1)}
-                aria-label="Previous process"
-                className="liquid-glass flex h-10 w-10 items-center justify-center rounded-full text-white"
-              >
-                <ChevronLeft size={17} strokeWidth={2} />
-              </button>
-              <button
-                type="button"
-                onClick={() => go(1)}
-                aria-label="Next process"
-                className="liquid-glass flex h-10 w-10 items-center justify-center rounded-full text-white"
-              >
-                <ChevronRight size={17} strokeWidth={2} />
-              </button>
+              <Magnetic max={4}>
+                <button
+                  type="button"
+                  onClick={() => go(-1)}
+                  aria-label="Previous process"
+                  className="liquid-glass flex h-10 w-10 items-center justify-center rounded-full text-white"
+                >
+                  <ChevronLeft size={17} strokeWidth={2} />
+                </button>
+              </Magnetic>
+              <Magnetic max={4}>
+                <button
+                  type="button"
+                  onClick={() => go(1)}
+                  aria-label="Next process"
+                  className="liquid-glass flex h-10 w-10 items-center justify-center rounded-full text-white"
+                >
+                  <ChevronRight size={17} strokeWidth={2} />
+                </button>
+              </Magnetic>
               <Link
                 href="/processes"
-                className="link-sweep ml-3 t-caption text-white/70 transition-colors duration-200 hover:text-white"
+                className="link-sweep press-sm ml-3 t-caption text-white/70 transition-colors duration-200 hover:text-white"
               >
                 See all six
               </Link>
             </div>
           </div>
+          </Parallax>
         </div>
       </div>
     </section>

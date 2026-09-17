@@ -3,7 +3,9 @@
 import { useState } from "react";
 
 import { Reveal } from "./reveal";
+import { ScrubList, SectionRule } from "./scroll-motion";
 import { SectionHead } from "./section-head";
+import { at } from "@/lib/scrub";
 import { processes } from "@/content/site";
 
 export function Processes() {
@@ -11,7 +13,8 @@ export function Processes() {
   const current = processes[active];
 
   return (
-    <section id="processes" className="scroll-mt-24 border-t border-hairline bg-ink-900">
+    <section id="processes" className="relative scroll-mt-24 border-t border-hairline bg-ink-900">
+      <SectionRule />
       <div className="shell py-16 md:py-24">
         <SectionHead heading="We run one process at a time, and we finish it.">
           Not a platform. Not a suite. A specific piece of your operation, handed over
@@ -20,17 +23,18 @@ export function Processes() {
 
         {/* Desktop: a directory. Names on the left, the selected one open on the right. */}
         <Reveal delay={140} className="mt-16 hidden gap-16 lg:grid lg:grid-cols-[1fr_1fr] md:mt-20">
-          <ul className="-mt-2">
+          <ScrubList as="div" count={processes.length} className="-mt-2" to={0.66}>
+          <ul>
             {processes.map((p, i) => {
               const on = i === active;
               return (
-                <li key={p.id}>
+                <li key={p.id} className="scrub-item" style={at(i, processes.length)}>
                   <button
                     type="button"
                     onClick={() => setActive(i)}
                     onMouseEnter={() => setActive(i)}
                     aria-current={on}
-                    className="group flex w-full items-baseline gap-5 border-b border-hairline py-6 text-left"
+                    className="press group flex w-full items-baseline gap-5 border-b border-hairline py-6 text-left"
                   >
                     <span
                       className="h-px w-8 shrink-0 self-center transition-all duration-300"
@@ -52,6 +56,7 @@ export function Processes() {
               );
             })}
           </ul>
+          </ScrubList>
 
           {/*
             Pin and transform. The pane holds its place while the six names
@@ -71,14 +76,15 @@ export function Processes() {
         </Reveal>
 
         {/* Mobile: the same content, opened in place. */}
-        <div className="mt-14 lg:hidden">
+        <ScrubList as="div" count={processes.length} className="mt-14 lg:hidden" to={0.72}>
           {processes.map((p, i) => (
             <details
               key={p.id}
-              className="group border-b border-hairline py-5"
+              className="scrub-item group border-b border-hairline py-5"
+              style={at(i, processes.length)}
               open={i === 0}
             >
-              <summary className="flex items-start justify-between gap-4 text-lg text-white marker:hidden [&::-webkit-details-marker]:hidden">
+              <summary className="press flex cursor-pointer items-start justify-between gap-4 text-lg text-white marker:hidden [&::-webkit-details-marker]:hidden">
                 <span>{p.name}</span>
                 <span
                   aria-hidden="true"
@@ -89,7 +95,7 @@ export function Processes() {
               <p className="mt-3 t-body-sm text-text-secondary">{p.detail}</p>
             </details>
           ))}
-        </div>
+        </ScrubList>
       </div>
     </section>
   );

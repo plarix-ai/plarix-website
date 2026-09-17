@@ -6,6 +6,8 @@ import { Report } from "@/components/site/report";
 import { Refusals } from "@/components/site/refusals";
 import { Closing } from "@/components/site/closing";
 import { JsonLd, breadcrumbLd, pageMeta } from "@/lib/seo";
+import { ScrubList, SectionRule } from "@/components/site/scroll-motion";
+import { at } from "@/lib/scrub";
 import { SITE_URL, answers, method } from "@/content/site";
 
 export const metadata = pageMeta({
@@ -57,16 +59,19 @@ export default function HowItWorksPage() {
             answer={answers.howLong.a}
             className="mb-4"
           />
+          <ScrubList as="div" count={method.steps.length} to={0.7}>
           {method.steps.map((step, i) => (
             <Reveal
               key={step.verb}
               delay={i * 90}
-              className="grid gap-6 border-t border-hairline py-12 md:grid-cols-[minmax(0,18rem)_1fr] md:gap-12 md:py-12"
+              className="scrub-item relative grid gap-6 border-t border-hairline py-12 md:grid-cols-[minmax(0,18rem)_1fr] md:gap-12 md:py-12"
+              style={at(i, method.steps.length)}
             >
-              <div>
-                <h2 className="t-h2 text-white">
+              <SectionRule tone="rgba(255,255,255,0.28)" />
+              <div className="lg:sticky lg:top-28 lg:self-start">
+                <Reveal as="h2" clip className="t-h2 text-white">
                   {step.verb}
-                </h2>
+                </Reveal>
                 <p className="mt-3 t-label text-text-tertiary">
                   {step.time}
                 </p>
@@ -79,6 +84,7 @@ export default function HowItWorksPage() {
               </div>
             </Reveal>
           ))}
+          </ScrubList>
         </section>
 
         <Report />

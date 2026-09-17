@@ -5,6 +5,7 @@ import { ArrowRight } from "lucide-react";
 import { PageFrame } from "@/components/site/page-frame";
 import { PageHeader } from "@/components/site/page-header";
 import { Reveal } from "@/components/site/reveal";
+import { Parallax, SectionRule } from "@/components/site/scroll-motion";
 import { Closing } from "@/components/site/closing";
 import { ReadingProgress } from "@/components/site/reading-progress";
 import { Toc } from "@/components/site/toc";
@@ -91,9 +92,14 @@ export default async function JournalPost({ params }: { params: Promise<{ slug: 
             {post.body.map((block, i) => (
               <Reveal key={i} delay={i * 50} className="mt-14 first:mt-0">
                 {block.h ? (
-                  <h2 id={tocId(block.h)} className="mb-5 t-h3 scroll-mt-32 text-white">
+                  <Reveal
+                    as="h2"
+                    clip
+                    id={tocId(block.h)}
+                    className="mb-5 t-h3 scroll-mt-32 text-white"
+                  >
                     {block.h}
-                  </h2>
+                  </Reveal>
                 ) : null}
                 <div className="space-y-5">
                   {block.p.map((p, j) => (
@@ -106,16 +112,17 @@ export default async function JournalPost({ params }: { params: Promise<{ slug: 
             ))}
           </article>
 
-          <aside className="hidden lg:block">
+          <Parallax as="aside" distance={16} className="hidden lg:block">
             <Toc headings={headings} />
-          </aside>
+          </Parallax>
         </div>
 
         <div className="shell pb-16 md:pb-24">
-          <Reveal delay={200} className="border-t border-hairline pt-10">
+          <Reveal delay={200} className="relative border-t border-hairline pt-10">
+            <SectionRule />
             <Link
               href={`/journal/${next.slug}`}
-              className="group inline-flex items-center gap-3 text-base text-text-secondary transition-colors duration-200 hover:text-white md:text-lg"
+              className="press group inline-flex items-center gap-3 text-base text-text-secondary transition-colors duration-200 hover:text-white md:text-lg"
             >
               <span className="text-text-tertiary">Next</span>
               <span className="link-sweep">{next.title}</span>

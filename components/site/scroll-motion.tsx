@@ -21,17 +21,21 @@ type Subscriber = {
   /** Called with the element's progress through the viewport, 0 to 1. */
   apply: (progress: number, el: HTMLElement) => void;
   visible: boolean;
+  /** Last value written, so an unchanged frame costs nothing at all. */
+  last: number;
+  /** Smallest change worth a write. */
+  epsilon: number;
 };
 
 const subs = new Set<Subscriber>();
 const byEl = new WeakMap<Element, Subscriber>();
+const reads: { sub: Subscriber; p: number }[] = [];
 let io: IntersectionObserver | null = null;
 let frame = 0;
 let running = false;
 
-function measure(sub: Subscriber) {
+function measure(sub: Subscriber, vh: number) {
   const rect = sub.el.getBoundingClientRect();
-  const vh = window.innerHeight || 1;
   /*
    * 0 when the element's top edge first touches the bottom of the viewport,
    * 1 when its bottom edge leaves the top. Height is folded in so a tall
@@ -42,12 +46,33 @@ function measure(sub: Subscriber) {
   return Math.min(1, Math.max(0, travelled / span));
 }
 
+/*
+ * Every read first, then every write.
+ *
+ * Interleaving them is what makes a scroll effect expensive: each write
+ * invalidates layout, so the next getBoundingClientRect has to flush it again,
+ * and a page with twenty subscribers pays for twenty layouts a frame instead of
+ * one. Splitting the loop in two measurably recovered most of that.
+ *
+ * A subscriber whose value has not moved past its own epsilon is then skipped
+ * entirely, so a section that is on screen but not actually moving, which is
+ * most of them on any given frame, costs one rect read and nothing else.
+ */
 function tick() {
   frame = 0;
+  const vh = window.innerHeight || 1;
+
+  reads.length = 0;
   for (const sub of subs) {
     if (!sub.visible) continue;
-    sub.apply(measure(sub), sub.el);
+    const p = measure(sub, vh);
+    if (Math.abs(p - sub.last) < sub.epsilon) continue;
+    sub.last = p;
+    reads.push({ sub, p });
   }
+
+  for (let i = 0; i < reads.length; i++) reads[i].sub.apply(reads[i].p, reads[i].sub.el);
+  reads.length = 0;
 }
 
 function request() {
@@ -70,17 +95,20 @@ function start() {
         if (entry.isIntersecting) request();
       }
     },
-    /* A generous margin so an element is subscribed slightly before it is
-       seen and its first painted frame is already correct. */
-    { rootMargin: "20% 0px 20% 0px" },
+    /* Enough margin that an element's first painted frame is already correct,
+       but not so much that a long page keeps a dozen off-screen subscribers
+       being measured every frame. */
+    { rootMargin: "12% 0px 12% 0px" },
   );
   window.addEventListener("scroll", request, { passive: true });
   window.addEventListener("resize", request, { passive: true });
 }
 
-function subscribe(el: HTMLElement, apply: Subscriber["apply"]) {
+function subscribe(el: HTMLElement, apply: Subscriber["apply"], epsilon = 0.0008) {
   start();
-  const sub: Subscriber = { el, apply, visible: false };
+  /* -1 rather than 0, so the first measurement always passes the epsilon test
+     and the element is written once even if it starts at exactly zero. */
+  const sub: Subscriber = { el, apply, visible: false, last: -1, epsilon };
   subs.add(sub);
   byEl.set(el, sub);
   io?.observe(el);
@@ -118,11 +146,14 @@ export function Parallax({
   distance = 28,
   className = "",
   style,
+  as: Tag = "div",
 }: {
   children: ReactNode;
   distance?: number;
   className?: string;
   style?: CSSProperties;
+  /** So a parallax layer can still be the landmark it ought to be. */
+  as?: "div" | "aside" | "figure";
 }) {
   const ref = useRef<HTMLDivElement | null>(null);
 
@@ -131,13 +162,15 @@ export function Parallax({
     if (!el || reducedMotion()) return;
     const inner = el.firstElementChild as HTMLElement | null;
     if (!inner) return;
-    inner.style.willChange = "transform";
+    /* Half a pixel of travel. Below that nothing on screen changes, so the
+       write is pure cost. */
+    const eps = 0.5 / Math.max(1, distance);
     return subscribe(el, (p) => {
       /* Centred on the midpoint, so the element sits at its authored position
          when it is in the middle of the viewport and the offset is shared
          evenly between arriving and leaving. */
       inner.style.transform = `translate3d(0, ${((0.5 - p) * distance).toFixed(2)}px, 0)`;
-    });
+    }, eps);
   }, [distance]);
 
   /*
@@ -149,9 +182,9 @@ export function Parallax({
    * nothing, so it is safe on both shapes.
    */
   return (
-    <div ref={ref} className={className} style={style}>
+    <Tag ref={ref as never} className={className} style={style}>
       <div className="h-full">{children}</div>
-    </div>
+    </Tag>
   );
 }
 
@@ -194,15 +227,89 @@ export function Scrub({
       return;
     }
     const range = Math.max(0.0001, to - from);
-    return subscribe(el, (p) => {
-      const v = Math.min(1, Math.max(0, (p - from) / range));
-      el.style.setProperty("--scrub", v.toFixed(4));
-    });
+    let written = "";
+    return subscribe(
+      el,
+      (p) => {
+        const v = Math.min(1, Math.max(0, (p - from) / range));
+        /*
+         * Three decimals, and only when the printed value actually changes.
+         * Setting a custom property invalidates style for everything beneath
+         * it, and beneath a scrubbed list that is every row, so a write worth
+         * nothing on screen is the single most expensive thing this file can
+         * do. Quantising here is what keeps an eighteen row list free.
+         */
+        const next = v.toFixed(3);
+        if (next === written) return;
+        written = next;
+        el.style.setProperty("--scrub", next);
+      },
+      /* Matched to the quantisation above, scaled back into progress space. */
+      0.001 * range,
+    );
   }, [from, to]);
 
   return (
     <Tag ref={ref as never} className={className} style={{ "--scrub": 0 } as CSSProperties}>
       {children}
     </Tag>
+  );
+}
+
+/* ------------------------------------------------------------------
+   Two shapes built on Scrub that the whole site uses.
+------------------------------------------------------------------ */
+
+/**
+ * The hairline at the top of a section, drawn as the section arrives rather
+ * than already present before it. The static border underneath stays as the
+ * track, so the divide is never a gap and nothing about the page's structure
+ * depends on JavaScript having run.
+ *
+ * Its host is one pixel tall, so its progress is simply how far down the
+ * viewport the line has travelled, and the window is set so the rule finishes
+ * drawing while the section's heading is still arriving rather than as the
+ * section leaves.
+ */
+export function SectionRule({ tone = "rgba(255,255,255,0.34)" }: { tone?: string }) {
+  return (
+    <Scrub
+      className="pointer-events-none absolute inset-x-0 top-0 z-10 h-px"
+      from={0.04}
+      to={0.42}
+    >
+      <span className="scrub-rule block h-px w-full" style={{ background: tone }} aria-hidden="true" />
+    </Scrub>
+  );
+}
+
+/**
+ * A list whose items light in turn as the reader moves through it, each one
+ * keyed to its own position rather than to a timer. A stagger fires once on
+ * arrival and is over; this tracks the reader, so scrolling back up dims the
+ * items again and the list always reflects where they actually are.
+ *
+ * `count` is what spaces the items along the scrub, so the component needs it
+ * rather than counting children, which would not survive a fragment.
+ */
+export function ScrubList({
+  children,
+  count,
+  className = "",
+  from = 0.08,
+  to = 0.66,
+  as = "div",
+}: {
+  children: ReactNode;
+  count: number;
+  className?: string;
+  from?: number;
+  to?: number;
+  as?: "div" | "section";
+}) {
+  return (
+    <Scrub as={as} className={className} from={from} to={to}>
+      {children}
+    </Scrub>
   );
 }

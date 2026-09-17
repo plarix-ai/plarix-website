@@ -1,6 +1,8 @@
 import { PageFrame } from "@/components/site/page-frame";
 import { PageHeader } from "@/components/site/page-header";
 import { Reveal } from "@/components/site/reveal";
+import { ScrubList } from "@/components/site/scroll-motion";
+import { at } from "@/lib/scrub";
 import { Closing } from "@/components/site/closing";
 import { JsonLd, breadcrumbLd, faqLd, pageMeta } from "@/lib/seo";
 import { faqs } from "@/content/site";
@@ -30,18 +32,23 @@ export default function FaqPage() {
         />
 
         <section className="shell pb-18 md:pb-26">
-          <div className="max-w-[72ch]">
+          <ScrubList as="div" count={faqs.length} className="max-w-[72ch]" to={0.8}>
             {faqs.map((item, i) => (
-              <Reveal key={item.q} delay={i * 45} className="border-t border-hairline py-8 last:border-b">
-                <h2 className="t-h3 text-white">
+              <Reveal
+                key={item.q}
+                delay={i * 45}
+                className="scrub-item border-t border-hairline py-8 last:border-b"
+                style={at(i, faqs.length)}
+              >
+                <Reveal as="h2" clip className="t-h3 text-white">
                   {item.q}
-                </h2>
+                </Reveal>
                 <p className="mt-4 t-prose text-text-secondary">
                   {item.a}
                 </p>
               </Reveal>
             ))}
-          </div>
+          </ScrubList>
         </section>
 
         <Closing />
